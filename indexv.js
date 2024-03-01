@@ -23,13 +23,13 @@ const firebaseConfig = {
         if (!snapshot.exists()) {
             document.getElementById('sameToBody').style.display = "none"
             Swal.fire({
-                title: "Votre nom d'utilisateur",
+                title: "Your username",
                 input: 'text',
                 inputAttributes: {
                   autocapitalize: 'off'
                 },
                 showCancelButton: false,
-                confirmButtonText: "Envoyer",
+                confirmButtonText: "Send",
                 showLoaderOnConfirm: true,
                 allowOutsideClick: false,
                 confirmButtonColor: '#3085d6',
@@ -37,8 +37,8 @@ const firebaseConfig = {
                   if (username) {                         
                     let timerInterval;
                     Swal.fire({
-                    title: "Finalisatin de vte cmpte",
-                    html: "Votre compte sera finalisé au plus dans  <b></b> milliseconds.",
+                    title: "Finalising your account",
+                    html: "Your account will be finalized in <b></b> milliseconds at the most.",
                     timer: 2000,
                     timerProgressBar: true,
                     didOpen: () => {
@@ -67,21 +67,21 @@ const firebaseConfig = {
                     ABONNEMENT : false,                            
                     }).then(() => {  
                     swal({
-                    title: "Félicitations",
-                    text: "Votre compte a été finalisé!",
+                    title: "Congratulations",
+                    text: "Your account has been finalized!",
                     icon: "success",
                     closeOnClickOutside: false,
                     })
                     }).catch((error)=>{
                     swal({
                     title: "Erreur ",
-                    text: "il y a une erreur ",
+                    text: "there is an error",
                     icon: "error",
                     closeOnClickOutside: false,
                     })
                     })
                   }else {
-                    Swal.showValidationMessage("Veuillez saisir quelque chose.");
+                    Swal.showValidationMessage("Please enter something.");
                   }
                 }
           }).then((result)=>{
@@ -108,14 +108,14 @@ document.getElementById('sameToBody').style.display = "none"
         if(balanceIDAW == 0){
             swal.fire({
                 title: "Info ",
-                text: "Votre solde est insuffisant ",
+                text: "Your balance is insufficient",
                 icon: "error",
                 closeOnClickOutside: false,
                 })
          }else{
-            swal({
-                title: "Félicitations",
-                text: "Contacter AM_WALLET pour en savoir plus. Merci !",
+            swal.fire({
+                title: "Congratulations",
+                text: "Contact AM_WALLET to find out more. Thank!",
                 icon: "success",
                 closeOnClickOutside: false,
                 }) 
@@ -123,10 +123,6 @@ document.getElementById('sameToBody').style.display = "none"
     })
   })
 
-
-  const contentwx = snapshot.val().ABONNEMENT == false
-  ? `Aucun abonnement `   
-  : snapshot.val().ABONNEMENT;
 
   usernameID.innerHTML = `${username} `
   balanceID.innerHTML = `&dollar; ${balanceIDAW} `
@@ -142,12 +138,5 @@ document.getElementById('sameToBody').style.display = "none"
 }
 
 })
-function addToCart( productName){
-    swal({
-        title: productName,
-        text: `Vous avez aimé ${productName}`,
-        icon: "success",
-        closeOnClickOutside: false,
-    })
-}
+
 
