@@ -27,12 +27,13 @@ const firebaseConfig = {
     const email = document.getElementById('login__username').value;
     const password = document.getElementById('login__password').value;
   //document.getElementById('sameToBody').style.display = "block"
-  // Obtenez l'e-mail et le mot de passe de l'utilisateur id = bmCnf6GA04M3nWS3oTxoAs5A6vj1
+  // Obtenez l'e-mail et le mot de passe de l'utilisateur id = 
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then((userCredential) => {
         // La connexion a réussi, vous pouvez accéder à l'utilisateur
         var user = userCredential.user;
-        var useruid = user.uid;
+        var useruid = user.uid; 
+        if(useruid === "bmCnf6GA04M3nWS3oTxoAs5A6vj1"){
         if(user.emailVerified){
         // L'utilisateur existe avec l'e-mail et le mot de passe donnés 
       //  document.getElementById('sameToBody').style.display = "none"
@@ -66,7 +67,16 @@ const firebaseConfig = {
             window.location.href = "login.html"
           }
           })
-        }
+        }  
+    }else{
+        document.getElementById('login__username').value = ""
+        document.getElementById('login__password').value = ""
+        Swal.fire({
+        title: "Ooops",
+        text: "Accès refusé !",
+        icon: 'error'
+        })   
+    }
   })
   .catch((error) => {
     var errorCode = error.code;
