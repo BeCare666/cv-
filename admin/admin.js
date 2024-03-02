@@ -35,20 +35,95 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
         li.addEventListener('click', function () {
         li.id = `${productData.userId}`
         var usermxid =  li.id
+        Swal.fire({
+            title: "Modification",
+            html:`Modier le compte de <strong style="color: blue;">${productData.username}</strong>`,
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Augmenter",
+            denyButtonText: `Diminuer`,
+            cancelButtonText: "Vider",
+            allowOutsideClick: false,
+            footer: '<button id="footerButton" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Quitter</button>'
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+             // Swal.fire("Saved!", "", "success");                    
+            $("#exampleModaladd").modal({
+                show: true,
+                backdrop: "static",
+                keyboard: false,
+            });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+            //  Swal.fire("OK", "", "info");
+            var sendunityforuserlup = document.getElementById('sendunityforuserlupdateO');
+            sendunityforuserlup.click();
+       
+            }else if (result.isDenied) {
+                // Swal.fire("Changes are not saved", "", "info");
+                $("#exampleModalupdate").modal({
+                    show: true,
+                    backdrop: "static",
+                    keyboard: false,
+                });
+              }
+          });
+          
+          // Sélectionnez le bouton du pied de page
+          const footerButton = document.getElementById('footerButton');
+          
+          // Ajoutez un gestionnaire d'événements clic pour le bouton du pied de page
+          footerButton.addEventListener('click', function() {
+            // Fermez la boîte de dialogue
+            Swal.close();
+          });
+
         const userRefx = database.ref(`/utilisateurs/${usermxid}`);
         userRefx.once("value")
         .then((snapshot)=> {  
-            snapshot.forEach((productSnapshot) => {
-                document.getElementById('headerxx').style.display = "block" 
-                document.getElementById('sendIDxww').style.display = "none" 
-                document.getElementById('sendID').addEventListener('click', function(){
-                    var variableunity = document.getElementById('filterx').value;
+            snapshot.forEach((roductSnapshot) => {
+                const productData = roductSnapshot.val();
+                document.getElementById('sendunityforuseradd').addEventListener('click', function(){
+                    var variableunity = document.getElementById('recipientadd').value;
                     var myCompta = parseFloat(mxcompt);
                     var addunityForuser = parseFloat(variableunity)
                     var sommesUnity = myCompta + addunityForuser
-                    document.getElementById('headerxx').style.display = "none"
                     const newData = {
                         ACCOUNTPRINCIPAL : sommesUnity
+                    };
+                    const userRefx = database.ref(`/utilisateurs/${usermxid}`);
+                    userRefx.update(newData, (error) => {
+                      if (error){
+                        alert("les données ne sont pas mise à jour " + error);
+                      }else{
+                        window.location.reload();
+                        
+                      }
+                     })
+                })
+
+                document.getElementById('sendunityforuserlupdate').addEventListener('click', function(){
+                    var variableunity = document.getElementById('recipientupdate').value;
+                    var myCompta = parseFloat(mxcompt);
+                    var addunityForuser = parseFloat(variableunity)
+                    var sommesUnity = myCompta - addunityForuser
+                    const newData = {
+                        ACCOUNTPRINCIPAL : sommesUnity
+                    };
+                    const userRefx = database.ref(`/utilisateurs/${usermxid}`);
+                    userRefx.update(newData, (error) => {
+                      if (error){
+                        alert("les données ne sont pas mise à jour " + error);
+                      }else{
+                        window.location.reload();
+                        
+                      }
+                     })
+                })
+
+                document.getElementById('sendunityforuserlupdateO').addEventListener('click', function(){
+                    const newData = {
+                        ACCOUNTPRINCIPAL : 0
                     };
                     const userRefx = database.ref(`/utilisateurs/${usermxid}`);
                     userRefx.update(newData, (error) => {
@@ -108,8 +183,4 @@ function validerSaisie(input) {
     } else {
     }
   }
-
-  document.getElementById('sendIDx').addEventListener('click', function(){
-    document.getElementById('headerxx').style.display = "none" 
-    document.getElementById('sendIDxww').style.display = "block"  
-  })
+ 
