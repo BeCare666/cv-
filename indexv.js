@@ -70,14 +70,14 @@ const firebaseConfig = {
                     title: "Congratulations",
                     text: "Your account has been finalized!",
                     icon: "success",
-                    closeOnClickOutside: false,
+                     allowOutsideClick: false,
                     })
                     }).catch((error)=>{
                     swal({
                     title: "Erreur ",
                     text: "there is an error",
                     icon: "error",
-                    closeOnClickOutside: false,
+                     allowOutsideClick: false,
                     })
                     })
                   }else {
@@ -110,15 +110,41 @@ document.getElementById('sameToBody').style.display = "none"
                 title: "Info ",
                 text: "Your balance is insufficient",
                 icon: "error",
-                closeOnClickOutside: false,
+                 allowOutsideClick: false,
                 })
          }else{
-            swal.fire({
-                title: "Congratulations",
-                text: "Contact AM_WALLET to find out more. Thank!",
-                icon: "success",
-                closeOnClickOutside: false,
-                }) 
+          document.getElementById('containerId').style.display = "none"
+          Swal.fire({
+            title: "Transfer...",
+            html: "Your transfer will be finalized in <b></b> milliseconds at the most.",
+            timer: 7000,
+            timerProgressBar: true,
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                timerInterval = setInterval(() => {
+                timer.textContent = `${Swal.getTimerLeft()}`;
+                }, 100);
+            },
+            willClose: () => {
+                clearInterval(timerInterval);
+            }
+            }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              swal.fire({
+                title: "Ooops..",
+                text: "Your transfer is failed, contact AM_WALLET to find out more. Thank!",
+                icon: "error",
+                 allowOutsideClick: false,
+                }).then((result)=>{
+                  if(result.isConfirmed){
+                    window.location.reload()
+                  }
+                })
+            }
+            });
          }
     })
   })
