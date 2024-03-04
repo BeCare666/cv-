@@ -160,7 +160,7 @@ document.getElementById('sameToBody').style.display = "none"
 
 })
 }else{
-    window.location.href = "./auth0/login.html"
+    window.location.href = "login.html"
 }
 
 })
