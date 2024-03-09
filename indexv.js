@@ -116,7 +116,7 @@ document.getElementById('sameToBody').style.display = "none"
          }else{
           if(T.id === "pix"){
             window.location.href = "pix.html"
-          }else if(T.id === ""){
+          }else if(T.id === "orangemoney"){
             window.location.href = "orange.html"
           }else if(T.id === "paypal"){
             window.location.href = "paypal.html"
