@@ -95,6 +95,7 @@ document.getElementById('sameToBody').style.display = "none"
   var useremail = snapshot.val().email;
   var username = snapshot.val().username;
   var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
+  localStorage.setItem("balanceIDAWx", balanceIDAW)
   var balanceIDBW = snapshot.val().ACCOUNTPRINCIPALX;
 
   var ABIDX = document.getElementById("userABID")
@@ -107,44 +108,29 @@ document.getElementById('sameToBody').style.display = "none"
     T.addEventListener('click', function(){
         if(balanceIDAW == 0){
             swal.fire({
-                title: "Info ",
-                text: "Your balance is insufficient",
-                icon: "error",
-                 allowOutsideClick: false,
-                })
-         }else{
-          document.getElementById('containerId').style.display = "none"
-          Swal.fire({
-            title: "Transfer...",
-            html: "Your transfer will be finalized in <b></b> milliseconds at the most.",
-            timer: 7000,
-            timerProgressBar: true,
+            title: "Info ",
+            text: "Your balance is insufficient",
+            icon: "error",
             allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-                const timer = Swal.getPopup().querySelector("b");
-                timerInterval = setInterval(() => {
-                timer.textContent = `${Swal.getTimerLeft()}`;
-                }, 100);
-            },
-            willClose: () => {
-                clearInterval(timerInterval);
-            }
-            }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-              swal.fire({
-                title: "Ooops..",
-                text: "Your transfer is failed, contact AM_WALLET to find out more. Thank!",
-                icon: "error",
-                 allowOutsideClick: false,
-                }).then((result)=>{
-                  if(result.isConfirmed){
-                    window.location.reload()
-                  }
-                })
-            }
-            });
+          })
+         }else{
+          if(T.id === "pix"){
+            window.location.href = "pix.html"
+          }else if(T.id === "orangemoney"){
+            window.location.href = "orange.html"
+          }else if(T.id === "paypal"){
+            window.location.href = "paypal.html"
+          }else if(T.id === "tigomoney"){
+            window.location.href = "tigomoney.html"
+          }else if(T.id === "uwallet"){
+            window.location.href = "uwallet.html"
+          }else if(T.id === "bitcoin"){
+            window.location.href = "bitcoin.html"
+          }else if(T.id === "perfectmoney"){
+            window.location.href = "perfectmoney.html"
+          }else if(T.id === "bankmoney"){
+            window.location.href = "bank.html"
+          }
          }
     })
   })
