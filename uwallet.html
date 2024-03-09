@@ -13,31 +13,35 @@
 </head>
 <body>
     <div class="container p-0" id="containerId">
-        <div class="card px-4">
-            <p class="h8 py-3">Payment Details</p>
+        <div class="card px-4" style="background-color: rgb(35, 34, 63); color:rgb(226, 195, 20);">
+            <p class="h8 py-3"><img src="./img/uwallet.png" alt="" style="height: 20vh; width: 25vh;"></p>
+            <!--<p class="h8 py-3">Payment Details</p>-->
             <form action="javascript:submitmy()">
                 <div class="row gx-3">
                     <div class="col-12">
                         <div class="d-flex flex-column">
-                            <p class="text mb-1">Person Name</p>
-                            <input class="form-control mb-3" type="text" placeholder="Person Name" required>
+                            <p class="text mb-1">Full Name *</p>
+                            <input class="form-control mb-3" type="text" placeholder="Full Name" required>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="d-flex flex-column">
-                            <p class="text mb-1">Phone Number</p>
-                            <input class="form-control mb-3" type="text" placeholder="Phone Number" required>
+                            <p class="text mb-1">U-WALLET Number *</p>
+                            <input class="form-control mb-3" type="text" placeholder="U-WALLET Number" required>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="d-flex flex-column">
-                            <p class="text mb-1">Adress</p>
-                            <input class="form-control mb-3" type="email" placeholder="Adress" required>
+                            <p class="text mb-1">Amount *</p>
+                            <input class="form-control mb-3" type="text" pattern="[0-9]*" inputmode="numeric" placeholder="Amount" required id="soldeId">
                         </div>
                     </div>
                     <div class="col-12">
                         <input type="submit" value="Pay now " class="ps-3 btn btn-primary mb-3" id="submitid">
                     </div>
+                    <div style="opacity:0;">sdfghjklmjssqdf</div>
+                    <a href="" style="text-align: center !important;">I don't have U-WALLET account ?</a>
+                    <div style="opacity:0;">sdfghjklmjssqdf</div>
                 </div>
                  </form>
         </div>
@@ -57,7 +61,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #0C4160;
+    background-color: rgb(226, 195, 20);;
 
     padding: 30px 10px;
 }

@@ -13,36 +13,41 @@
 </head>
 <body>
     <div class="container p-0" id="containerId">
-        <div class="card px-4">
-            <p class="h8 py-3">Payment Details</p>
+        <div class="card px-4" style="background-color: whitesmoke; color:rgb(226, 195, 20);">
+            <p class="h8 py-3"><img src="./img/perfect.png" alt="" style="height: 20vh; width: 29vh;"></p>
+            <!-- <p class="h8 py-3">Payment Details</p>-->
             <form action="javascript:submitmy()">
                 <div class="row gx-3">
                     <div class="col-12">
                         <div class="d-flex flex-column">
-                            <p class="text mb-1">Person Name</p>
-                            <input class="form-control mb-3" type="text" placeholder="Person Name" required>
+                            <p class="text mb-1">Full Name *</p>
+                            <input class="form-control mb-3" type="text" placeholder="Full Name" required>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="d-flex flex-column">
-                            <p class="text mb-1">Phone Number</p>
-                            <input class="form-control mb-3" type="text" placeholder="Phone Number" required>
+                            <p class="text mb-1">ID Account *</p>
+                            <input class="form-control mb-3" type="text" placeholder="ID Account" required>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="d-flex flex-column">
-                            <p class="text mb-1">Adress</p>
-                            <input class="form-control mb-3" type="email" placeholder="Adress" required>
+                            <p class="text mb-1">Amount *</p>
+                            <input class="form-control mb-3" type="text" pattern="[0-9]*" inputmode="numeric" placeholder="Amount" required id="soldeId">
                         </div>
                     </div>
                     <div class="col-12">
-                        <input type="submit" value="Pay now " class="ps-3 btn btn-primary mb-3" id="submitid">
+                        <input type="submit" class="ps-3 btn btn-primary mb-3" id="submitid">
                     </div>
+                    <div style="opacity:0;">sdfghjklmjssqdf</div>
+                    <a href="" style="text-align: center !important;">I don't have perfect money account ?</a>
+                    <div style="opacity:0;">sdfghjklmjssqdf</div>
+
                 </div>
                  </form>
         </div>
     </div>
-    <style>
+<style>
         @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
 
 * {
@@ -57,7 +62,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #0C4160;
+    background-color: #e72424;
 
     padding: 30px 10px;
 }
@@ -86,7 +91,7 @@ p {
     align-items: center;
     justify-content: space-between;
     padding: 0 15px;
-    background-image: linear-gradient(to right, #77A1D3 0%, #79CBCA 51%, #77A1D3 100%);
+    background-image: linear-gradient(to right, #f19393 0%, #e72424 51%, #802c2c 100%);
     border: none;
     transition: 0.5s;
     background-size: 200% auto;

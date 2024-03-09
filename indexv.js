@@ -94,8 +94,8 @@ const firebaseConfig = {
 document.getElementById('sameToBody').style.display = "none"
   var useremail = snapshot.val().email;
   var username = snapshot.val().username;
-  var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
-  localStorage.setItem("balanceIDAWx", balanceIDAW)
+  //var usernameTx = snapshot.val().ACCOUNTPRINCIPAL;
+  localStorage.setItem("usernameT", username)
   var balanceIDBW = snapshot.val().ACCOUNTPRINCIPALX;
 
   var ABIDX = document.getElementById("userABID")
