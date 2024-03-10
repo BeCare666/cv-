@@ -12,7 +12,7 @@ const firebaseConfig = {
     const database = firebase.database();
     var tableOfPrice = []
     var tableEmail = []
-    document.getElementById('sameToBody').style.display = "none"
+   // document.getElementById('sameToBody').style.display = "none"
     firebase.auth().onAuthStateChanged(function(user) { 
         if(user){
         var userId = user.uid;
