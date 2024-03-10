@@ -1,7 +1,22 @@
 const username = localStorage.getItem("usernameT")
-document.getElementById('submitid').value = `Transfer your Amount now`
+const balanceIDAWW = localStorage.getItem("balanceIDAWWW")
+// -----Country Code Selection
+function validerSaisie(input) {
+  const valeurSaisie = input.value;
+  const regexLettresAvecEspaces = /^\d+$/;
+
+  if (!regexLettresAvecEspaces.test(valeurSaisie)) {
+    //alert("ne fait pas ça")
+    // Effacez la saisie incorrecte
+    input.value = input.value.replace(/\D/g, '');
+   
+  } else {
+  }
+}
+document.getElementById('submitid').value = `Transfer your Amount`  
 function submitmy(){
   var valVal = document.getElementById('soldeId').value
+  if(balanceIDAWW == valVal || balanceIDAWW > valVal){
     document.getElementById('containerId').style.display = "none"
     Swal.fire({
       title: "Transfer...",
@@ -34,5 +49,12 @@ function submitmy(){
           })
       }
       });
-
+    }else{
+      Swal.fire({
+        title: "Info ",
+        text: "Your balance is insufficient",
+        icon: "error",
+        allowOutsideClick: false,
+      })
+}
 }

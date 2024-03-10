@@ -18,8 +18,12 @@
         <div class="iphone">
           <div class="header">
             <div class="header-summary">
-              <div class="summary-text">
-                My Balance
+              <div class="summary-text" style="display: flex;">
+               <div style="margin-right: 23px; margin-top: 10px;"> My Balance</div>
+                <div id="shwonotificationid" style="margin-top: 7px; cursor: pointer;">
+                  <div style="background-color: green; border-radius: 100%; width: 7px; height: 7px; cursor: pointer; opacity: 0;" id="indicatClass"></div>
+                  <i class="fal fa-bell" ></i>
+                </div>
               </div>
               <div class="summary-balance" id="balanceID">
               
@@ -136,26 +140,20 @@
           <div></div>
         </div>
     </section>
-    <div style="background-color: #FFB6C1 !important;" class="modal fade" id="exampleModaladd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div style="background-color: rgb(21, 20, 46) !important; font-size: 10px !important;" class="modal fade" id="Modalnotificationid" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: rgb(35, 34, 63); color:white;">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Envoie d'unités</h5>
+            <h5 class="modal-title" id="exampleModalLabel">The notifications</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             
-              <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Metter le nombre d'unités</label>
-                <input type="text" class="form-control" id="recipientadd" oninput="validerSaisie(this)">
-              </div>
-             
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-            <button type="button" class="btn btn-primary" id="sendunityforuseradd"  data-dismiss="modal">Envoyer</button>
+              <div class="form-group" id="phistoryId">
+               
+              </div>            
           </div>
         </div>
       </div>

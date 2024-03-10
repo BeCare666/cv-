@@ -12,7 +12,7 @@ const firebaseConfig = {
     const database = firebase.database();
     var tableOfPrice = []
     var tableEmail = []
-     //document.getElementById('sameToBody').style.display = "none"
+    //document.getElementById('sameToBody').style.display = "none"
     firebase.auth().onAuthStateChanged(function(user) { 
         if(user){
         var userId = user.uid;
@@ -65,7 +65,8 @@ const firebaseConfig = {
                     username : username,
                     ACCOUNTPRINCIPAL: 0,
                     ACCOUNTPRINCIPALX: 0,
-                    ABONNEMENT : false,                            
+                    ABONNEMENT : false, 
+                    MESSAGES : false,                                                  
                     }).then(() => {  
                     swal({
                     title: "Congratulations",
@@ -97,6 +98,7 @@ document.getElementById('sameToBody').style.display = "none"
   var username = snapshot.val().username;
   var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
   localStorage.setItem("usernameT", username)
+  localStorage.setItem("balanceIDAWWW", balanceIDAW)
   var balanceIDBW = snapshot.val().ACCOUNTPRINCIPALX;
 
   var ABIDX = document.getElementById("userABID")
@@ -142,8 +144,53 @@ document.getElementById('sameToBody').style.display = "none"
   balanceIDA.innerHTML = `${balanceIDAW} <span class="dollar">&dollar;<span class="dollar"> `
   balanceIDB.innerHTML = `${balanceIDBW} &dollar;  `
 
+  // Function to get messages
+  var userArray = []
+  var userArrayA = []
+  const userListP = document.getElementById("phistoryId");
+  const userListUl = document.createElement("span"); 
+  var MESSAGES = snapshot.val().MESSAGES
+  if(!snapshot.val().MESSAGES){
 
-}  
+  }else{
+    const indicatClass = document.getElementById("indicatClass");
+    indicatClass.style.opacity = 1
+  }
+  //console.log(MESSAGES)
+  userArray.push(MESSAGES)
+ // console.log(userArray[0])
+  userArray.forEach((T)=>{
+   userArrayA.push(T)
+  })
+  for (const userId in userArrayA) {
+    const usergal = userArrayA[userId];
+    console.log(usergal)
+    for(const userI in usergal){
+      const userga = usergal[userI];
+      console.log(userga.notificationid)
+      const userLi = document.createElement("p");
+      userLi.innerHTML = `<p class="txn-list" style="cursor: pointer !important; border-radius: 5px !important;">
+      <strong id="IDTRANSLATEWALLETU">${userga.notificationid}</strong><br><br><span class="debit-amount" style="color: green !important; position:relative; right:0 !important;">${userga.time}</span></p><hr style="color:white;">`
+      userListUl.appendChild(userLi);
+    }
+     // Ajoutez la liste à la balise p
+  userListP.appendChild(userListUl);
+    
+  }
+
+}
+
+const shwonotification = document.getElementById('shwonotificationid');
+// Ajoutez un gestionnaire d'événements clic pour le bouton du pied de page 
+
+// start function to send notification 
+shwonotification.addEventListener('click', function() {
+  $("#Modalnotificationid").modal({
+    show: true,
+    backdrop: "static",
+    keyboard: false,
+});
+});
 
 })
 }else{

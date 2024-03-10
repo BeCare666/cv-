@@ -30,10 +30,11 @@
                             <input class="form-control mb-3" type="text" placeholder="ID Account" required>
                         </div>
                     </div>
+    
                     <div class="col-12">
                         <div class="d-flex flex-column">
                             <p class="text mb-1">Amount *</p>
-                            <input class="form-control mb-3" type="text" pattern="[0-9]*" inputmode="numeric" placeholder="Amount" required id="soldeId">
+                            <input class="form-control mb-3" type="text" pattern="[0-9]*" inputmode="numeric" placeholder="Amount" required id="soldeId" oninput="validerSaisie(this)">
                         </div>
                     </div>
                     <div class="col-12">

@@ -44,7 +44,9 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
             denyButtonText: `Diminuer`,
             cancelButtonText: "Vider",
             allowOutsideClick: false,
-            footer: '<button id="footerButton" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Quitter</button>'
+            footer: `
+            <button id="notificationidx" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Notification</button>
+            <button id="footerButton" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Quitter</button>`
           }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -67,16 +69,62 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
                     keyboard: false,
                 });
               }
-          });
+          });  
           
           // Sélectionnez le bouton du pied de page
           const footerButton = document.getElementById('footerButton');
           
-          // Ajoutez un gestionnaire d'événements clic pour le bouton du pied de page
+          // Ajoutez un gestionnaire d'événements clic pour le bouton du pied de page  
           footerButton.addEventListener('click', function() {
             // Fermez la boîte de dialogue
             Swal.close();
           });
+          // Sélectionnez le bouton du pied de page
+          const notificationidx = document.getElementById('notificationidx');
+          const sendnotificationidx = document.getElementById('sendnotificationid');
+          // Ajoutez un gestionnaire d'événements clic pour le bouton du pied de page 
+
+          // start function to send notification 
+          notificationidx.addEventListener('click', function() {
+            Swal.close();
+            $("#Modalnotificationid").modal({
+              show: true,
+              backdrop: "static",
+              keyboard: false,
+          });
+          });
+          sendnotificationidx.addEventListener('click', function() {
+            const notificationid = document.getElementById('notificationid').value;
+            const userRefx = database.ref(`/utilisateurs/${usermxid}`);
+            const dateActuelle = new Date();
+            // Obtenez les composantes de la date et de l'heure  
+            const jour = dateActuelle.getDate();
+            const mois = dateActuelle.getMonth() + 1; // Les mois commencent à 0, donc ajoutez 1
+            const annee = dateActuelle.getFullYear();
+            const heures = dateActuelle.getHours();
+            const minutes = dateActuelle.getMinutes();
+            // Formatez la date et l'heure
+            const dateFormatee = `${jour}/${mois}/${annee} ${heures}h:${minutes}min`;
+            //console.log(dateFormatee);
+        // Function to add a gain with status to the user's gains array
+        function addGainToUser(notificationid, status, time) {
+            const newNotification = { notificationid: notificationid, status: status, time:time};
+            userRefx.child("MESSAGES").push(newNotification);
+        }              
+        // Usage
+        addGainToUser(notificationid, true, dateFormatee); // Add a gain of 100 with "won" status
+        Swal.fire({
+          icon: 'success',
+          title: "Félicitations !",
+          text: "La notification  a été envoyé avec succès !",
+          allowOutsideClick: false,
+        }).then((result) => {
+          if (result.isConfirmed){
+              location.reload();
+          }
+       })
+        });
+        // end function to send notification 
 
         const userRefx = database.ref(`/utilisateurs/${usermxid}`);
         userRefx.once("value")
