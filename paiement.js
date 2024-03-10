@@ -16,7 +16,9 @@ function validerSaisie(input) {
 document.getElementById('submitid').value = `Transfer your Amount`  
 function submitmy(){
   var valVal = document.getElementById('soldeId').value
-  if(balanceIDAWW == valVal || balanceIDAWW > valVal){
+  var balanceIDAWWx = parseFloat(balanceIDAWW);
+  var valValx = parseFloat(valVal);
+  if(balanceIDAWWx >= valValx){
     document.getElementById('containerId').style.display = "none"
     Swal.fire({
       title: "Transfer...",

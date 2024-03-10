@@ -12,7 +12,7 @@ const firebaseConfig = {
     const database = firebase.database();
     var tableOfPrice = []
     var tableEmail = []
-    //document.getElementById('sameToBody').style.display = "none"
+    document.getElementById('sameToBody').style.display = "none"
     firebase.auth().onAuthStateChanged(function(user) { 
         if(user){
         var userId = user.uid;
@@ -93,7 +93,7 @@ const firebaseConfig = {
           })
 
 }else{
-document.getElementById('sameToBody').style.display = "none"
+  document.getElementById('sameToBody').style.display = "none"
   var useremail = snapshot.val().email;
   var username = snapshot.val().username;
   var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
@@ -150,12 +150,7 @@ document.getElementById('sameToBody').style.display = "none"
   const userListP = document.getElementById("phistoryId");
   const userListUl = document.createElement("span"); 
   var MESSAGES = snapshot.val().MESSAGES
-  if(!snapshot.val().MESSAGES){
 
-  }else{
-    const indicatClass = document.getElementById("indicatClass");
-    indicatClass.style.opacity = 1
-  }
   //console.log(MESSAGES)
   userArray.push(MESSAGES)
  // console.log(userArray[0])
@@ -164,22 +159,24 @@ document.getElementById('sameToBody').style.display = "none"
   })
   for (const userId in userArrayA) {
     const usergal = userArrayA[userId];
-    console.log(usergal)
+   var userArrayAXXXX = []
     for(const userI in usergal){
       const userga = usergal[userI];
+      userArrayAXXXX.push(userga.notificationid)
       console.log(userga.notificationid)
       const userLi = document.createElement("p");
       userLi.innerHTML = `<p class="txn-list" style="cursor: pointer !important; border-radius: 5px !important;">
       <strong id="IDTRANSLATEWALLETU">${userga.notificationid}</strong><br><br><span class="debit-amount" style="color: green !important; position:relative; right:0 !important;">${userga.time}</span></p><hr style="color:white;">`
       userListUl.appendChild(userLi);
     }
+    const indicatClass = document.getElementById("indicatClass");
+indicatClass.innerHTML = `&nbsp;${userArrayAXXXX.length}`
      // Ajoutez la liste à la balise p
   userListP.appendChild(userListUl);
     
   }
 
 }
-
 const shwonotification = document.getElementById('shwonotificationid');
 // Ajoutez un gestionnaire d'événements clic pour le bouton du pied de page 
 
