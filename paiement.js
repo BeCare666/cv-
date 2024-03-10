@@ -1,7 +1,7 @@
 const username = localStorage.getItem("usernameT")
-var valVal = document.getElementById('soldeId').value
 document.getElementById('submitid').value = `Transfer your Amount now`
-function submitmy(username){
+function submitmy(){
+  var valVal = document.getElementById('soldeId').value
     document.getElementById('containerId').style.display = "none"
     Swal.fire({
       title: "Transfer...",

@@ -189,12 +189,9 @@ font-family: 'Montserrat', sans-serif;
 
 .content {
   z-index: 4;
-  position: absolute;
-  top: 210px;
-  margin-left:30px;
   display:flex;
   flex-direction:column;
-  width:85%;
+  padding: 7px !important;
 }
 
 .card {
@@ -251,6 +248,16 @@ font-family: 'Montserrat', sans-serif;
     left: 25%;
     border-top: 1px solid #E1E1E1;
 }
+#fiestItemIdA{
+  position: absolute;
+  top:90px;
+}
+#fiestItemIdB{
+  position: relative;
+  top:55px;
+  right: 23px;
+
+}
 
 .icon-item {
   display: flex;
@@ -258,6 +265,7 @@ font-family: 'Montserrat', sans-serif;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  height: 17vh;
 }
 
 .icon {

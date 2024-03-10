@@ -12,6 +12,7 @@ const firebaseConfig = {
     const database = firebase.database();
     var tableOfPrice = []
     var tableEmail = []
+     //document.getElementById('sameToBody').style.display = "none"
     firebase.auth().onAuthStateChanged(function(user) { 
         if(user){
         var userId = user.uid;
@@ -94,7 +95,7 @@ const firebaseConfig = {
 document.getElementById('sameToBody').style.display = "none"
   var useremail = snapshot.val().email;
   var username = snapshot.val().username;
-  //var usernameTx = snapshot.val().ACCOUNTPRINCIPAL;
+  var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
   localStorage.setItem("usernameT", username)
   var balanceIDBW = snapshot.val().ACCOUNTPRINCIPALX;
 
@@ -138,8 +139,8 @@ document.getElementById('sameToBody').style.display = "none"
 
   usernameID.innerHTML = `${username} `
   balanceID.innerHTML = `&dollar; ${balanceIDAW} `
-  balanceIDA.innerHTML = ` ${balanceIDAW} <span class="dollar">&dollar; `
-  balanceIDB.innerHTML = `${balanceIDBW} <span class="dollar">&dollar;  `
+  balanceIDA.innerHTML = `${balanceIDAW} <span class="dollar">&dollar;<span class="dollar"> `
+  balanceIDB.innerHTML = `${balanceIDBW} &dollar;  `
 
 
 }  
