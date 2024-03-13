@@ -597,10 +597,24 @@ body{
 }
 
  
+@media (max-width: 468px) {
+  #fiestItemIdA{
+    position: absolute;
+    top:90px;
+    left: 30px;
+  } 
+}
+@media (max-width: 668px) {
+  #fiestItemIdA{
+    position: absolute;
+    top:90px;
+    left: 55px;
+  } 
+}
 @media (max-width: 768px) {
   #fiestItemIdA{
     position: absolute;
     top:90px;
-    left: 25px;
+    left: 55px;
   } 
 }
