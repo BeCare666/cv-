@@ -2,12 +2,12 @@
 
 body {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+  supported by Chrome and Opera */
 }
 .lower-row{
   font-size: 11px !important;
@@ -251,6 +251,7 @@ font-family: 'Montserrat', sans-serif;
 #fiestItemIdA{
   position: absolute;
   top:90px;
+  left: 75px;
 }
 #fiestItemIdB{
   position: relative;
@@ -382,7 +383,18 @@ font-family: 'Montserrat', sans-serif;
   padding-bottom: 8px;
 }
 
-
+#indicatClass{
+  position: relative;
+  top: 0;
+  right: 0;
+}
+#shwonotificatio{
+  position: relative;
+  margin-top: 0;
+  top: 0;
+  right: 0;
+  font-size: 25px;
+}
 
 .menu-btn {
   display: flex;
@@ -403,6 +415,30 @@ font-family: 'Montserrat', sans-serif;
 }
 
 .menu-btn:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.menu-btnx {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  color: rgb(212, 34, 34);
+  top: -25px;
+  position: absolute;
+  border-radius: 10px;
+  box-shadow: 5px 5px 25px 0px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: all 0.1s;
+  opacity: 0.9;
+}
+.menu-btnx p{
+  font-size: 7px;
+  text-align: center;
+  margin-top: 7px;
+} 
+.menu-btnx:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
@@ -453,8 +489,6 @@ font-family: 'Montserrat', sans-serif;
     overflow: hidden;
     background: #fff;
   }
-  
-   
   
   .loading div:nth-child(2) {
 	animation-delay: 0.3s;
@@ -560,4 +594,13 @@ body{
 .intl-tel-input,
 .iti{
   width: 100%;
+}
+
+ 
+@media (max-width: 768px) {
+  #fiestItemIdA{
+    position: absolute;
+    top:90px;
+    left: 25px;
+  } 
 }

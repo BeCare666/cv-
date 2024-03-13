@@ -6,8 +6,8 @@ const firebaseConfig = {
     storageBucket: "am-wallet.appspot.com",
     messagingSenderId: "877693231070",
     appId: "1:877693231070:web:47c59ac6220ed09af9c74f"
-    };
-
+};
+const unserconnectId = localStorage.getItem("unserconnect")
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
     var tableOfPrice = []
@@ -175,6 +175,77 @@ indicatClass.innerHTML = `&nbsp;${userArrayAXXXX.length}`
   userListP.appendChild(userListUl);
     
   }
+  var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
+  //function to generate affilition link
+const linkInput = document.getElementById('linkInput');
+const copyButton = document.getElementById('affiliateID');
+//linkInput.value = `Copier ici votre lien d'affiliation.`
+// function to hide border when you click
+copyButton.addEventListener('click', () => {
+linkInput.value = `https://edotofamily.netlify.app/?user-id=${unserconnectId}`
+linkInput.select(); // Sélectionne le texte dans l'input
+document.execCommand('copy'); // Copie le texte sélectionné dans le presse-papiers
+Swal.fire({
+  title: "Super !",
+  text: "Your link has been copied to the clipboard",
+  icon: "success",
+  input: 'text',
+  confirmButtonText: "Send",
+  cancelButtonText: "Back",
+  showCancelButton: true,
+  inputAttributes: {
+    placeholder: 'Enter a amount',
+    style: 'text-align: center;' // Center the input text
+  },
+  inputValidator: (value) => {
+    if (!value || value <= 0 || isNaN(value)) {
+      return 'Please enter a number';
+    }else{
+      if(balanceIDAW >= value){
+        const newData = {
+          ACCOUNTPRINCIPALACCESS: value
+          };
+          const userRefx = database.ref(`/utilisateurs/${unserconnectId}`);
+          userRefx.update(newData, (error) => {
+            if (error){
+              Swal.fire({
+                  title: "Ooops",
+                  confirmButtonText: "D'accord",
+                  allowOutsideClick: false,
+                  text: "les données ne sont pas mise à jour ",
+                  icon: 'error'
+                  }).then((result)=>{
+                  if(result.isConfirmed){
+                      window.location.reload(); 
+                  }
+               })
+            }else{
+              Swal.fire({
+                  icon: 'success',
+                  title:"Succès",
+                  confirmButtonText: "D'accord",
+                  allowOutsideClick: false,
+                  text : `les données ont été mise à jour avec succès !`,
+                  }).then((result)=>{
+                  if(result.isConfirmed){
+                  window.location.reload();
+                  }
+              })
+            }
+          })
+      }else{
+        Swal.fire({
+          title: "Info ",
+          text: "Your balance is insufficient",
+          icon: "error",
+          allowOutsideClick: false,
+        }) 
+      }
+    }
+  },
+  closeOnClickOutside: false
+});
+});
 
 }
 const shwonotification = document.getElementById('shwonotificationid');
@@ -196,4 +267,15 @@ shwonotification.addEventListener('click', function() {
 
 })
 
+var transfer_systems = document.getElementById('transfer_systems')
+var transfer_for_user = document.getElementById('transfer_for_user')
+var containerID = document.getElementById('containerID')
+var containerIDx = document.getElementById('containerIDx')
+transfer_systems.addEventListener("click", function(){
+  containerIDx.style.display = "block"
+  containerID.style.display = "none"
+})
 
+transfer_for_user.addEventListener("click", function(){
+ window.location.href = "amwalette.html"
+})
