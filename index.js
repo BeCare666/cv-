@@ -151,6 +151,3 @@ const cards = [
 ]
 
 new CardSlider(cards, { slide: 3 })
-
-
- 

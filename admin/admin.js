@@ -34,7 +34,8 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
         const li = document.createElement("li");
         li.addEventListener('click', function () {
         li.id = `${productData.userId}`
-        var usermxid =  li.id
+        var usermxid =  li.id 
+        alert(usermxid)
         Swal.fire({
             title: "Modification",
             html:`Modier le compte de <strong style="color: blue;">${productData.username}</strong>`,

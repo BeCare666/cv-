@@ -37,30 +37,33 @@
               <img src="./img/logo_of_wallet.jpg" class="user-photo">
             </div>
           </div>
-          <div class="content">      
+          <div class="content" >      
               <p style="cursor: pointer; color: blue !important; text-align: center;" id="affiliateID"><span class="icon"><i class="fas fa-copy" aria-hidden="true"></i></span>Copy your amwalette adress link.</p>
                <form data-copy=true>
                  <input id="linkInput" type="text" data-click-select-all style="border: none !important; cursor: pointer; border-radius: 5px !important; opacity:0;" />
                </form>
               
-            <div class="card">
+            <div class="card" style="background-color: rgb(35, 34, 63); color: white;">
               <div class="upper-row">
-                <div class="card-item">
-                  <span>Active Balance</span>
-                  <span id="balanceIDA"></span>
+                <div class="card-item menu-btnwy" id="financementId">
+                  <span style="font-size: 12px !important; text-align: center;">😇</span> 
+                  <span>financing request</span>
+                <!-- <span id="balanceIDA"></span>-->
                 </div>
-                <div class="card-item">
-                  <span>My Save it</span>
-                  <span id="balanceIDB"></span>
+                <div class="card-item menu-btnwy" id="assistanceId">
+                 <span style="font-size: 12px !important; text-align: center;">👫</span>
+                  <span>Assistance</span>
+                  <!--<span id="balanceIDB"></span>-->
                 </div>
               </div>
               <span class="t-desc" style="text-align: center; opacity: 0 !important;" id="fiestItemIdB">Transfer you solde for:</span>
               <div class="container" id="containerID">
                 <div class="row">
-                  <div class="col-6 menu-btnx lower-row" id="transfer_systems"><p style="font-size: 12px;">Transfer systems</p></div>
-                  <div class="col-6 menu-btnx lower-row" id="transfer_for_user"><p style="font-size: 12px;">Transfer for user</p></div>
+                  <div class="col-6 menu-btnx lower-row" id="transfer_systems"><p style="font-size: 12px;"> Transfer systems</p></div>
+                  <div class="col-6 menu-btnx lower-row" id="transfer_for_user"><p style="font-size: 12px;">Transfer by amwalette</p></div>
                 </div>
               </div>
+
               <div class="container" style="display: none;" id="containerIDx">
                 <div style="opacity: 0;">hjklmkjhg</div>
               <div class="row lower-row">
@@ -139,7 +142,7 @@
           </div>
           <div class="drawer">
             <span><a href="login.html" style="color: #2c3338;"><i class="fal fa-sign-out-alt"></i></a></span>
-            <div class="menu-btn" ><i class="fal fa-plus"></i></div>
+            <div class="menu-btn" id="menu-btnId"><i class="fal fa-plus"></i></div>
             <span><!---to evenly space icons---></span>
             <span><i class="fal fa-user" style="color: blue;"></i> </span>
           </div>
@@ -157,7 +160,7 @@
         <div class="modal-content" style="background-color: rgb(35, 34, 63); color:white;">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">The notifications</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button id="deletenotfifId" type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>

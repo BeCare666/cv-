@@ -141,8 +141,8 @@ const unserconnectId = localStorage.getItem("unserconnect")
 
   usernameID.innerHTML = `${username} `
   balanceID.innerHTML = `&dollar; ${balanceIDAW} `
-  balanceIDA.innerHTML = `${balanceIDAW} <span class="dollar">&dollar;<span class="dollar"> `
-  balanceIDB.innerHTML = `${balanceIDBW} &dollar;  `
+  //balanceIDA.innerHTML = ` &nbsp; &nbsp; &nbsp; &nbsp;${balanceIDAW} <span class="dollar">&dollar;<span class="dollar"> `
+  //balanceIDB.innerHTML = `${balanceIDBW} &dollar;  `
 
   // Function to get messages
   var userArray = []
@@ -150,7 +150,30 @@ const unserconnectId = localStorage.getItem("unserconnect")
   const userListP = document.getElementById("phistoryId");
   const userListUl = document.createElement("span"); 
   var MESSAGES = snapshot.val().MESSAGES
-
+var deletenotfifId = document.getElementById('deletenotfifId');
+deletenotfifId.addEventListener('click', function(){
+  const newData = {
+    MESSAGES: ""
+    };
+    const userRefx = database.ref(`/utilisateurs/${unserconnectId}`);
+    userRefx.update(newData, (error) => {
+      if (error){
+        Swal.fire({
+            title: "Ooops",
+            text:"error",
+            confirmButtonText: "OK",
+            allowOutsideClick: false,
+            icon: 'error'
+            }).then((result)=>{
+            if(result.isConfirmed){
+                window.location.reload(); 
+            }
+         })
+      }else{
+        window.location.reload(); 
+      }
+    })
+})
   //console.log(MESSAGES)
   userArray.push(MESSAGES)
  // console.log(userArray[0])
@@ -186,6 +209,12 @@ linkInput.value = `https://edotofamily.netlify.app/?user-id=${unserconnectId}`
 linkInput.select(); // Sélectionne le texte dans l'input
 document.execCommand('copy'); // Copie le texte sélectionné dans le presse-papiers
 Swal.fire({
+  title: "Super !",
+  text: "Your link has been copied to the clipboard",
+  icon: "success",
+  confirmButtonText: "OK",
+})
+{/*Swal.fire({
   title: "Super !",
   text: "Your link has been copied to the clipboard",
   icon: "success",
@@ -244,7 +273,7 @@ Swal.fire({
     }
   },
   closeOnClickOutside: false
-});
+});*/}
 });
 
 }
@@ -276,6 +305,66 @@ transfer_systems.addEventListener("click", function(){
   containerID.style.display = "none"
 })
 
-transfer_for_user.addEventListener("click", function(){
+transfer_for_user.addEventListener("click", function(){ 
  window.location.href = "amwalette.html"
+})
+var financementId = document.getElementById('financementId');
+var containerId = document.getElementById('containerId');
+var assistanceId = document.getElementById('assistanceId');
+var menubtnId = document.getElementById('menu-btnId');
+menubtnId.addEventListener('click', function(){
+	containerId.style.display = "none"
+	Swal.fire({
+		title: "Info ",
+		html: `Recharge your account for <strong style="color: blue;">am walette adress</strong>.`,
+		icon: "Info",
+    confirmButtonText: "Yes",
+    cancelButtonText: "Back",
+    showCancelButton: true,
+    footer:`<a href="mailto:amobilewalettet.inter.@gmail.com">ask for address to assistance <strong style="color: blue;">am walette </strong>.`,
+		allowOutsideClick: false,
+	  }).then((result)=>{
+      if(result.isConfirmed){
+        window.location.reload();
+      }else{ 
+        window.location.reload();
+      }
+   })
+})
+assistanceId.addEventListener('click', function(){
+	containerId.style.display = "none"
+	Swal.fire({
+    imageUrl: "img/logo_of_wallet.jpg", // Remplacez "url_de_votre_image.jpg" par l'URL de votre image
+    imageWidth: 200, // Largeur de l'image en pixels
+    imageHeight: 200, // Hauteur de l'image en pixels
+		html: `
+    <div style="text-align: left !important;">
+    <a href="https://wa.me/+447418315534" target="_blank" rel="noopener noreferrer">
+    <i class="fab fa-whatsapp"></i> +44 7418315534
+    </a><hr>
+    <a href="mailto:amobilewalettet.inter.@gmail.com" target="_blank" rel="noopener noreferrer">
+      <i class="far fa-envelope"></i>  amobilewalettet.inter.@gmail.com
+    </a>
+    </div>`,
+		icon: "Info",
+    confirmButtonText: "Yes",
+    cancelButtonText: "Back",
+    showCancelButton: true,
+		allowOutsideClick: false,
+	  }).then((result)=>{
+      if(result.isConfirmed){
+        window.location.reload();
+      }else{ 
+        window.location.reload();
+      }
+   })
+})
+financementId.addEventListener('click', function(){
+	Swal.fire({
+		title: "Ooops ",
+		html: `Service isn't disponible for now.`,
+		icon: "info",
+    confirmButtonText: "OK",
+		allowOutsideClick: true,
+	  }) 
 })

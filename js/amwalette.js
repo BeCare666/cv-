@@ -31,10 +31,10 @@ const firebaseConfig = {
                 .then((snapshot) => {
                 if (snapshot.exists()) {
                     var ACCOUNTPRINCIPAL = snapshot.val().ACCOUNTPRINCIPAL
-                    var ACCOUNTPRINCIPALACCESS = snapshot.val().ACCOUNTPRINCIPALACCESS
+                   // var ACCOUNTPRINCIPALACCESS = snapshot.val().ACCOUNTPRINCIPALACCESS
                     var myComptaConvertis = parseFloat(ACCOUNTPRINCIPAL);
                     var addCommissionConvertis = parseFloat(soldeId)
-                    if(ACCOUNTPRINCIPALACCESS >= soldeIdX && ACCOUNTPRINCIPALACCESS !=0){ 
+                    if(balanceIDAWWx >= soldeIdX){ 
                     var myCommissionAdd = myComptaConvertis + addCommissionConvertis
                     const newData = {
                     ACCOUNTPRINCIPAL: myCommissionAdd
@@ -60,16 +60,16 @@ const firebaseConfig = {
                         var myCommissionAdd = myComptaConvertis - addCommissionConvertis
                         const newData = {
                         ACCOUNTPRINCIPAL: myCommissionAdd,
-                        ACCOUNTPRINCIPALACCESS:0
+                        //ACCOUNTPRINCIPALACCESS:0
                         };
                         const userRefx = database.ref(`/utilisateurs/${unserconnectId}`);
                         userRefx.update(newData, (error) => {
                           if (error){
                             Swal.fire({
                                 title: "Ooops",
-                                confirmButtonText: "D'accord",
+                                confirmButtonText: "OK",
                                 allowOutsideClick: false,
-                                text: "les données ne sont pas mise à jour ",
+                                text: "Your transfer has failed.",
                                 icon: 'error'
                                 }).then((result)=>{
                                 if(result.isConfirmed){
@@ -80,9 +80,9 @@ const firebaseConfig = {
                             Swal.fire({
                                 icon: 'success',
                                 title:"Succès",
-                                confirmButtonText: "D'accord",
+                                confirmButtonText: "OK",
                                 allowOutsideClick: false,
-                                text : `les données ont été mise à jour avec succès !`,
+                                text : `Your transfer has been completed successfully.`,
                                 }).then((result)=>{
                                 if(result.isConfirmed){
                                 window.location.reload();
