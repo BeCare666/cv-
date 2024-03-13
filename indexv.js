@@ -308,7 +308,6 @@ transfer_systems.addEventListener("click", function(){
 transfer_for_user.addEventListener("click", function(){ 
  window.location.href = "amwalette.html"
 })
-var financementId = document.getElementById('financementId');
 var containerId = document.getElementById('containerId');
 var assistanceId = document.getElementById('assistanceId');
 var menubtnId = document.getElementById('menu-btnId');
@@ -321,7 +320,7 @@ menubtnId.addEventListener('click', function(){
     confirmButtonText: "Yes",
     cancelButtonText: "Back",
     showCancelButton: true,
-    footer:`<a href="mailto:amobilewalettet.inter.@gmail.com">ask for address to assistance <strong style="color: blue;">am walette </strong>.`,
+    footer:`<a href="mailto:amobilewalettet.inter@gmail.com">ask for address to assistance <strong style="color: blue;">am walette </strong>.`,
 		allowOutsideClick: false,
 	  }).then((result)=>{
       if(result.isConfirmed){
@@ -342,8 +341,8 @@ assistanceId.addEventListener('click', function(){
     <a href="https://wa.me/+447418315534" target="_blank" rel="noopener noreferrer">
     <i class="fab fa-whatsapp"></i> +44 7418315534
     </a><hr>
-    <a href="mailto:amobilewalettet.inter.@gmail.com" target="_blank" rel="noopener noreferrer">
-      <i class="far fa-envelope"></i>  amobilewalettet.inter.@gmail.com
+    <a href="mailto:amobilewalettet.inter@gmail.com" target="_blank" rel="noopener noreferrer">
+      <i class="far fa-envelope"></i>  amobilewalettet.inter@gmail.com
     </a>
     </div>`,
 		icon: "Info",
@@ -359,12 +358,4 @@ assistanceId.addEventListener('click', function(){
       }
    })
 })
-financementId.addEventListener('click', function(){
-	Swal.fire({
-		title: "Ooops ",
-		html: `Service isn't disponible for now.`,
-		icon: "info",
-    confirmButtonText: "OK",
-		allowOutsideClick: true,
-	  }) 
-})
+

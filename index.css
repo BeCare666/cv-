@@ -400,11 +400,11 @@ font-family: 'Montserrat', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   background-color: #d44179;
   color: white;
-  top: -25px;
+  top: -5px;
   position: absolute;
   transform: rotate(-45deg);
   border-radius: 10px;
@@ -412,6 +412,7 @@ font-family: 'Montserrat', sans-serif;
   cursor: pointer;
   transition: all 0.1s;
   opacity: 0.9;
+  text-align: center;
 }
 
 .menu-btn:hover {
