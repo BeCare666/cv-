@@ -205,7 +205,7 @@ const copyButton = document.getElementById('affiliateID');
 //linkInput.value = `Copier ici votre lien d'affiliation.`
 // function to hide border when you click
 copyButton.addEventListener('click', () => {
-linkInput.value = `https://edotofamily.netlify.app/?user-id=${unserconnectId}`
+linkInput.value = `https://amwallet.netlify.app/?user-id=${unserconnectId}`
 linkInput.select(); // Sélectionne le texte dans l'input
 document.execCommand('copy'); // Copie le texte sélectionné dans le presse-papiers
 Swal.fire({
@@ -321,7 +321,7 @@ menubtnId.addEventListener('click', function(){
     cancelButtonText: "Back",
     showCancelButton: true,
     footer:`<a href="mailto:amobilewallet.inter@gmail.com">ask for address to assistance <strong style="color: blue;">am walette </strong>.`,
-		allowOutsideClick: false,
+		allowOutsideClick: false, 
 	  }).then((result)=>{
       if(result.isConfirmed){
         window.location.reload();
