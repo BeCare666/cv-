@@ -34,7 +34,8 @@ const firebaseConfig = {
                    // var ACCOUNTPRINCIPALACCESS = snapshot.val().ACCOUNTPRINCIPALACCESS
                     var myComptaConvertis = parseFloat(ACCOUNTPRINCIPAL);
                     var addCommissionConvertis = parseFloat(soldeId)
-                    if(balanceIDAWWx >= soldeIdX){ 
+                    if(balanceIDAWWx >= soldeIdX){
+                     if(amwalettuserId != unserconnectId){
                     var myCommissionAdd = myComptaConvertis + addCommissionConvertis
                     const newData = {
                     ACCOUNTPRINCIPAL: myCommissionAdd
@@ -46,7 +47,7 @@ const firebaseConfig = {
                             title: "Ooops",
                             confirmButtonText: "D'accord",
                             allowOutsideClick: false,
-                            text: "les données ne sont pas mise à jour ",
+                            text: "Error ",
                             icon: 'error'
                             }).then((result)=>{
                             if(result.isConfirmed){
@@ -91,7 +92,21 @@ const firebaseConfig = {
                           }
                         })   
                       }
-                    })   
+                    }) 
+                  }else{
+                    Swal.fire({
+                      title: "Ooops",
+                      confirmButtonText: "D'accord",
+                      allowOutsideClick: false,
+                      text: "This transfert isn't possible. ",
+                      icon: 'error'
+                      }).then((result)=>{
+                      if(result.isConfirmed){
+                          window.location.reload(); 
+                  }
+                   })
+                   }
+                    
                   }else{
                     Swal.fire({
                         title: "Info ",
