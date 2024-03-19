@@ -95,15 +95,17 @@ const unserconnectId = localStorage.getItem("unserconnect")
 }else{
   document.getElementById('sameToBody').style.display = "none"
   var useremail = snapshot.val().email;
-  var username = snapshot.val().username;
+  var username = snapshot.val().username; 
   var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
+  var MESSAGESAMWALLET = snapshot.val().MESSAGESAMWALLET;
   localStorage.setItem("usernameT", username)
   localStorage.setItem("balanceIDAWWW", balanceIDAW)
-  var balanceIDBW = snapshot.val().ACCOUNTPRINCIPALX;
+  var balanceIDBW = snapshot.val().ACCOUNTPRINCIPALX;   
 
   var ABIDX = document.getElementById("userABID")
   var balanceID = document.getElementById("balanceID")
   var usernameID = document.getElementById("usernameID")
+  var marqueeId = document.getElementById("marqueeId")
   var balanceIDA = document.getElementById("balanceIDA")
   var balanceIDB = document.getElementById("balanceIDB")
   var iconitem =document.querySelectorAll('.icon-item')
@@ -117,6 +119,8 @@ const unserconnectId = localStorage.getItem("unserconnect")
             allowOutsideClick: false,
           })
          }else{
+          var typeway = T.id
+          localStorage.setItem('typewayval', typeway)
           if(T.id === "pix"){
             window.location.href = "pix.html"
           }else if(T.id === "orangemoney"){
@@ -140,6 +144,7 @@ const unserconnectId = localStorage.getItem("unserconnect")
 
 
   usernameID.innerHTML = `${username} `
+  marqueeId.innerHTML = `${MESSAGESAMWALLET} `
   balanceID.innerHTML = `&dollar; ${balanceIDAW} `
   //balanceIDA.innerHTML = ` &nbsp; &nbsp; &nbsp; &nbsp;${balanceIDAW} <span class="dollar">&dollar;<span class="dollar"> `
   //balanceIDB.innerHTML = `${balanceIDBW} &dollar;  `

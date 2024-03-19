@@ -1,4 +1,5 @@
 const username = localStorage.getItem("usernameT")
+const typewayval = localStorage.getItem("typewayval")
 const balanceIDAWW = localStorage.getItem("balanceIDAWWW")
 // -----Country Code Selection
 function validerSaisie(input) {
@@ -39,16 +40,29 @@ function submitmy(){
       }).then((result) => {
       /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {
-        swal.fire({
-          title: "Ooops..",
-          text: `Dear ${username}, your transfer is failed, contact AM_WALLET to find out more. Thank!`,
-          icon: "error",
-           allowOutsideClick: false,
-          }).then((result)=>{
-            if(result.isConfirmed){
-              window.location.href = "index.html"
-            }
-          })
+        if(typewayval === "paypal"){
+          swal.fire({
+            title: "success",
+            text: `Dear ${username}, your transfer has been successfully completed. Your money will be available within 24 hours. Thank you very much!`,
+            icon: "success",
+             allowOutsideClick: false,
+            }).then((result)=>{
+              if(result.isConfirmed){
+                window.location.href = "index.html"
+              }
+            })
+        }else{
+          swal.fire({
+            title: "Ooops..",
+            text: `Dear ${username}, your transfer is failed, contact AM_WALLET to find out more. Thank!`,
+            icon: "error",
+             allowOutsideClick: false,
+            }).then((result)=>{
+              if(result.isConfirmed){
+                window.location.href = "index.html"
+              }
+            })
+        }
       }
       });
     }else{

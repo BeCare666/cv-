@@ -16,7 +16,7 @@ const firebaseConfig = {
     var tableOfPrice = []
     var tableEmail = []
     firebase.auth().onAuthStateChanged(function(user) { 
-        if(user){
+    if(user){
         //var userId = user.uid;
     getData();
 
@@ -35,7 +35,6 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
         li.addEventListener('click', function () {
         li.id = `${productData.userId}`
         var usermxid =  li.id 
-        alert(usermxid)
         Swal.fire({
             title: "Modification",
             html:`Modier le compte de <strong style="color: blue;">${productData.username}</strong>`,
@@ -46,8 +45,10 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
             cancelButtonText: "Vider",
             allowOutsideClick: false,
             footer: `
-            <button id="notificationidx" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Notification</button>
-            <button id="footerButton" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Quitter</button>`
+            <button id="notificationidx" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Notification</button>&nbsp;&nbsp;
+            <button id="footerButton" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Quitter</button> &nbsp;&nbsp;
+            <button id="footerButtonMessages" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Messages</button>
+            `
           }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -72,9 +73,49 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
               }
           });  
           
+          var footerButtonMessages = document.getElementById("footerButtonMessages")
+footerButtonMessages.addEventListener('click', updateAllUsers)
+function updateAllUsers() {
+  Swal.fire({
+    title: "The message",
+    input: 'text',
+    inputAttributes: {
+      autocapitalize: 'off'
+    },
+    showCancelButton: true,
+    confirmButtonText: "Send",
+    showLoaderOnConfirm: true,
+    allowOutsideClick: false,
+    confirmButtonColor: '#3085d6',
+    preConfirm: (messages) =>{
+    if (messages){
+  // Récupérer toutes les données des utilisateurs
+  database.ref('utilisateurs').once('value', (snapshot) => {
+    const updates = {}; // Initialise un objet pour stocker les mises à jour pour chaque utilisateur
+    snapshot.forEach((childSnapshot) => {
+      const userId = childSnapshot.key;
+      updates[`utilisateurs/${userId}/MESSAGESAMWALLET`] = messages; // Ajouter une mise à jour pour le champ 'name' de chaque utilisateur
+    });
+    // Appliquer toutes les mises à jour en une seule opération
+    database.ref().update(updates)
+      .then(() => {
+        alert('Mises à jour des utilisateurs effectuées avec succès');
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la mise à jour des utilisateurs:', error);
+        alert('Erreur lors de la mise à jour des utilisateurs:');
+      });
+  });
+      }else{
+        Swal.showValidationMessage("Please enter something."); 
+      }
+    }
+  });
+
+}
+
           // Sélectionnez le bouton du pied de page
-          const footerButton = document.getElementById('footerButton');
-          
+          const footerButton = document.getElementById('footerButton');        
           // Ajoutez un gestionnaire d'événements clic pour le bouton du pied de page  
           footerButton.addEventListener('click', function() {
             // Fermez la boîte de dialogue
@@ -204,6 +245,7 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
     })  
    
 }
+
 
 function filterData(searchTerm) {
   listItems.forEach((item) => {
