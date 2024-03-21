@@ -66,7 +66,7 @@ const firebaseConfig = {
           var PhistoryId = document.getElementById('phistoryId');
           var IdTogetwallet = document.getElementById('idTogetwallet');
           Amount.innerHTML = `${UserCOMMISSON} $`
-          if(UserCOMMISSON >= 9){
+          if(UserCOMMISSON >= 20){
             IdTogetwallet.disabled = false
           }else{
             IdTogetwallet.disabled =  true
