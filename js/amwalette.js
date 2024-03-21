@@ -22,8 +22,9 @@ const firebaseConfig = {
             var amwalette_Adress = document.getElementById("amwalette_Adress").value; 
             var soldeId = document.getElementById("soldeId").value;
             var urlObject = new URL(amwalette_Adress);
-            // Récupérer la valeur de user-id depuis les paramètres de l'URL
+            // Récupérer la valeur de user-id depuis les paramètres de l'URL        
             var amwalettuserId = urlObject.searchParams.get("user-id");
+            if (urlObject.searchParams.has("user-id")){ 
             var soldeIdX = parseFloat(soldeId);
             var balanceIDAWWx = parseFloat(balanceIDAWW);
                 const userRef = database.ref(`/utilisateurs/${amwalettuserId}`);
@@ -45,7 +46,7 @@ const firebaseConfig = {
                       if (error){
                         Swal.fire({
                             title: "Ooops",
-                            confirmButtonText: "D'accord",
+                            confirmButtonText: "OK",
                             allowOutsideClick: false,
                             text: "Error ",
                             icon: 'error'
@@ -96,7 +97,7 @@ const firebaseConfig = {
                   }else{
                     Swal.fire({
                       title: "Ooops",
-                      confirmButtonText: "D'accord",
+                      confirmButtonText: "OK",
                       allowOutsideClick: false,
                       text: "This transfert isn't possible. ",
                       icon: 'error'
@@ -118,7 +119,19 @@ const firebaseConfig = {
                 } 
               
               })  
-               
+            }else{
+              Swal.fire({
+                title: "Ooops",
+                confirmButtonText: "OK",
+                allowOutsideClick: false,
+                text: "Error link",
+                icon: 'error'
+                }).then((result)=>{
+                if(result.isConfirmed){
+                    window.location.reload(); 
+            }
+             })
+            } 
         } 
     }else{
         window.location.href = "login.html"
