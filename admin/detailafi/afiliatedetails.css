@@ -1,9 +1,9 @@
  
 body{
-    background-color: black;
+    background-color: #2c3338;
   }
   .wallet-container {
-      background-color: blue !important;
+      background-color: rgb(35, 34, 63) !important;
           width: 60%;
       height: 95%;
           color: #fff;

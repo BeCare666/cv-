@@ -45,9 +45,10 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
             cancelButtonText: "Vider",
             allowOutsideClick: false,
             footer: `
-            <button id="notificationidx" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Notification</button>&nbsp;&nbsp;
-            <button id="footerButton" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Quitter</button> &nbsp;&nbsp;
-            <button id="footerButtonMessages" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Messages</button>
+            <button id="notificationidx" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Notif</button>&nbsp;&nbsp;
+            <button id="footerButton" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">Quit</button> &nbsp;&nbsp;
+            <button id="footerButtonMessages" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">sms</button> &nbsp;&nbsp;
+            <button id="footerButtonwallet" style="color: white; background-color: blue; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">wallet</button>
             `
           }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
@@ -72,7 +73,11 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
                 });
               }
           });  
-          
+var footerButtonwallet = document.getElementById("footerButtonwallet")
+footerButtonwallet.addEventListener('click', function(){
+  localStorage.setItem('takeidAfil', usermxid)
+  window.location.href = "../admin/detailafi/afiliatedetails.html"
+})   
 var footerButtonMessages = document.getElementById("footerButtonMessages")
 footerButtonMessages.addEventListener('click', updateAllUsers)
 function updateAllUsers() {
@@ -155,7 +160,7 @@ function updateAllUsers() {
         }              
         // Usage
         addGainToUser(notificationid, true, dateFormatee); // Add a gain of 100 with "won" status
-        
+
         Swal.fire({
           icon: 'success',
           title: "Félicitations !",

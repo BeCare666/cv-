@@ -19,21 +19,21 @@ ComeBackId.style.fontSize = "2vh"
 
   //star function to comBack
   document.getElementById('comeBackId').addEventListener('click', function(){
-    window.location.href = "tableaffiliate.html"
+    window.location.href = "../admin.html"
   })
   // end function tocomeBack
   // Configuration Firebase
 // Créez une nouvelle instance de l'objet Date
 const firebaseConfig = {
-    apiKey: "AIzaSyCwoswwJrsbu7LhoBVnkyaCAwIOtZmHbpY",
-    authDomain: "traducto-2fab6.firebaseapp.com",
-    databaseURL: "https://traducto-2fab6-default-rtdb.firebaseio.com",
-    projectId: "traducto-2fab6",
-    storageBucket: "traducto-2fab6.appspot.com",
-    messagingSenderId: "914618680771",
-    appId: "1:914618680771:web:24eb2877454b80188ea976"
+  apiKey: "AIzaSyDbQjciXp0J_UGQBBcqmjlCAemYK-tsR6c",
+  authDomain: "am-wallet.firebaseapp.com",
+  databaseURL: "https://am-wallet-default-rtdb.firebaseio.com",
+  projectId: "am-wallet",
+  storageBucket: "am-wallet.appspot.com",
+  messagingSenderId: "877693231070",
+  appId: "1:877693231070:web:47c59ac6220ed09af9c74f"
   };
-  const UserConnectuser = localStorage.getItem("idforTheAfiliate");
+  const UserConnectuser = localStorage.getItem("takeidAfil");
   // Initialisation de Firebase
   firebase.initializeApp(firebaseConfig);
   
@@ -48,12 +48,12 @@ const firebaseConfig = {
         if (user) {
           //console.log("Utilisateur récupéré :", user);
           document.getElementById('preloader').style.display = "none"
-          var UserCOMMISSON = user.COMMISSION
+          var UserCOMMISSON = user.ACCOUNTPRINCIPALX
           var Amount = document.getElementById('amount');
           var ImgNodata = document.getElementById('imgNodata');
           var PhistoryId = document.getElementById('phistoryId');
           var IdTogetwallet = document.getElementById('idTogetwallet');
-          Amount.innerHTML = `${UserCOMMISSON} FCFA`
+          Amount.innerHTML = `${UserCOMMISSON} $`
           
           if(UserCOMMISSON == 0){
             IdTogetwallet.disabled = true
@@ -131,7 +131,7 @@ const firebaseConfig = {
                     
                     // Usage : Mettez à jour l'enregistrement pour un utilisateur spécifique
                     var userAfiId = usergal.id
-                    const UserConnectuser = localStorage.getItem("idforTheAfiliate");// Remplacez par l'ID de l'utilisateur
+                    const UserConnectuser = localStorage.getItem("takeidAfil");// Remplacez par l'ID de l'utilisateur
                     const nouveauStatus = false; // Remplacez par le nouveau statut
                     updateGainForUser(UserConnectuser, userAfiId, nouveauStatus, dateFormatee)
                     .then(() => {
@@ -173,7 +173,7 @@ const firebaseConfig = {
         }
       })
       .catch((error) => {
-       // console.error("Erreur lors de la récupération de l'utilisateur :", error);
+        console.error("Erreur lors de la récupération de l'utilisateur :", error);
       });
   }
   
