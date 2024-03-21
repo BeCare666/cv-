@@ -50,6 +50,11 @@ const firebaseConfig = {
         // funnction to get cookies options     
         localStorage.setItem("Email", email);
         localStorage.setItem("Password", password);
+        const Bffiliate_id = localStorage.getItem('Affiliate_id');
+        if(Bffiliate_id){
+          localStorage.setItem('Cffiliate_id', Bffiliate_id)
+          localStorage.removeItem('Affiliate_id')
+        }
         setTimeout(()=>{
         window.location.href = "index.html"
         },5000)

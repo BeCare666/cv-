@@ -8,20 +8,20 @@ const firebaseConfig = {
     appId: "1:877693231070:web:47c59ac6220ed09af9c74f"
 };
 const unserconnectId = localStorage.getItem("unserconnect")
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-    var tableOfPrice = []
-    var tableEmail = []
-   // document.getElementById('sameToBody').style.display = "none"
-    firebase.auth().onAuthStateChanged(function(user) { 
-        if(user){
-        var userId = user.uid;
-        var useremail = user.email;
-        tableEmail.push(useremail)
-        const userRef = database.ref(`/utilisateurs/${userId}`);
-        userRef.once("value")
-        .then((snapshot) => {
-        if (!snapshot.exists()) {
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+var tableOfPrice = []
+var tableEmail = []
+// document.getElementById('sameToBody').style.display = "none"
+firebase.auth().onAuthStateChanged(function(user) { 
+if(user){
+var userId = user.uid;
+var useremail = user.email;
+tableEmail.push(useremail)
+const userRef = database.ref(`/utilisateurs/${userId}`);
+userRef.once("value")
+.then((snapshot) => {
+if(!snapshot.exists()){
             document.getElementById('sameToBody').style.display = "none"
             Swal.fire({
                 title: "Your username",
@@ -66,16 +66,18 @@ const unserconnectId = localStorage.getItem("unserconnect")
                     ACCOUNTPRINCIPAL: 0,
                     ACCOUNTPRINCIPALX: 0,
                     ABONNEMENT : false, 
-                    MESSAGES : false,                                                  
+                    MESSAGES : false,
+                    MESSAGESAMWALLET:"",
+                                                                      
                     }).then(() => {  
-                    swal({
+                    Swal.fire({
                     title: "Congratulations",
                     text: "Your account has been finalized!",
                     icon: "success",
                      allowOutsideClick: false,
                     })
                     }).catch((error)=>{
-                    swal({
+                    Swal.fire({
                     title: "Erreur ",
                     text: "there is an error",
                     icon: "error",
@@ -93,23 +95,23 @@ const unserconnectId = localStorage.getItem("unserconnect")
           })
 
 }else{
-  document.getElementById('sameToBody').style.display = "none"
-  var useremail = snapshot.val().email;
-  var username = snapshot.val().username; 
-  var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
-  var MESSAGESAMWALLET = snapshot.val().MESSAGESAMWALLET;
-  localStorage.setItem("usernameT", username)
-  localStorage.setItem("balanceIDAWWW", balanceIDAW)
-  var balanceIDBW = snapshot.val().ACCOUNTPRINCIPALX;   
+document.getElementById('sameToBody').style.display = "none"
+var useremail = snapshot.val().email;
+var username = snapshot.val().username; 
+var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
+var MESSAGESAMWALLET = snapshot.val().MESSAGESAMWALLET;
+localStorage.setItem("usernameT", username)
+localStorage.setItem("balanceIDAWWW", balanceIDAW)
+var balanceIDBWXW = snapshot.val().ACCOUNTPRINCIPALX;   
 
-  var ABIDX = document.getElementById("userABID")
-  var balanceID = document.getElementById("balanceID")
-  var usernameID = document.getElementById("usernameID")
-  var marqueeId = document.getElementById("marqueeId")
-  var balanceIDA = document.getElementById("balanceIDA")
-  var balanceIDB = document.getElementById("balanceIDB")
-  var iconitem =document.querySelectorAll('.icon-item')
-  iconitem.forEach((T)=>{
+var ABIDX = document.getElementById("userABID")
+var balanceID = document.getElementById("balanceID")
+var usernameID = document.getElementById("usernameID")
+var marqueeId = document.getElementById("marqueeId")
+var balanceIDA = document.getElementById("balanceIDA")
+var balanceIDB = document.getElementById("balanceIDB")
+var iconitem =document.querySelectorAll('.icon-item')
+iconitem.forEach((T)=>{
     T.addEventListener('click', function(){
         if(balanceIDAW == 0){
             swal.fire({
@@ -141,13 +143,17 @@ const unserconnectId = localStorage.getItem("unserconnect")
          }
     })
   })
+usernameID.innerHTML = `${username} || Gains : ${balanceIDBWXW} $`
+balanceID.innerHTML = `&dollar; ${balanceIDAW} `
 
-
-  usernameID.innerHTML = `${username} `
+var MESSAGESAMWALLET = snapshot.val().MESSAGESAMWALLET;
+if(!MESSAGESAMWALLET){
+  marqueeId.innerHTML = `Welcome to amwallet !`
+}else{
   marqueeId.innerHTML = `${MESSAGESAMWALLET} `
-  balanceID.innerHTML = `&dollar; ${balanceIDAW} `
-  //balanceIDA.innerHTML = ` &nbsp; &nbsp; &nbsp; &nbsp;${balanceIDAW} <span class="dollar">&dollar;<span class="dollar"> `
-  //balanceIDB.innerHTML = `${balanceIDBW} &dollar;  `
+}
+//balanceIDA.innerHTML = ` &nbsp; &nbsp; &nbsp; &nbsp;${balanceIDAW} <span class="dollar">&dollar;<span class="dollar"> `
+//balanceIDB.innerHTML = `${balanceIDBW} &dollar;  `
 
   // Function to get messages
   var userArray = []
@@ -207,8 +213,21 @@ indicatClass.innerHTML = `&nbsp;${userArrayAXXXX.length}`
   //function to generate affilition link
 const linkInput = document.getElementById('linkInput');
 const copyButton = document.getElementById('affiliateID');
+const linkInputx = document.getElementById('linkInputx');
+const copyButtonx = document.getElementById('affiliateIDx');
 //linkInput.value = `Copier ici votre lien d'affiliation.`
 // function to hide border when you click
+copyButtonx.addEventListener('click', () => {
+  linkInputx.value = `https://amwallet.netlify.app/signup.html?affiliate-id=${unserconnectId}`
+  linkInputx.select(); // Sélectionne le texte dans l'input
+  document.execCommand('copy'); // Copie le texte sélectionné dans le presse-papiers
+  Swal.fire({
+    title: "Super !",
+    text: "Your link has been copied to the clipboard",
+    icon: "success",
+    confirmButtonText: "OK",
+  })
+})
 copyButton.addEventListener('click', () => {
 linkInput.value = `https://amwallet.netlify.app/?user-id=${unserconnectId}`
 linkInput.select(); // Sélectionne le texte dans l'input
@@ -280,7 +299,51 @@ Swal.fire({
   closeOnClickOutside: false
 });*/}
 });
+const Cffiliate_id = localStorage.getItem('Cffiliate_id');
+if(Cffiliate_id){
+  const userRef = database.ref(`/utilisateurs/${Cffiliate_id}`);
+  userRef.once("value")
+  .then((snapshot) => {
+  if (snapshot.exists()) {
+    var ACCOUNTPRINCIPALX = snapshot.val().ACCOUNTPRINCIPALX;
+    var valeurx = "100"
+    var aCCOUNTPRINCIPALX = parseFloat(ACCOUNTPRINCIPALX);
+    var addCommissionConvertis = parseFloat(valeurx)
+    var myCommissionAdd = aCCOUNTPRINCIPALX + addCommissionConvertis
+    const newData = {
+    ACCOUNTPRINCIPALX: myCommissionAdd,
+    //ACCOUNTPRINCIPALACCESS:0
+    };
+    const userRefx = database.ref(`/utilisateurs/${Cffiliate_id}`);
+    userRefx.update(newData, (error) => {
+      if(error){
+        localStorage.removeItem('Affiliate_id')
+      }else{
+        const notificationid = `Dear user you are receive 100 FCFA on your account.`
+        const userRefx = database.ref(`/utilisateurs/${Cffiliate_id}`);
+        const dateActuelle = new Date();
+        // Obtenez les composantes de la date et de l'heure  
+        const jour = dateActuelle.getDate();
+        const mois = dateActuelle.getMonth() + 1; // Les mois commencent à 0, donc ajoutez 1
+        const annee = dateActuelle.getFullYear();
+        const heures = dateActuelle.getHours();
+        const minutes = dateActuelle.getMinutes();
+        // Formatez la date et l'heure
+        const dateFormatee = `${jour}/${mois}/${annee} ${heures}h:${minutes}min`;
+        //console.log(dateFormatee);
+    // Function to add a gain with status to the user's gains array
+    function addGainToUser(notificationid, status, time) {
+        const newNotification = { notificationid: notificationid, status: status, time:time};
+        userRefx.child("MESSAGES").push(newNotification);
+    }              
+    // Usage
+    addGainToUser(notificationid, true, dateFormatee); // Add a gain of 100 with "won" status
 
+    localStorage.removeItem('Affiliate_id')
+      }
+    }) 
+  } })
+}
 }
 const shwonotification = document.getElementById('shwonotificationid');
 // Ajoutez un gestionnaire d'événements clic pour le bouton du pied de page 

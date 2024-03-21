@@ -73,7 +73,7 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
               }
           });  
           
-          var footerButtonMessages = document.getElementById("footerButtonMessages")
+var footerButtonMessages = document.getElementById("footerButtonMessages")
 footerButtonMessages.addEventListener('click', updateAllUsers)
 function updateAllUsers() {
   Swal.fire({
@@ -155,6 +155,7 @@ function updateAllUsers() {
         }              
         // Usage
         addGainToUser(notificationid, true, dateFormatee); // Add a gain of 100 with "won" status
+        
         Swal.fire({
           icon: 'success',
           title: "Félicitations !",

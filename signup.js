@@ -1,3 +1,6 @@
+const urlParams = new URLSearchParams(window.location.search);
+const affiliate_id = urlParams.get("affiliate-id");
+
 const firebaseConfig = {
     apiKey: "AIzaSyDbQjciXp0J_UGQBBcqmjlCAemYK-tsR6c",
     authDomain: "am-wallet.firebaseapp.com",
@@ -31,9 +34,10 @@ const firebaseConfig = {
         // Envoi de l'e-mail de vérification
         user.sendEmailVerification()
           .then(() => {
+            if(affiliate_id){
+              localStorage.setItem('Affiliate_id', affiliate_id)
+            }
           // E-mail de vérification envoyé avec succès
-          //document.getElementById('sameToBody').style.display = "none"
-          // document.getElementById('contentSignup').style.display = "none"
            window.location.href = "xw.html"
           //  window.location.href = "validemail.html"
             

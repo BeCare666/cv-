@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
 </head>
 <body style="background-color: #2c3338 !important;">
+  <marquee behavior="" direction="" id="marqueeId" style="color: yellow !important;"></marquee>
     <div class="container" style=" border-radius: 6px !important;" id="containerId">
         <div class="iphone">
           <div class="header">
@@ -31,7 +32,6 @@
               </div>
               <div class="summary-text-2" id="usernameID">
               </div>
-              <marquee behavior="" direction="" id="marqueeId"></marquee>
             </div>
             <div class="user-profile">
               <img src="./img/logo_of_wallet.jpg" class="user-photo">
@@ -42,8 +42,11 @@
                <form data-copy=true>
                  <input id="linkInput" type="text" data-click-select-all style="border: none !important; cursor: pointer; border-radius: 5px !important; opacity:0;" />
                </form>
-              
-            <div class="card">
+               <p style="cursor: pointer; color: green !important; text-align: center;" id="affiliateIDx"><span class="icon"><i class="fas fa-copy" aria-hidden="true"></i></span>Copy your amwalette affiliate link.</p>
+               <form data-copy=true>
+                 <input id="linkInputx" type="text" data-click-select-all style="border: none !important; cursor: pointer; border-radius: 5px !important; opacity:0;" />
+               </form>
+            <div class="card" style="height: 35vh; overflow: auto;">
               <div class="upper-row">
                 <div class="card-item menu-btnwy" id="financementId">          
                   <span style="font-size: 12px !important; text-align: center;">😇</span> 
@@ -146,7 +149,7 @@
             <span><a href="login.html" style="color: #2c3338;"><i class="fal fa-sign-out-alt"></i></a></span>
             <div class="menu-btn" id="menu-btnId"><!--<i class="fal fa-plus"></i>-->add walette</i></div>
             <span><!---to evenly space icons---></span>
-            <span><i class="fal fa-user" style="color: blue;"></i> </span>
+           <a href="./wallet/wallet.html"> <span> <i class="fal fa-wallet wallet-icon"  style="color: blue;"></i></span></a>
           </div>
     
         </div>
