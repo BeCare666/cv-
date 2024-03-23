@@ -305,9 +305,9 @@ if(Cffiliate_id){
   userRef.once("value")
   .then((snapshot) => {
   if (snapshot.exists()) {
-    var ACCOUNTPRINCIPALX = snapshot.val().ACCOUNTPRINCIPALX;
-    var valeurx = "2"
-    var aCCOUNTPRINCIPALX = parseFloat(ACCOUNTPRINCIPALX);
+    var ACCOUNTPRINCIPALXWX = snapshot.val().ACCOUNTPRINCIPALX;
+    var valeurx = "0.5"
+    var aCCOUNTPRINCIPALX = parseFloat(ACCOUNTPRINCIPALXWX);
     var addCommissionConvertis = parseFloat(valeurx)
     var myCommissionAdd = aCCOUNTPRINCIPALX + addCommissionConvertis
     const newData = {
@@ -317,9 +317,9 @@ if(Cffiliate_id){
     const userRefx = database.ref(`/utilisateurs/${Cffiliate_id}`);
     userRefx.update(newData, (error) => {
       if(error){
-        localStorage.removeItem('Affiliate_id')
+        localStorage.removeItem('Cffiliate_id')
       }else{
-        const notificationid = `Dear user you are receive 100 FCFA on your account.`
+      {/*        const notificationid = `Dear user you are receive 100 FCFA on your account.`
         const userRefx = database.ref(`/utilisateurs/${Cffiliate_id}`);
         const dateActuelle = new Date();
         // Obtenez les composantes de la date et de l'heure  
@@ -337,9 +337,9 @@ if(Cffiliate_id){
         userRefx.child("MESSAGES").push(newNotification);
     }              
     // Usage
-    addGainToUser(notificationid, true, dateFormatee); // Add a gain of 100 with "won" status
+    addGainToUser(notificationid, true, dateFormatee); // Add a gain of 100 with "won" status*/}
 
-    localStorage.removeItem('Affiliate_id')
+      localStorage.removeItem('Cffiliate_id')
       }
     }) 
   } })

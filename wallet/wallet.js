@@ -171,70 +171,9 @@ const firebaseConfig = {
                     if (result.isConfirmed){
                         location.reload();
                     }
-                 })
-                 // statr envoi de mail de validation
-                 const apiKey = "34F593452254BAB8CACDA4A39FC9C44BFC0D3E63B8842CD369FF37BBE4AC5017DA7917B6E03C3C8EB379F906C80E9DED";
-                 const apiUrl = "https://api.elasticemail.com/v2/email/send";
-                 
-                 // Définir les paramètres de l'e-mail
-                 const emailParams = {
-                 apiKey: apiKey,
-                 subject: "Gain de point",
-                 from: emailUser,
-                 fromName: "illicolove",
-                 to: "validation@illicolove.com",
-                 bodyHtml: `
-                 <table cellpadding="10" cellspacing="0" style="background-color: #f1f1f1; padding: 20px;">
-                 <tr>
-                     <td>
-                     <h1 style="color: #333;">Salut, illicolove !</h1>
-                     <div style="text-align: center;">
-                         <img src="https://illicolove.com/assets/img/illicolove-.png" style="max-width: 100%; height: auto; display: inline-block;" />
-                     </div>
-                     <p style="font-size: 16px; color: #666;">
-                     Nous avons le plaisir de vous informer que ${fullname} a récemment retiré ${UserCOMMISSON} de son portefeuille. Nous vous prions de bien vouloir confirmer cette transaction. 
-                     </p>
-                     <ul>
-                         <li><a href="https://illicolove.com/v/profil.html">Vous pouvez visiter son profil.</a></li>
-                     </ul>
-                     <p style="font-size: 14px; color: #999;">
-                         Restez à l'écoute pour recevoir d'autres nouvelles passionnantes !     
-                     </p>
-                     <p style="font-size: 14px; color: #999;">
-                         Cordialement,     
-                     </p>
-                     <p style="font-size: 14px; color: #999;">
-                         L'équipe illicolove.      
-                     </p>
-                     </td>
-                 </tr>
-                 </table>
-                 `
-                 };
-
-                // Effectuer une requête POST vers l'API ElasticEmail
-                fetch(apiUrl, {
-                method: "POST",
-                headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: new URLSearchParams(emailParams)
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                //console.log(data); // Afficher la réponse de l'API ElasticEmail
-                if (data.success) {
-                //console.log("E-mail envoyé avec succès.");
-                 } else {
-                 // console.error("Erreur lors de l'envoi de l'e-mail.");
-                 }
-                })
-                .catch((error) => {
-                //console.error("Erreur lors de la requête API :", error);
-                });
-                // end envoi de mail de validation
+                 })  
                 }
-                  });
+                });
 
             })
         } else {
