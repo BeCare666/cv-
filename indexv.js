@@ -306,7 +306,7 @@ if(Cffiliate_id){
   .then((snapshot) => {
   if (snapshot.exists()) {
     var ACCOUNTPRINCIPALXWX = snapshot.val().ACCOUNTPRINCIPALX;
-    var valeurx = "0.5"
+    var valeurx = "1"
     var aCCOUNTPRINCIPALX = parseFloat(ACCOUNTPRINCIPALXWX);
     var addCommissionConvertis = parseFloat(valeurx)
     var myCommissionAdd = aCCOUNTPRINCIPALX + addCommissionConvertis
