@@ -24,8 +24,9 @@
       const to = formData.get('to');
       const subject = formData.get('subject');
       const message = formData.get('message');
-
-      axios.post('https://api.mailjet.com/v3.1/send', {
+      const url = 'https://api.mailjet.com/v3.1/send';
+      const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+      axios.post(proxyUrl + url,  {
         Messages: [{
           From: { Email: 'becare.fr.ge@gmail.com', Name: 'becare' },
           To: [{ Email: to }],
