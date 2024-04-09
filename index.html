@@ -38,15 +38,8 @@
             </div>
           </div>
           <div class="content" >      
-              <p style="cursor: pointer; color: blue !important; text-align: center;" id="affiliateID"><span class="icon"><i class="fas fa-copy" aria-hidden="true"></i></span>Copy your amwalette adress link.</p>
-               <form data-copy=true>
-                 <input id="linkInput" type="text" data-click-select-all style="border: none !important; cursor: pointer; border-radius: 5px !important; opacity:0;" />
-               </form>
-               <p style="cursor: pointer; color: green !important; text-align: center;" id="affiliateIDx"><span class="icon"><i class="fas fa-copy" aria-hidden="true"></i></span>Copy your amwalette affiliate link.</p>
-               <form data-copy=true>
-                 <input id="linkInputx" type="text" data-click-select-all style="border: none !important; cursor: pointer; border-radius: 5px !important; opacity:0;" />
-               </form>
-            <div class="card" style="height: 35vh; overflow: auto;">
+          <!---->
+            <div class="card" style="height: 55vh; overflow: auto;">
               <div class="upper-row">
                 <div class="card-item menu-btnwy" id="financementId">          
                   <span style="font-size: 12px !important; text-align: center;">😇</span> 
@@ -61,53 +54,22 @@
                   <!--<span id="balanceIDB"></span>-->
                 </div>
               </div>
-              <span class="t-desc" style="text-align: center; opacity: 0 !important;" id="fiestItemIdB">Transfer you solde for:</span>
+              <span class="t-desc" style="text-align: center; opacity: 0 !important;" id="fiestItemIdB">
+                Transfer you solde for:
+              </span>
               <div class="container" id="containerID">
                 <div class="row">
-                  <div class="col-6 menu-btnx lower-row" id="transfer_systems"><p style="font-size: 12px;"> Transfer systems</p></div>
-                  <div class="col-6 menu-btnx lower-row" id="transfer_for_user"><p style="font-size: 12px;">Transfer by amwalette</p></div>
+                  <div class="col-6 menu-btnx lower-row" id="transfer_systemsd" data-toggle="modal" data-target="#exampleModalCenter" style=" background-color: #2c3338; color: white;"><p style="font-size: 12px;">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-money-check-alt"></i> Transfer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div>
+                  <div class="col-6 menu-btnx lower-row" id="transfer_for_user" style=" background-color: #2c3338; color: white;"><p style="font-size: 12px; margin-top: 26px !important;" id="menu-btnId">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-exchange-alt"></i> Recharge &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div>
+                </div>              
+              </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-6 menu-btnx lower-row" id="transfer_systemsx" style=" background-color: #2c3338; color: white;"><p style="font-size: 12px;">&nbsp;&nbsp;<i class="fas fa-chart-line"></i> investment&nbsp;&nbsp;</p></div>
+                  <div class="col-6 menu-btnx lower-row" id="transfer_for_userx" style=" background-color: #2c3338; color: white;"><p style="font-size: 12px;">&nbsp;<i class="fas fa-hand-holding-usd"></i> crowdfunding&nbsp;</p></div>
                 </div>
               </div>
 
-              <div class="container" style="display: none;" id="containerIDx">
-                <div style="opacity: 0;">hjklmkjhg</div>
-              <div class="row lower-row">
-                <div class="icon-item" id="pix">
-                  <div class="icon"><i class="fal fa-wallet"></i></div>
-                  <div class="icon-text">Pix money</div>
-                </div>&nbsp;
-                <div class="icon-item"  id="paypal">
-                  <div class="icon"><i class="fas fa-money-check-alt"></i></div>
-                  <div class="icon-text">Paypal</div>
-                </div>&nbsp;
-                <div class="icon-item"  id="orangemoney">
-                  <div class="icon"><i class="fas fa-money-check-alt"></i></div>
-                  <div class="icon-text">Orange Money</div>
-                </div>&nbsp;
-                <div class="icon-item"  id="uwallet">
-                  <div class="icon"><i class="fal fa-wallet"></i></div>
-                  <div class="icon-text">U-Wallet</div>
-              </div>
-              </div>
-              <div class="lower-row row" id="fiestItemIdA">
-                <div class="icon-item"  id="tigomoney">
-                  <div class="icon"><i class="fal fa-wallet"></i></div>
-                  <div class="icon-text">Tigo Money</div>
-                </div>&nbsp;
-                <div class="icon-item"  id="bankmoney">
-                  <div class="icon"><i class="fas fa-money-check-alt"></i></div>
-                  <div class="icon-text">Bank Transfer</div>
-                </div>&nbsp;
-                <div class="icon-item"  id="perfectmoney">
-                  <div class="icon"><i class="fas fa-money-check-alt"></i></div>
-                  <div class="icon-text">Perfectmoney</div>
-                </div>&nbsp;
-                <div class="icon-item"  id="bitcoin">
-                  <div class="icon"><i class="fal fa-wallet"></i></div>
-                  <div class="icon-text">Bitcoin</div>
-                </div>
-              </div>
-              </div>
            
             <div class="transactions" style="display: none;"><span class="t-desc">Transfer your solde for:</span>
               <div class="transaction">
@@ -147,7 +109,7 @@
           </div>
           <div class="drawer">
             <span><a href="login.html" style="color: #2c3338;"><i class="fal fa-sign-out-alt"></i></a></span>
-            <div class="menu-btn" id="menu-btnId"><!--<i class="fal fa-plus"></i>-->Recharge amwalette</i></div>
+            <div class="menu-btn"  data-toggle="modal" data-target="#ModalnotificationidLink"><!--<i class="fal fa-plus"></i>--> Copy Links</i></div>
             <span><!---to evenly space icons---></span>
            <a href="./wallet/wallet.html"> <span> <i class="fal fa-wallet wallet-icon"  style="color: blue;"></i></span></a>
           </div>
@@ -178,6 +140,90 @@
         </div>
       </div>
   </div>
+
+  <div style="background-color: rgb(21, 20, 46) !important; font-size: 10px !important;" class="modal fade" id="ModalnotificationidLink" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content" style="background-color: rgb(35, 34, 63); color:white;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">The Links</h5>
+          <button id="deletenotfifId" type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p style="cursor: pointer; color: blue !important; text-align: center; font-size: 15px !important;" id="affiliateID"><span class="icon"><i class="fas fa-copy" aria-hidden="true"></i></span> Copy your amwalette adress link.</p>
+          <form data-copy=true>
+            <input id="linkInput" type="text" data-click-select-all style="border: none !important; cursor: pointer; border-radius: 5px !important; opacity:0;" />
+          </form>
+          <p style="cursor: pointer; color: green !important; text-align: center; font-size: 15px !important;" id="affiliateIDx"><span class="icon"><i class="fas fa-copy" aria-hidden="true"></i></span>  Copy your amwalette affiliate link.</p>
+          <form data-copy=true>
+            <input id="linkInputx" type="text" data-click-select-all style="border: none !important; cursor: pointer; border-radius: 5px !important; opacity:0;" />
+          </form>           
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div style=" background-color: #2c3338;" class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #2c3338; display: none;">
+        <button id="deletenotfifId" type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style=" background-color: #2c3338;">
+        <div class="container">
+        <div class="row">
+          <div class="icon-item col-3" id="pix">
+            <div class="icon"><i class="fal fa-wallet"></i></div>
+            <div class="icon-text">Pix money</div>
+          </div>
+          <div class="icon-item col-3"  id="paypal">
+            <div class="icon"><i class="fas fa-money-check-alt"></i></div>
+            <div class="icon-text">Paypal</div>
+          </div>
+          <div class="icon-item col-3"  id="orangemoney">
+            <div class="icon"><i class="fas fa-money-check-alt"></i></div>
+            <div class="icon-text">Orange Money</div>
+          </div>
+          <div class="icon-item col-3"  id="uwallet">
+            <div class="icon"><i class="fal fa-wallet"></i></div>
+            <div class="icon-text">U-Wallet</div>
+        </div>
+        </div>
+        </div>
+        <div class="container">
+          <div class=" row" >
+            <div class="icon-item col-3"  id="tigomoney">
+              <div class="icon"><i class="fal fa-wallet"></i></div>
+              <div class="icon-text">Tigo Money</div>
+            </div>
+            <div class="icon-item col-3"  id="bankmoney">
+              <div class="icon"><i class="fas fa-money-check-alt"></i></div>
+              <div class="icon-text">Bank Transfer</div>
+            </div>
+            <div class="icon-item col-3"  id="perfectmoney">
+              <div class="icon"><i class="fas fa-money-check-alt"></i></div>
+              <div class="icon-text">Perfectmoney</div>
+            </div>
+            <div class="icon-item col-3"  id="bitcoin">
+              <div class="icon"><i class="fal fa-wallet"></i></div>
+              <div class="icon-text">Bitcoin</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style=" background-color: #2c3338;">
+        <a href="amwalette.html"><button type="button" class="btn btn-primary" style=" background-color: #2c3338; border: #06D778 1px solid;"><img src="img/logo_of_wallet.jpg" alt="" style="width: 20px; height: 20px; border-radius: 100%;"> AM_wallet</button></a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" style=" background-color: #2c3338; border: #06D778 1px solid;">
+          Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     <script src="index.js"></script>
     <script src="indexv.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"  crossorigin="anonymous"></script>
