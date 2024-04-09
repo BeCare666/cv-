@@ -407,13 +407,14 @@ font-family: 'Montserrat', sans-serif;
   color: white;
   top: -5px;
   position: absolute;
-  transform: rotate(-45deg);
+  /*transform: rotate(-45deg);*/
   border-radius: 10px;
   box-shadow: 5px 5px 25px 0px rgba(0,0,0,0.2);
   cursor: pointer;
   transition: all 0.1s;
   opacity: 0.9;
   text-align: center;
+  padding: 5px;
 }
 
 .menu-btn:hover {

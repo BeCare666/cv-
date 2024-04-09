@@ -368,7 +368,6 @@ var transfer_systems = document.getElementById('transfer_systems')
 var transfer_for_user = document.getElementById('transfer_for_user')
 var containerID = document.getElementById('containerID')
 var containerIDx = document.getElementById('containerIDx')
- 
 
 var containerId = document.getElementById('containerId');
 var assistanceId = document.getElementById('assistanceId');
