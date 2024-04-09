@@ -368,14 +368,8 @@ var transfer_systems = document.getElementById('transfer_systems')
 var transfer_for_user = document.getElementById('transfer_for_user')
 var containerID = document.getElementById('containerID')
 var containerIDx = document.getElementById('containerIDx')
-transfer_systems.addEventListener("click", function(){
-  containerIDx.style.display = "block"
-  containerID.style.display = "none"
-})
+ 
 
-transfer_for_user.addEventListener("click", function(){ 
- window.location.href = "amwalette.html"
-})
 var containerId = document.getElementById('containerId');
 var assistanceId = document.getElementById('assistanceId');
 var menubtnId = document.getElementById('menu-btnId');
