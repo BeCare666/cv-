@@ -110,7 +110,7 @@ body {
 
 .header {
   height: 30%;
-  background-color: rgb(21, 20, 46) !important;
+  background-color: #d47fa0;
   border-bottom-right-radius: 40px;
     border-bottom-left-radius: 40px;
   display: flex;
@@ -125,7 +125,7 @@ body {
   content:"";
   height: 200px;
   width: 200px;
-  background-color: #2c3338;
+  background-color: #d44179;
   border-radius: 50%;
   position:absolute;
   top: -60px;
@@ -137,7 +137,7 @@ body {
   content:"";
   height: 100px;
   width: 100px;
-  background-color: #2c3338;
+  background-color: #d44179;
   border-radius: 50%;
   position:absolute;
   right: -20px;
