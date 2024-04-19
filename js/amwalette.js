@@ -15,7 +15,8 @@ const firebaseConfig = {
     //const bilanuserId = "JyPM9obdRafgNHOZZ8e4piR1SVA3"
     
     firebase.auth().onAuthStateChanged(function(user) { 
-    if(user){ 
+    if(user){
+      var useremail = user.email
         var submitid = document.getElementById("submitid");
         submitid.addEventListener("click", submitmy)
         function submitmy() {
@@ -32,6 +33,8 @@ const firebaseConfig = {
                 .then((snapshot) => {
                 if (snapshot.exists()) {
                     var ACCOUNTPRINCIPAL = snapshot.val().ACCOUNTPRINCIPAL
+                    var usernameVal = snapshot.val().username
+                    var userEmail = snapshot.val().email
                    // var ACCOUNTPRINCIPALACCESS = snapshot.val().ACCOUNTPRINCIPALACCESS
                     var myComptaConvertis = parseFloat(ACCOUNTPRINCIPAL);
                     var addCommissionConvertis = parseFloat(soldeId)
@@ -83,13 +86,76 @@ const firebaseConfig = {
                                 icon: 'success',
                                 title:"Succès",
                                 confirmButtonText: "OK",
-                                allowOutsideClick: false,
+                                allowOutsideClick: true,
                                 text : `Your transfer has been completed successfully.`,
                                 }).then((result)=>{
                                 if(result.isConfirmed){
-                                window.location.reload();
+                                //window.location.reload();
                                 }
                             })
+
+                              // statr envoi de mail de validation
+                              const apiKey = "8641DFD6DEB84F274A242CED8BEE37881D26BCEBA376A91F443285636EE43B33260B0611BBC88F1001BF8C88FBBC26C1";
+                              const apiUrl = "https://api.elasticemail.com/v2/email/send";
+                              
+                              // Définir les paramètres de l'e-mail
+                              const emailParams = {
+                              apiKey: apiKey,
+                              subject: "Notification de Commission",
+                              from: "amobilewallet.inter@gmail.com",
+                              fromName: "AM WALLET",
+                              to:  userEmail,
+                              bodyHtml: `
+                              <table cellpadding="10" cellspacing="0" style="background-color: #f1f1f1; padding: 20px;">
+                                  <tr>
+                                <td>
+                                    <h1 style="color: #333;">Congratulations ${usernameVal}!</h1>
+                                    <p style="font-size: 16px; color: #666;">
+                                    We are pleased to inform you that you have just received ${addCommissionConvertis}$ from ${useremail} about AM WALLET. thank you!
+                                    </p>
+                                    <p style="font-size: 14px; color: #999;">
+                                        Stay tuned for more exciting news!
+                                    </p>
+                                    <p style="font-size: 14px; color: #999;">
+                                        Sincerely,
+                                    </p>
+                                    <p style="font-size: 14px; color: #999;">
+                                        The AM WALLET team.
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        `
+                        };
+
+                        // Effectuer une requête POST vers l'API ElasticEmail
+                        fetch(apiUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: new URLSearchParams(emailParams)
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            //console.log(data); // Afficher la réponse de l'API ElasticEmail
+                            if (data.success) {
+                               window.location.href = "index.html"
+                            // localStorage.removeItem('IDAFILIATE');
+                            console.log("E-mail envoyé avec succès.");
+                            } else {
+                            console.error("Erreur lors de l'envoi de l'e-mail.");
+                            window.location.href = "index.html"
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Erreur lors de la requête API :", error);
+                             window.location.href = "index.html"
+                        });
+                        // end envoi de mail de validation
+
+
                           }
                         })   
                       }
