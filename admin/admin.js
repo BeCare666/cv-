@@ -173,7 +173,6 @@ function updateAllUsers() {
        })
         });
         // end function to send notification 
-
         const userRefx = database.ref(`/utilisateurs/${usermxid}`);
         userRefx.once("value")
         .then((snapshot)=> {  
@@ -237,6 +236,7 @@ function updateAllUsers() {
             alert("il y une erreur")
         })
         })
+        
         listItems.push(li);
         li.style.cursor = "pointer"
         li.innerHTML = `
@@ -249,7 +249,62 @@ function updateAllUsers() {
         result.appendChild(li);
     })  
     })  
-   
+
+                  // Sélectionnez le bouton du pied de page
+                 
+                  var sendnotificationidxw = document.getElementById('sendnotificationidw');
+                  sendnotificationidxw.addEventListener('click', function() {
+                    // Récupérer la valeur du champ de saisie
+                    const notificationidw = document.getElementById('notificationidw').value;
+                    // Vérifier si la valeur est vide
+                    if (!notificationidw) {
+                        // Afficher un message d'erreur ou empêcher l'exécution de la suite du code
+                        console.error("L'identifiant de notification est vide !");
+                        return; // Arrêter l'exécution de la fonction
+                    }
+                    
+                    const dateActuelle = new Date();
+                    // Obtenez les composantes de la date et de l'heure  
+                    const jour = dateActuelle.getDate();
+                    const mois = dateActuelle.getMonth() + 1; // Les mois commencent à 0, donc ajoutez 1
+                    const annee = dateActuelle.getFullYear();
+                    const heures = dateActuelle.getHours();
+                    const minutes = dateActuelle.getMinutes();
+                    // Formatez la date et l'heure
+                    const dateFormatee = `${jour}/${mois}/${annee} ${heures}h:${minutes}min`;
+                  
+                    // Récupérez une référence à la liste des utilisateurs
+                    const usersRef = database.ref(`/utilisateurs`);
+                    
+                    // Function to add a notification to the user's messages array
+                    function addNotificationToUser(userRef, notificationidw, status, time) {
+                        const newNotification = { notificationid: notificationidw, status: status, time: time };
+                        userRef.child("MESSAGES").push(newNotification);
+                    }              
+                    
+                    // Ajoutez la notification à tous les utilisateurs
+                    usersRef.once('value', function(snapshot) {
+                        snapshot.forEach(function(childSnapshot) {
+                            const userRef = childSnapshot.ref;
+                            addNotificationToUser(userRef, notificationidw, true, dateFormatee);
+                        });
+                        
+                        // Affichez la notification de succès une fois que toutes les notifications ont été envoyées
+                        Swal.fire({
+                            icon: 'success',
+                            title: "Félicitations !",
+                            text: "La notification a été envoyée avec succès à tous les utilisateurs !",
+                            allowOutsideClick: false,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+                    });
+                });
+                
+                
+                // end function to send notification    
 }
 
 
@@ -280,4 +335,13 @@ function validerSaisie(input) {
     } else {
     }
   }
- 
+                  // Ajoutez un gestionnaire d'événements clic pour le bouton du pied de page 
+                  var notificationidxw = document.getElementById('notificationidxw');
+                  // start function to send notification 
+                  notificationidxw.addEventListener('click', function() {
+                  $("#Modalnotificationidw").modal({
+                  show: true,
+                  backdrop: "static",
+                  keyboard: false,
+                  });
+                  });
