@@ -23,10 +23,10 @@ const firebaseConfig = {
        var InvestClass =  document.querySelectorAll('.investClass');
        InvestClass.forEach((T)=>{
       T.addEventListener('click', function(){
+        var Amont = T.id
         if(!ACCOUNTINVESTSATUS && ACCOUNTINVEST ==0){
-       var Amont = T.id
        const newData = {
-         ACCOUNTINVEST:Amont,
+         ACCOUNTINVEST: Amont,
          };
        userRef.update(newData, (error) => {
          if (error){
@@ -42,7 +42,7 @@ const firebaseConfig = {
              }
             })
          }else{
-          localStorage.setItem('SommesPrice', Amont)
+{/*          localStorage.setItem('SommesPrice', Amont)
                     // Récupérer la valeur du champ de saisie
                     const notificationidw = `Félicitations
                     Votre pack d'investissement est  activé et nous vous informons 
@@ -76,7 +76,7 @@ const firebaseConfig = {
                             const userRef = childSnapshot.ref;
                             addNotificationToUser(userRef, notificationidw, true, dateFormatee);
                         });
-                    });            
+              }); */}           
                 Swal.fire({
                     title: "Congratulation",
                     text:"Your investment pack has been activated.",
