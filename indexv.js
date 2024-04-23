@@ -71,7 +71,7 @@ if(!snapshot.exists()){
                   ACCOUNTINVEST:0,
                   ACCOUNTINVESTSATUS: false,
                   ACCOUNTINVESTGETCIDR: 0,
-                  ACCOUNTINVESTGETCIDRDATE: ""
+                  ACCOUNTINVESTGETCIDRDATE: ""  
                                                                     
                   }).then(() => {  
                   Swal.fire({
