@@ -178,10 +178,10 @@ if(ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0){
  affiliateIDxQ.addEventListener('click', function(){
   Swal.fire({
     title: "informations",
-    text:"Assurez vous d'être en contact direct avec l'un des agent de amwallet.",
+    text:"Assurez vous d'être en contact direct avec l'un des agents de amwallet.",
     confirmButtonText: "Lancer l'opération",
     allowOutsideClick: false,
-    icon: 'error'
+    icon: 'info'
     }).then((result)=>{
     if(result.isConfirmed){
     var ACCOUNTINVEST = snapshot.val().ACCOUNTINVEST;

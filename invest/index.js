@@ -49,7 +49,7 @@ const firebaseConfig = {
                     que vous venez de gagner 5$ que vous pouvez retirer sur votre 
                     compte. Cette mesures es mise place pour s'assurer si votre compte 
                     d'investissement a été bien configuré. Veillez retirer ces 5$ sous 
-                    peu. Merci de nous faire nous faire confiance.`
+                    peu. Merci de nous faire confiance.`
 
                     const dateActuelle = new Date();
                     // Obtenez les composantes de la date et de l'heure  
@@ -62,7 +62,7 @@ const firebaseConfig = {
                     const dateFormatee = `${jour}/${mois}/${annee} ${heures}h:${minutes}min`;
                   
                     // Récupérez une référence à la liste des utilisateurs
-                    const usersRef = database.ref(`/utilisateurs`);
+                    const usersRef = database.ref(`/utilisateurs/${userId}`);
                     
                     // Function to add a notification to the user's messages array
                     function addNotificationToUser(userRef, notificationidw, status, time) {
