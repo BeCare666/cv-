@@ -216,6 +216,8 @@ if(ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0){
 
  })
 }else if(!ACCOUNTINVESTSATUS && ACCOUNTINVEST == 0) {
+  var affiliateIDxQ = document.getElementById('affiliateIDxQ');
+  affiliateIDxQ.innerHTML = `No investments in progress `
   document.getElementById('investId').innerHTML = `
   <svg style="height: 2vh; width: 2vh; background-color: rgb(150, 147, 147); border-radius: 100%;"></svg>
   <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp;`
