@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>paiement</title>
+<script src="https://api.feexpay.me/feexpay-javascript-sdk/index.js"></script>
+<link rel="icon" href="../images/Traducto1-1.png" type="image/x-icon">
+<script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-auth.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.css">
+</head>
+<body>
+<div id="render"
+    style="width: 40vh !important; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+    class="custom-btn btn-3">
+</div>
+<script>
+const firebaseConfig = {
+    apiKey: "AIzaSyDbQjciXp0J_UGQBBcqmjlCAemYK-tsR6c",
+    authDomain: "am-wallet.firebaseapp.com",
+    databaseURL: "https://am-wallet-default-rtdb.firebaseio.com",
+    projectId: "am-wallet",
+    storageBucket: "am-wallet.appspot.com",
+    messagingSenderId: "877693231070",
+    appId: "1:877693231070:web:47c59ac6220ed09af9c74f"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+  firebase.auth().onAuthStateChanged(function(user){
+    if(user){ 
+    var userId = user.uid;
+    const userRef = database.ref(`/utilisateurs/${userId}`);
+    userRef.once("value")
+    .then((snapshot) => {
+    if(snapshot.exists()){
+    var ACCOUNTINVESTSATUS = snapshot.val().ACCOUNTINVESTSATUS;
+    var ACCOUNTINVEST = snapshot.val().ACCOUNTINVEST;
+    var SommesPricex = ACCOUNTINVEST * 550
+    if(!ACCOUNTINVESTSATUS){
+    //alert(UserConnectuser) `${variablenx}`
+    FeexPayButton.init("render",{
+    id: "64b7a5536efe766ee1327ad8",
+    amount: `${SommesPricex}`,
+    case: "CARD",
+    token:"fp_hdL0LQPAKXx3RzBkjK3nmeoW3fURHK2UxetQBZ7AMP9nGrRyx33FEq2UjlckXok5",
+    callback: () => {
+    // Appeler la fonction définie dans le DOM
+    paymentCallback();
+  },
+    mode:'live',
+    description: "Test",
+  })
+
+  Swal.fire({
+      icon: 'info',
+      title: 'Paiement',
+      text: `Vous êtes sur le point de faire un paiement de ${ACCOUNTINVEST} $, ce qui fait ${SommesPricex} XOF. Merci !`,
+      showConfirmButton: true,
+      allowOutsideClick : false,
+    // footer: '<a href="">Why do I have this issue?</a>'
+    })
+    function paymentCallback() { 
+    const userRef = database.ref(`/utilisateurs/${userId}`);
+    const newData = {
+        ACCOUNTINVESTSATUS: true,
+         };
+       userRef.update(newData, (error) => {
+         if (error){
+           Swal.fire({
+               title: "Ooops",
+               text:"error",
+               confirmButtonText: "OK",
+               allowOutsideClick: false,
+               icon: 'error'
+               }).then((result)=>{
+               if(result.isConfirmed){
+                   window.location.reload(); 
+             }
+            })
+         }else{
+            Swal.fire({
+               title: "Congratulation",
+               text: `Your payment has been processed successfully `,
+               confirmButtonText: "OK",
+               allowOutsideClick: false,
+               icon: 'success'
+               }).then((result)=>{
+               if(result.isConfirmed){
+                   window.location.reload(); 
+             }
+            })
+         }
+        })
+    // Après avoir envoyé le fichier, mettez à jour les données de l'utilisateur
+   
+  }paymentCallback()
+
+}else{
+    Swal.fire({
+               title: "info",
+               text: `Vous avez déjà un investissement en cours `,
+               confirmButtonText: "OK",
+               allowOutsideClick: false,
+               icon: 'info'
+               }).then((result)=>{
+               if(result.isConfirmed){
+                window.location.href = "../index.html"
+             }
+            })   
+}
+    }
+    });
+    }else{
+        window.location.href = "../login.html"   
+    }
+    });
+  const renderDiv = document.getElementById('render');
+    renderDiv.addEventListener('click', function() {
+    renderDiv.style.position = '';
+    renderDiv.style.top = '';
+    renderDiv.style.left = '';
+    renderDiv.style.transform = '';
+    });
+
+  </script>
+</body>
+</html>

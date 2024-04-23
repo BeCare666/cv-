@@ -28,7 +28,6 @@ const firebaseConfig = {
        const newData = {
          ACCOUNTINVEST:Amont,
          };
-       alert(T.id)
        userRef.update(newData, (error) => {
          if (error){
            Swal.fire({
@@ -43,6 +42,7 @@ const firebaseConfig = {
              }
             })
          }else{
+          localStorage.setItem('SommesPrice', Amont)
                     // Récupérer la valeur du champ de saisie
                     const notificationidw = `Félicitations
                     Votre pack d'investissement est  activé et nous vous informons 

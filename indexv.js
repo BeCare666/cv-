@@ -155,7 +155,7 @@ marqueeId.innerHTML = `Welcome to amwallet !`
 marqueeId.innerHTML = `${MESSAGESAMWALLET} `
 }
 // star function to get invest
-var ACCOUNTINVESTSATUS = snapshot.val().ACCOUNTINVESTSATUS;
+var ACCOUNTINVESTSATUS = snapshot.val().ACCOUNTINVESTSATUS; 
 var ACCOUNTINVEST = snapshot.val().ACCOUNTINVEST;
 if(ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0){
   document.getElementById('investId').innerHTML = `
@@ -166,7 +166,6 @@ if(ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0){
   document.getElementById('investId').innerHTML = `  <svg style="height: 2vh; width: 2vh; border-radius: 100%; background-color:yellow"></svg>
   <span style="font-size: 16px; color: white;"> Investments :${ACCOUNTINVEST} $ </span>&nbsp; `
  var affiliateIDxQ = document.getElementById('affiliateIDxQ');
- affiliateIDxQ.innerHTML = `Click to get your 5$`
  affiliateIDxQ.addEventListener('click', function(){
   Swal.fire({
     title: "informations",
@@ -176,59 +175,33 @@ if(ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0){
     icon: 'error'
     }).then((result)=>{
     if(result.isConfirmed){
-      // Obtenir une référence à l'objet d'authentification
-      var phoneNumber = "+22951455930"
-      const auth = firebase.auth();
-      // Configurer l'application pour envoyer un SMS
-      const appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');  
-      // Envoyer le code de vérification au numéro de téléphone
-      auth.signInWithPhoneNumber(phoneNumber, appVerifier)
-        .then((confirmationResult) => {
-          // Le code de vérification a été envoyé avec succès
-          const verificationCode = prompt('Entrez le code de vérification que vous avez reçu par SMS :');   
-          // Vérifier le code de vérification
-          return confirmationResult.confirm(verificationCode);
-        })
-        .then((result) => {
-          var ACCOUNTINVEST = snapshot.val().ACCOUNTINVEST;
-          var valeurx = "5"
-          var aCCOUNTPRINCIPALX = parseFloat(ACCOUNTINVEST);
-          var addCommissionConvertis = parseFloat(valeurx)
-          var myCommissionAdd = aCCOUNTPRINCIPALX - addCommissionConvertis
-          const newData = {
-            ACCOUNTINVEST: myCommissionAdd,
-          //ACCOUNTPRINCIPALACCESS:0
-          };
-          const userRefx = database.ref(`/utilisateurs/${unserconnectId}`);
-          userRefx.update(newData, (error) => {
-            if (error){
-              Swal.fire({
-                  title: "Ooops",
-                  text:"error",
-                  confirmButtonText: "OK",
-                  allowOutsideClick: false,
-                  icon: 'error'
-                  }).then((result)=>{
-                  if(result.isConfirmed){
-                      window.location.reload(); 
-                  }
-               })
-            }else{
-              window.location.reload(); 
+    var ACCOUNTINVEST = snapshot.val().ACCOUNTINVEST;
+    var valeurx = "5"
+    var aCCOUNTPRINCIPALX = parseFloat(ACCOUNTINVEST);
+    var addCommissionConvertis = parseFloat(valeurx)
+    var myCommissionAdd = aCCOUNTPRINCIPALX - addCommissionConvertis
+    const newData = {
+      ACCOUNTINVEST: myCommissionAdd,
+      ACCOUNTINVESTGETCIDR:addCommissionConvertis
+    };
+    const userRefx = database.ref(`/utilisateurs/${unserconnectId}`);
+    userRefx.update(newData, (error) => {
+      if (error){
+        Swal.fire({
+            title: "Ooops",
+            text:"error",
+            confirmButtonText: "OK",
+            allowOutsideClick: false,
+            icon: 'error'
+            }).then((result)=>{
+            if(result.isConfirmed){
+                window.location.reload(); 
             }
-          })
-         window.location.href = "./../profil.html"
-        })
-        .catch((error) => {
-          // Une erreur s'est produite lors de l'envoi du code de vérification ou de l'authentification
-          //console.error('Erreur d\'authentification par numéro de téléphone:', error);
-          Swal.fire({
-              title: "Ooops",
-              text: `${error} `,
-              icon: 'error'
-            })
-        });
-
+         })
+      }else{
+        window.location.reload(); 
+      }
+    })
     }
  })
 
@@ -238,6 +211,19 @@ if(ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0){
   <svg style="height: 2vh; width: 2vh; background-color: rgb(150, 147, 147); border-radius: 100%;"></svg>
   <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp;`
 }
+var ACCOUNTINVESTGETCIDR = snapshot.val().ACCOUNTINVESTGETCIDR;
+if(ACCOUNTINVESTGETCIDR ==="0"){
+  var affiliateIDxQ = document.getElementById('affiliateIDxQ');
+  affiliateIDxQ.innerHTML = `Click to get your 5$`
+}else{
+  var affiliateIDxQ = document.getElementById('affiliateIDxQ');
+  affiliateIDxQ.innerHTML = `Click to invest ` 
+  affiliateIDxQ.style.color = "blue"
+  affiliateIDxQ.addEventListener('click', function(){
+    window.location.href = "./invest/invest.html"
+  })
+}
+
 // end function to get invest
 //balanceIDA.innerHTML = ` &nbsp; &nbsp; &nbsp; &nbsp;${balanceIDAW} <span class="dollar">&dollar;<span class="dollar"> `
 //balanceIDB.innerHTML = `${balanceIDBW} &dollar;  `
@@ -249,6 +235,7 @@ const userListP = document.getElementById("phistoryId");
 const userListUl = document.createElement("span"); 
 var MESSAGES = snapshot.val().MESSAGES
 var deletenotfifId = document.getElementById('deletenotfifId');
+
 deletenotfifId.addEventListener('click', function(){
 const newData = {
   MESSAGES: ""
@@ -508,3 +495,41 @@ Swal.fire({
     }
  })
 })
+
+{/*document.getElementById('env').addEventListener('click', function(){
+  // Assurez-vous que database est correctement initialisé
+const database = firebase.database();
+
+// Récupérez une référence à la base de données des utilisateurs
+const usersRef = database.ref('utilisateurs');
+
+// Récupérez les données des utilisateurs
+usersRef.once('value', (snapshot) => {
+  // Parcourez chaque utilisateur
+  snapshot.forEach((userSnapshot) => {
+    // Obtenez la clé de l'utilisateur
+    const userKey = userSnapshot.key;
+
+    // Obtenez les données de l'utilisateur
+    const userData = userSnapshot.val();
+
+    // Définissez les nouvelles données à mettre à jour pour cet utilisateur
+    const newData = {
+      ACCOUNTINVESTGETCIDR: 0,
+      ACCOUNTINVESTGETCIDRDATE: ""
+    };
+
+    // Mettez à jour les données de l'utilisateur individuel
+    database.ref(`utilisateurs/${userKey}`).update(newData)
+      .then(() => {
+        // Succès de la mise à jour pour cet utilisateur
+        console.log(`Données mises à jour pour l'utilisateur avec la clé ${userKey}`);
+      })
+      .catch((error) => {
+        // Erreur lors de la mise à jour pour cet utilisateur
+        console.error(`Erreur lors de la mise à jour des données pour l'utilisateur avec la clé ${userKey} :`, error);
+      });
+  });
+});
+
+})*/}

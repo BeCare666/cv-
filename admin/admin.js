@@ -243,7 +243,8 @@ function updateAllUsers() {
             <img src="../img/user_logo.png" alt="">
             <div class="user-info">
                 <h5 style="width: 34vh !important; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${productData.email}</h5>
-                <p>${productData.username}, &nbsp; &nbsp;&nbsp; ${productData.ACCOUNTPRINCIPAL}$</p>
+                <p>${productData.username}, &nbsp; &nbsp;&nbsp; Solde : ${productData.ACCOUNTPRINCIPAL}$  Invest: ${productData.ACCOUNTINVEST}$</p>
+                <p> <strong style="color: blue;">CDDR : ${productData.ACCOUNTINVESTGETCIDR}$</strong></p>
             </div>
             `;
         result.appendChild(li);
