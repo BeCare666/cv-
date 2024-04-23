@@ -184,33 +184,37 @@ if(ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0){
     icon: 'info'
     }).then((result)=>{
     if(result.isConfirmed){
-    var ACCOUNTINVEST = snapshot.val().ACCOUNTINVEST;
-    var valeurx = "5"
-    var aCCOUNTPRINCIPALX = parseFloat(ACCOUNTINVEST);
-    var addCommissionConvertis = parseFloat(valeurx)
-    var myCommissionAdd = aCCOUNTPRINCIPALX - addCommissionConvertis
-    const newData = {
-      ACCOUNTINVEST: myCommissionAdd,
-      ACCOUNTINVESTGETCIDR:addCommissionConvertis
-    };
-    const userRefx = database.ref(`/utilisateurs/${unserconnectId}`);
-    userRefx.update(newData, (error) => {
-      if (error){
-        Swal.fire({
-            title: "Ooops",
-            text:"error",
-            confirmButtonText: "OK",
-            allowOutsideClick: false,
-            icon: 'error'
-            }).then((result)=>{
-            if(result.isConfirmed){
-                window.location.reload(); 
-            }
-         })
+      var ACCOUNTINVESTGETCIDR = snapshot.val().ACCOUNTINVESTGETCIDR;
+      if(ACCOUNTINVESTGETCIDR !=0){
       }else{
-        window.location.reload(); 
+        var ACCOUNTINVEST = snapshot.val().ACCOUNTINVEST;
+        var valeurx = "5"
+        var aCCOUNTPRINCIPALX = parseFloat(ACCOUNTINVEST);
+        var addCommissionConvertis = parseFloat(valeurx)
+        var myCommissionAdd = aCCOUNTPRINCIPALX - addCommissionConvertis
+        const newData = {
+          ACCOUNTINVEST: myCommissionAdd,
+          ACCOUNTINVESTGETCIDR:addCommissionConvertis
+        };
+        const userRefx = database.ref(`/utilisateurs/${unserconnectId}`);
+        userRefx.update(newData, (error) => {
+          if (error){
+            Swal.fire({
+                title: "Ooops",
+                text:"error",
+                confirmButtonText: "OK",
+                allowOutsideClick: false,
+                icon: 'error'
+                }).then((result)=>{
+                if(result.isConfirmed){
+                    window.location.reload(); 
+                }
+             })
+          }else{
+            window.location.reload(); 
+          }
+        }) 
       }
-    })
     }
  })
 
