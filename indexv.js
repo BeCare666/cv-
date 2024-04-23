@@ -167,6 +167,9 @@ if(!ACCOUNTINVESTSATUS && ACCOUNTINVESTGETCIDR !=0){
   affiliateIDxQ.addEventListener('click', function(){
     window.location.href = "./invest/invest.html"
   })
+  document.getElementById('investId').innerHTML = `  <svg style="height: 2vh; width: 2vh; border-radius: 100%; background-color:yellow"></svg>
+  <span style="font-size: 16px; color: white;"> Investments :${ACCOUNTINVEST} $ </span>&nbsp; `
+ var affiliateIDxQ = document.getElementById('affiliateIDxQ');
 }else if(!ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0) {
   var affiliateIDxQ = document.getElementById('affiliateIDxQ');
   affiliateIDxQ.innerHTML = `Click to get your 5$`
