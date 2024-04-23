@@ -69,7 +69,9 @@ if(!snapshot.exists()){
                   MESSAGES : false,
                   MESSAGESAMWALLET:"",
                   ACCOUNTINVEST:0,
-                  ACCOUNTINVESTSATUS: false
+                  ACCOUNTINVESTSATUS: false,
+                  ACCOUNTINVESTGETCIDR: 0,
+                  ACCOUNTINVESTGETCIDRDATE: ""
                                                                     
                   }).then(() => {  
                   Swal.fire({
