@@ -107,7 +107,13 @@ body {
   transform: scale(0.9);
   transform-origin: top center;
 }
-
+#recaptcha-container{
+  position: absolute; top: 5%; left: 50%;
+  transform: translate(-50%, -50%); 
+  align-content: center !important; 
+  align-items: center !important; 
+  text-align: center !important;
+}
 .header {
   height: 30%;
   background-color: #d47fa0;

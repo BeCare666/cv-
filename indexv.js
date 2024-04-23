@@ -68,6 +68,8 @@ if(!snapshot.exists()){
                   ABONNEMENT : false, 
                   MESSAGES : false,
                   MESSAGESAMWALLET:"",
+                  ACCOUNTINVEST:0,
+                  ACCOUNTINVESTSATUS: false
                                                                     
                   }).then(() => {  
                   Swal.fire({
@@ -152,6 +154,91 @@ marqueeId.innerHTML = `Welcome to amwallet !`
 }else{
 marqueeId.innerHTML = `${MESSAGESAMWALLET} `
 }
+// star function to get invest
+var ACCOUNTINVESTSATUS = snapshot.val().ACCOUNTINVESTSATUS;
+var ACCOUNTINVEST = snapshot.val().ACCOUNTINVEST;
+if(ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0){
+  document.getElementById('investId').innerHTML = `
+  <svg style="height: 2vh; width: 2vh; background-color: #06D778; border-radius: 100%;"></svg>
+  <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp; 
+  `
+}else if(!ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0) {
+  document.getElementById('investId').innerHTML = `  <svg style="height: 2vh; width: 2vh; border-radius: 100%; background-color:yellow"></svg>
+  <span style="font-size: 16px; color: white;"> Investments :${ACCOUNTINVEST} $ </span>&nbsp; `
+ var affiliateIDxQ = document.getElementById('affiliateIDxQ');
+ affiliateIDxQ.innerHTML = `Click to get your 5$`
+ affiliateIDxQ.addEventListener('click', function(){
+  Swal.fire({
+    title: "informations",
+    text:"Assurez vous d'être en contact direct avec l'un des agent de amwallet.",
+    confirmButtonText: "Lancer l'opération",
+    allowOutsideClick: false,
+    icon: 'error'
+    }).then((result)=>{
+    if(result.isConfirmed){
+      // Obtenir une référence à l'objet d'authentification
+      var phoneNumber = "+22951455930"
+      const auth = firebase.auth();
+      // Configurer l'application pour envoyer un SMS
+      const appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');  
+      // Envoyer le code de vérification au numéro de téléphone
+      auth.signInWithPhoneNumber(phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+          // Le code de vérification a été envoyé avec succès
+          const verificationCode = prompt('Entrez le code de vérification que vous avez reçu par SMS :');   
+          // Vérifier le code de vérification
+          return confirmationResult.confirm(verificationCode);
+        })
+        .then((result) => {
+          var ACCOUNTINVEST = snapshot.val().ACCOUNTINVEST;
+          var valeurx = "5"
+          var aCCOUNTPRINCIPALX = parseFloat(ACCOUNTINVEST);
+          var addCommissionConvertis = parseFloat(valeurx)
+          var myCommissionAdd = aCCOUNTPRINCIPALX - addCommissionConvertis
+          const newData = {
+            ACCOUNTINVEST: myCommissionAdd,
+          //ACCOUNTPRINCIPALACCESS:0
+          };
+          const userRefx = database.ref(`/utilisateurs/${unserconnectId}`);
+          userRefx.update(newData, (error) => {
+            if (error){
+              Swal.fire({
+                  title: "Ooops",
+                  text:"error",
+                  confirmButtonText: "OK",
+                  allowOutsideClick: false,
+                  icon: 'error'
+                  }).then((result)=>{
+                  if(result.isConfirmed){
+                      window.location.reload(); 
+                  }
+               })
+            }else{
+              window.location.reload(); 
+            }
+          })
+         window.location.href = "./../profil.html"
+        })
+        .catch((error) => {
+          // Une erreur s'est produite lors de l'envoi du code de vérification ou de l'authentification
+          //console.error('Erreur d\'authentification par numéro de téléphone:', error);
+          Swal.fire({
+              title: "Ooops",
+              text: `${error} `,
+              icon: 'error'
+            })
+        });
+
+    }
+ })
+
+ })
+}else if(!ACCOUNTINVESTSATUS && ACCOUNTINVEST == 0) {
+  document.getElementById('investId').innerHTML = `
+  <svg style="height: 2vh; width: 2vh; background-color: rgb(150, 147, 147); border-radius: 100%;"></svg>
+  <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp;`
+}
+// end function to get invest
 //balanceIDA.innerHTML = ` &nbsp; &nbsp; &nbsp; &nbsp;${balanceIDAW} <span class="dollar">&dollar;<span class="dollar"> `
 //balanceIDB.innerHTML = `${balanceIDBW} &dollar;  `
 
@@ -191,6 +278,8 @@ userArray.push(MESSAGES)
 userArray.forEach((T)=>{
  userArrayA.push(T)
 })
+
+
 for (const userId in userArrayA) {
   const usergal = userArrayA[userId];
  var userArrayAXXXX = []
