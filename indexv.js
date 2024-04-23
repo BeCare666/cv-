@@ -156,20 +156,17 @@ marqueeId.innerHTML = `Welcome to amwallet !`
 }else{
 marqueeId.innerHTML = `${MESSAGESAMWALLET} `
 }
-// star function to get invest
+// star function to get invest 
 var ACCOUNTINVESTSATUS = snapshot.val().ACCOUNTINVESTSATUS; 
 var ACCOUNTINVEST = snapshot.val().ACCOUNTINVEST;
-if(ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0){
+var ACCOUNTINVESTGETCIDR = snapshot.val().ACCOUNTINVESTGETCIDR;
+if(!ACCOUNTINVESTSATUS && ACCOUNTINVESTGETCIDR !=0){
   var affiliateIDxQ = document.getElementById('affiliateIDxQ');
   affiliateIDxQ.innerHTML = `Click to invest ` 
   affiliateIDxQ.style.color = "blue"
   affiliateIDxQ.addEventListener('click', function(){
     window.location.href = "./invest/invest.html"
   })
-  document.getElementById('investId').innerHTML = `
-  <svg style="height: 2vh; width: 2vh; background-color: #06D778; border-radius: 100%;"></svg>
-  <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp; 
-  `
 }else if(!ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0) {
   var affiliateIDxQ = document.getElementById('affiliateIDxQ');
   affiliateIDxQ.innerHTML = `Click to get your 5$`
@@ -227,6 +224,11 @@ if(ACCOUNTINVESTSATUS && ACCOUNTINVEST !=0){
   document.getElementById('investId').innerHTML = `
   <svg style="height: 2vh; width: 2vh; background-color: rgb(150, 147, 147); border-radius: 100%;"></svg>
   <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp;`
+}else if(ACCOUNTINVESTSATUS && ACCOUNTINVEST != 0){
+  document.getElementById('investId').innerHTML = `
+  <svg style="height: 2vh; width: 2vh; background-color: #06D778; border-radius: 100%;"></svg>
+  <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp; 
+  `
 }
 
 
