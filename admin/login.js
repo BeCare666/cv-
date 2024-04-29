@@ -33,7 +33,7 @@ const firebaseConfig = {
         // La connexion a réussi, vous pouvez accéder à l'utilisateur
         var user = userCredential.user;
         var useruid = user.uid; 
-        if(useruid === "bmCnf6GA04M3nWS3oTxoAs5A6vj1"){
+        if(useruid === "4XlMfTGWe4egy9Ieye8AM4joAIh2"){
         if(user.emailVerified){
         // L'utilisateur existe avec l'e-mail et le mot de passe donnés 
       //  document.getElementById('sameToBody').style.display = "none"
