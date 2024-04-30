@@ -68,53 +68,53 @@ const firebaseConfig = {
           }
           })
         }  
-    }else{
+        }else{
+            document.getElementById('login__username').value = ""
+            document.getElementById('login__password').value = ""
+            Swal.fire({
+            title: "Ooops",
+            text: "Accès refusé !",
+            icon: 'error'
+            })   
+        }
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        //console.error('Error:', errorMessage);
+        if (errorCode === 'INVALID_LOGIN_CREDENTIALS'){
+        console.error('Error:', errorCode, errorMessage);
+        // document.getElementById('sameToBody').style.display = "none"
         document.getElementById('login__username').value = ""
         document.getElementById('login__password').value = ""
         Swal.fire({
-        title: "Ooops",
-        text: "Accès refusé !",
-        icon: 'error'
-        })   
-    }
-  })
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    //console.error('Error:', errorMessage);
-    if (errorCode === 'INVALID_LOGIN_CREDENTIALS'){
-    console.error('Error:', errorCode, errorMessage);
-    // document.getElementById('sameToBody').style.display = "none"
-    document.getElementById('login__username').value = ""
-    document.getElementById('login__password').value = ""
-    Swal.fire({
-        icon: 'error',
-        title:"Erreur ",
-        allowOutsideClick: false,
-        text : `L'utilisateur n'existe pas avec cet adresse mail !`,
-    })
-   
-  }else if(errorCode === 'auth/wrong-password'){
-   // document.getElementById('sameToBody').style.display = "none"
-    document.getElementById('login__username').value = ""
-    document.getElementById('login__password').value = ""
+            icon: 'error',
+            title:"Erreur ",
+            allowOutsideClick: false,
+            text : `L'utilisateur n'existe pas avec cet adresse mail !`,
+        })
+      
+      }else if(errorCode === 'auth/wrong-password'){
+      // document.getElementById('sameToBody').style.display = "none"
+        document.getElementById('login__username').value = ""
+        document.getElementById('login__password').value = ""
 
-    Swal.fire({
-        icon: 'error',
-        title:"Erreur ",
-        allowOutsideClick: false,
-        text : `Mot de passe incorrect !`,
-    })
-  }else{
-    //document.getElementById('sameToBody').style.display = "none"
-    document.getElementById('login__username').value = ""
-    document.getElementById('login__password').value = ""
-    Swal.fire({
-        icon: 'error',
-        title:"Erreur ",
-        allowOutsideClick: false,
-        text : `L'utilisateur n'existe pas ou vos identifiants sont incorrect  `,
-    })
-  }
-  });  
-}
+        Swal.fire({
+            icon: 'error',
+            title:"Erreur ",
+            allowOutsideClick: false,
+            text : `Mot de passe incorrect !`,
+        })
+      }else{
+        //document.getElementById('sameToBody').style.display = "none"
+        document.getElementById('login__username').value = ""
+        document.getElementById('login__password').value = ""
+        Swal.fire({
+            icon: 'error',
+            title:"Erreur ",
+            allowOutsideClick: false,
+            text : `L'utilisateur n'existe pas ou vos identifiants sont incorrect  `,
+        })
+      }
+      });  
+    }
