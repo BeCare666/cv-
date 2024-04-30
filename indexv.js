@@ -79,6 +79,10 @@ if(!snapshot.exists()){
                   text: "Your account has been finalized!",
                   icon: "success",
                    allowOutsideClick: false,
+                  }).then((result)=>{
+                    if(result.isConfirmed){
+                      window.reload()
+                    }
                   })
                   }).catch((error)=>{
                   Swal.fire({

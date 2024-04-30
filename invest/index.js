@@ -24,14 +24,14 @@ const firebaseConfig = {
        InvestClass.forEach((T)=>{
       T.addEventListener('click', function(){
         var Amont = T.id
-        var valeurx = "5"
+        //var valeurx = "5"
         var Amonti = parseFloat(Amont);
-        var valeurxi = parseFloat(valeurx)
-        var sommes = Amonti + valeurxi
+        //var valeurxi = parseFloat(valeurx)
+        //var sommes = Amonti + valeurxi
         //console.log(sommes)
         if(!ACCOUNTINVESTSATUS && ACCOUNTINVEST ==0){
           const newData = {
-            ACCOUNTINVEST: sommes,
+            ACCOUNTINVEST: Amonti,
             };
           userRef.update(newData, (error) => {
             if (error){
