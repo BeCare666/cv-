@@ -81,7 +81,7 @@ if(!snapshot.exists()){
                    allowOutsideClick: false,
                   }).then((result)=>{
                     if(result.isConfirmed){
-                      window.reload()
+                      location.reload()
                     }
                   })
                   }).catch((error)=>{
