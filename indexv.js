@@ -16,7 +16,7 @@ var tableEmail = []
 firebase.auth().onAuthStateChanged(function(user) { 
 if(user){
 var userId = user.uid;
-//alert(userId)
+localStorage.setItem('unserconnectuserId', userId)
 var useremail = user.email;
 tableEmail.push(useremail)
 const userRef = database.ref(`/utilisateurs/${userId}`);
