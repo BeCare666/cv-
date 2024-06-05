@@ -517,7 +517,8 @@ if (snapshot.exists()) {
     showCancelButton: false,
     showConfirmButton: false,
     allowOutsideClick: false,
-    icon: 'error'
+    icon: 'error',
+    footer:`<a href="https://wa.me/+447418315534">Contact technical support.</a>`
     }) 
 }
 }
