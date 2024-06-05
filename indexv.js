@@ -356,7 +356,8 @@ for (const userId in userArrayAJob) {
             text: `Your payment has been processed successfully. Please check your email address and am-walette will send you your invoice. `,
             confirmButtonText: "OK",
             allowOutsideClick: false,
-            icon: 'success'
+            icon: 'success',
+            footer:`<a href="https://wa.me/+447418315534">Contact technical support.</a>`
             }).then((result)=>{
             if(result.isConfirmed){
                 window.location.reload(); 
