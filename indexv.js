@@ -1,8 +1,8 @@
 const firebaseConfig = {
   apiKey: "AIzaSyDbQjciXp0J_UGQBBcqmjlCAemYK-tsR6c",
   authDomain: "am-wallet.firebaseapp.com",
-  databaseURL: "https://am-wallet-default-rtdb.firebaseio.com",
-  projectId: "am-wallet",
+  databaseURL: "https://am-wallet-default-rtdb.firebaseio.com",  
+  projectId: "am-wallet", 
   storageBucket: "am-wallet.appspot.com",
   messagingSenderId: "877693231070",
   appId: "1:877693231070:web:47c59ac6220ed09af9c74f"
@@ -23,8 +23,8 @@ const userRef = database.ref(`/utilisateurs/${userId}`);
 userRef.once("value")
 .then((snapshot) => {
 if(!snapshot.exists()){
-          document.getElementById('sameToBody').style.display = "none"
-          Swal.fire({
+        document.getElementById('sameToBody').style.display = "none"
+        Swal.fire({
               title: "Your username",
               input: 'text',
               inputAttributes: {
@@ -67,12 +67,13 @@ if(!snapshot.exists()){
                   ACCOUNTPRINCIPAL: 0,
                   ACCOUNTPRINCIPALX: 0,
                   ABONNEMENT : false, 
+                  USERSTATUS : false, 
                   MESSAGES : false,
                   MESSAGESAMWALLET:"",
                   ACCOUNTINVEST:0,
                   ACCOUNTINVESTSATUS: false,
                   ACCOUNTINVESTGETCIDR: 0,
-                  ACCOUNTINVESTGETCIDRDATE: ""  
+                  ACCOUNTINVESTGETCIDRDATE: "", 
                                                                     
                   }).then(() => {  
                   Swal.fire({
@@ -104,6 +105,7 @@ if(!snapshot.exists()){
         })
 
 }else{
+if(snapshot.val().USERSTATUS){
 document.getElementById('sameToBody').style.display = "none"
 var useremail = snapshot.val().email;
 var username = snapshot.val().username; 
@@ -301,6 +303,77 @@ indicatClass.innerHTML = `&nbsp;${userArrayAXXXX.length}`
 userListP.appendChild(userListUl);
   
 }
+var JOBSYX = snapshot.val().JOBSYX
+var userArrayJob = []
+var userArrayAJob = []
+userArrayJob.push(JOBSYX)
+userArrayJob.forEach((W)=>{
+ userArrayAJob.push(W)
+})
+
+const indicatClassJob = document.getElementById("indicatClassJob");
+const userListUlx = document.createElement("span");
+for (const userId in userArrayAJob) {
+  const usergal = userArrayAJob[userId];
+  for(const userI in usergal){
+    const usergax = usergal[userI];
+   
+    const userLix = document.createElement("p");
+    userLix.id = usergax.Descriptiondejob
+    userLix.innerHTML = `
+    <img src="img/logo_of_wallet.jpg" alt="" style="height: 25%; width: 25%; border-radius: 100%;">
+    <p class="card__number">${usergax.Titledejob} </p>
+    <p class="card__owner"><strong>Salaire :</strong> ${usergax.Salairedejob} $</p>
+    <div class="card__info">
+      <p class="card__integral" ><strong>Description :</strong>${usergax.Descriptiondejob}</p><br>
+     
+      <button class=" btn btn-primary" id="paidId">Postuler</button>
+      
+    </div>
+    <strong class="card__owner"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </svg> Ce Job nécessite 1 $</strong>
+
+  <p class="card__owner">Publié le ${usergax.time}</p>
+  </div>`
+  userListUlx.appendChild(userLix);
+  function handleMouseOver(){
+    //alert(usergax.Descriptiondejob);
+    const paidId = document.getElementById('paidId');
+    function handleclick(){
+      openKkiapayWidget({
+        amount: `555`,
+        position: "center",
+        callback: "javascript:sendmycommandinCentremodale()",
+        data: `${usergax.Descriptiondejob}`,
+        theme: "blue",
+        key: "878e7b7232e5a1e067f29d44816f4b801a029e09",
+        });
+
+        addSuccessListener(response => {
+          Swal.fire({
+            title: "Congratulation",
+            text: `Your payment has been processed successfully. Please check your email address and am-walette will send you your invoice. `,
+            confirmButtonText: "OK",
+            allowOutsideClick: false,
+            icon: 'success'
+            }).then((result)=>{
+            if(result.isConfirmed){
+                window.location.reload(); 
+          }
+         })
+        })
+    }
+    paidId.addEventListener('click', handleclick);
+  }
+  userLix.addEventListener('mouseover', handleMouseOver);
+  }
+
+   // Ajoutez la liste à la balise p
+   indicatClassJob.appendChild(userListUlx);
+  
+}
+
 var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
 //function to generate affilition link
 const linkInput = document.getElementById('linkInput');
@@ -435,6 +508,17 @@ if (snapshot.exists()) {
     }
   }) 
 } })
+}
+}else{
+  document.getElementById('sameToBody').style.display = "none"
+  Swal.fire({
+    title: "Ooops",
+    text:"Votre compte est suspendu.",
+    showCancelButton: false,
+    showConfirmButton: false,
+    allowOutsideClick: false,
+    icon: 'error'
+    }) 
 }
 }
 const shwonotification = document.getElementById('shwonotificationid');

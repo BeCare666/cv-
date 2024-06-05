@@ -63,7 +63,6 @@ const firebaseConfig = {
       key: "878e7b7232e5a1e067f29d44816f4b801a029e09",
       });
       addSuccessListener(response => {
-        console.log(response);
         const userRef = database.ref(`/utilisateurs/${userId}`);
     const newData = {
         ACCOUNTINVESTSATUS: true,

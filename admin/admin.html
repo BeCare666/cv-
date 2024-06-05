@@ -22,7 +22,7 @@
     <input type="text" id="filter" placeholder="Search by username">
     <i class="fa-solid fa-magnifying-glass"></i>
   </header><br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-secondary" disabled>Send sms</button>&nbsp;<button class="btn btn-primary" id="notificationidxw">Send sms</button>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-secondary" data-toggle="modal" data-target="#postJobsId">Post Job</button>&nbsp;<button class="btn btn-primary" id="notificationidxw">Send sms</button>
   <div style="opacity: 0;">sdfghjk</div>
   <ul id="result" class="user-list">
     <li>
@@ -130,6 +130,44 @@
   </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="postJobsId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Poster un job</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Title de job </span>
+          </div>
+          <input id="Title_de_job" type="text" class="form-control" placeholder="Title de job" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Job Salaire</span>
+          </div>
+          <input id="Salaire_de_job" type="text" class="form-control" placeholder="Job Salaire" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Job Description</span>
+          </div>
+          <textarea id="Description_de_job" class="form-control" aria-label="With textarea" maxlength="150"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
+        <button type="button" class="btn btn-primary" id="postJobsIdSend">Poster</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="admin.js"></script>
 <a href="index.html"></a>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
