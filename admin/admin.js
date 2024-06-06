@@ -15,8 +15,8 @@ const firebaseConfig = {
     const listItems = [];
     var tableOfPrice = []
     var tableEmail = []
-    firebase.auth().onAuthStateChanged(function(user) { 
-    if(user){
+  firebase.auth().onAuthStateChanged(function(user) { 
+  if(user){
         //var userId = user.uid;
     getData();
 
@@ -374,6 +374,18 @@ function updateAllUsers() {
                  // Start function to send job 
                 var postJobsIdSend = document.getElementById('postJobsIdSend');
                 postJobsIdSend.addEventListener('click', function() { 
+                  function generateUUID() {
+                    // Fonction pour générer un UUID v4
+                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                      var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                      return v.toString(16);
+                    });
+                  }
+                  
+                  // Exemple d'utilisation
+                  var uniqueId = generateUUID();
+
+                  
                   // Récupérer la valeur du champ de saisie
                   const Title_de_job = document.getElementById('Title_de_job').value;
                   const Salaire_de_job = document.getElementById('Salaire_de_job').value;
@@ -392,35 +404,29 @@ function updateAllUsers() {
                     const minutes = dateActuelle.getMinutes();
                     // Formatez la date et l'heure
                     const dateFormatee = `${jour}/${mois}/${annee} ${heures}h:${minutes}min`;
-                  
-                    // Récupérez une référence à la liste des utilisateurs
-                    const usersRef = database.ref(`/utilisateurs`);
-                    
-                    // Function to add a notification to the user's messages array
-                    function addNotificationToUser(userRef, Title_de_job, Salaire_de_job, Description_de_job, time) {
-                        const newNotification = { Titledejob: Title_de_job, Salairedejob: Salaire_de_job, Descriptiondejob: Description_de_job, time: time };
-                        userRef.child("JOBSYX").push(newNotification);
-                    }              
-                    
-                    // Ajoutez la notification à tous les utilisateurs
-                    usersRef.once('value', function(snapshot) {
-                        snapshot.forEach(function(childSnapshot) {
-                            const userRef = childSnapshot.ref;
-                            addNotificationToUser(userRef, Title_de_job, Salaire_de_job, Description_de_job, dateFormatee);
-                        });
-                        
+
+                    firebase.database().ref('lesjobsx/' + uniqueId).set({                    
+                      Titledejob: Title_de_job, 
+                      Salairedejob: Salaire_de_job, 
+                      Descriptiondejob: Description_de_job, 
+                      time: dateFormatee,
+                      jobId: uniqueId
+                                                                        
+                      }).then(() => {  
                         // Affichez la notification de succès une fois que toutes les notifications ont été envoyées
                         Swal.fire({
-                            icon: 'success',
-                            title: "Félicitations !",
-                            text: "Le job a été envoyée avec succès !",
-                            allowOutsideClick: false,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                    });
+                          icon: 'success',
+                          title: "Félicitations !",
+                          text: "Le job a été envoyée avec succès !",
+                          allowOutsideClick: false,
+                      }).then((result) => {
+                          if (result.isConfirmed) {
+                              location.reload();
+                          }
+                      });
+                      }).catch((error)=>{
+                        alert("il y a une erreur")
+                      })
                   }
                   
               });

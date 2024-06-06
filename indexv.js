@@ -67,7 +67,7 @@ if(!snapshot.exists()){
                   ACCOUNTPRINCIPAL: 0,
                   ACCOUNTPRINCIPALX: 0,
                   ABONNEMENT : false, 
-                  USERSTATUS : false, 
+                  USERSTATUS : true, 
                   MESSAGES : false,
                   MESSAGESAMWALLET:"",
                   ACCOUNTINVEST:0,
@@ -106,6 +106,7 @@ if(!snapshot.exists()){
 
 }else{
 if(snapshot.val().USERSTATUS){
+  getJobs()
 document.getElementById('sameToBody').style.display = "none"
 var useremail = snapshot.val().email;
 var username = snapshot.val().username; 
@@ -291,7 +292,7 @@ for (const userId in userArrayA) {
   for(const userI in usergal){
     const userga = usergal[userI];
     userArrayAXXXX.push(userga.notificationid)
-    console.log(userga.notificationid)
+    //console.log(userga.notificationid)
     const userLi = document.createElement("p");
     userLi.innerHTML = `<p class="txn-list" style="cursor: pointer !important; border-radius: 5px !important;">
     <strong id="IDTRANSLATEWALLETU">${userga.notificationid}</strong><br><br><span class="debit-amount" style="color: green !important; position:relative; right:0 !important;">${userga.time}</span></p><hr style="color:white;">`
@@ -301,77 +302,6 @@ for (const userId in userArrayA) {
 indicatClass.innerHTML = `&nbsp;${userArrayAXXXX.length}`
    // Ajoutez la liste à la balise p
 userListP.appendChild(userListUl);
-  
-}
-var JOBSYX = snapshot.val().JOBSYX
-var userArrayJob = []
-var userArrayAJob = []
-userArrayJob.push(JOBSYX)
-userArrayJob.forEach((W)=>{
- userArrayAJob.push(W)
-})
-
-const indicatClassJob = document.getElementById("indicatClassJob");
-const userListUlx = document.createElement("span");
-for (const userId in userArrayAJob) {
-  const usergal = userArrayAJob[userId];
-  for(const userI in usergal){
-    const usergax = usergal[userI];
-   
-    const userLix = document.createElement("p");
-    userLix.id = usergax.Descriptiondejob
-    userLix.innerHTML = `
-    <img src="img/logo_of_wallet.jpg" alt="" style="height: 25%; width: 25%; border-radius: 100%;">
-    <p class="card__number">${usergax.Titledejob} </p>
-    <p class="card__owner"><strong>Salaire :</strong> ${usergax.Salairedejob} $</p>
-    <div class="card__info">
-      <p class="card__integral" ><strong>Description :</strong>${usergax.Descriptiondejob}</p><br>
-     
-      <button class=" btn btn-primary" id="paidId">Postuler</button>
-      
-    </div>
-    <strong class="card__owner"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-  </svg> Ce Job nécessite 1 $</strong>
-
-  <p class="card__owner">Publié le ${usergax.time}</p>
-  </div>`
-  userListUlx.appendChild(userLix);
-  function handleMouseOver(){
-    //alert(usergax.Descriptiondejob);
-    const paidId = document.getElementById('paidId');
-    function handleclick(){
-      openKkiapayWidget({
-        amount: `555`,
-        position: "center",
-        callback: "javascript:sendmycommandinCentremodale()",
-        data: `${usergax.Descriptiondejob}`,
-        theme: "blue",
-        key: "878e7b7232e5a1e067f29d44816f4b801a029e09",
-        });
-
-        addSuccessListener(response => {
-          Swal.fire({
-            title: "Congratulation",
-            text: `Your payment has been processed successfully. Please check your email address and am-walette will send you your invoice. `,
-            confirmButtonText: "OK",
-            allowOutsideClick: false,
-            icon: 'success',
-            footer:`<a href="https://wa.me/+447418315534">Contact technical support.</a>`
-            }).then((result)=>{
-            if(result.isConfirmed){
-                window.location.reload(); 
-          }
-         })
-        })
-    }
-    paidId.addEventListener('click', handleclick);
-  }
-  userLix.addEventListener('mouseover', handleMouseOver);
-  }
-
-   // Ajoutez la liste à la balise p
-   indicatClassJob.appendChild(userListUlx);
   
 }
 
@@ -485,31 +415,12 @@ if (snapshot.exists()) {
     if(error){
       localStorage.removeItem('Cffiliate_id')
     }else{
-    {/*        const notificationid = `Dear user you are receive 100 FCFA on your account.`
-      const userRefx = database.ref(`/utilisateurs/${Cffiliate_id}`);
-      const dateActuelle = new Date();
-      // Obtenez les composantes de la date et de l'heure  
-      const jour = dateActuelle.getDate();
-      const mois = dateActuelle.getMonth() + 1; // Les mois commencent à 0, donc ajoutez 1
-      const annee = dateActuelle.getFullYear();
-      const heures = dateActuelle.getHours();
-      const minutes = dateActuelle.getMinutes();
-      // Formatez la date et l'heure
-      const dateFormatee = `${jour}/${mois}/${annee} ${heures}h:${minutes}min`;
-      //console.log(dateFormatee);
-  // Function to add a gain with status to the user's gains array
-  function addGainToUser(notificationid, status, time) {
-      const newNotification = { notificationid: notificationid, status: status, time:time};
-      userRefx.child("MESSAGES").push(newNotification);
-  }              
-  // Usage
-  addGainToUser(notificationid, true, dateFormatee); // Add a gain of 100 with "won" status*/}
-
     localStorage.removeItem('Cffiliate_id')
     }
   }) 
 } })
 }
+
 }else{
   document.getElementById('sameToBody').style.display = "none"
   Swal.fire({
@@ -521,6 +432,58 @@ if (snapshot.exists()) {
     icon: 'error',
     footer:`<a href="https://wa.me/+447418315534">Contact technical support.</a>`
     }) 
+}
+function getJobs(){
+  var userArrayJob = []
+var userArrayAJob = []
+var userArrayASal = []
+const userRef = database.ref(`/lesjobsx/`);
+  userRef.once("value")
+  .then((snapshot)=> {
+    snapshot.forEach((productSnapshot) => {  
+    const productData = productSnapshot.val();
+    userArrayAJob.push(productData)
+
+})
+
+const indicatClassJob = document.getElementById("indicatClassJob");
+const userListUlx = document.createElement("span");
+
+  for(let i = 0; i < userArrayAJob.length; i++  ){
+   //console.log(userArrayAJob[i]) 
+    const userLix = document.createElement("p");
+    userLix.id = userArrayAJob[i].uniqueId;
+    userLix.innerHTML = `
+      <img src="img/logo_of_wallet.jpg" alt="" style="height: 25%; width: 25%; border-radius: 100%;">
+      <p class="card__number">${userArrayAJob[i].Titledejob} </p>
+      <p class="card__owner"><strong>Salaire :</strong> ${userArrayAJob[i].Salairedejob} $</p>
+      <div class="card__info">
+        <p class="card__integral"><strong>Description :</strong>${userArrayAJob[i].Descriptiondejob}</p><br>
+        <a class="btn btn-primary" href="indexe.html">Postuler</a>
+      </div>
+      <p class="card__owner">Publié le ${userArrayAJob[i].time}</p><hr>
+    `;
+
+    // Attach the mouseover event listener
+    userLix.addEventListener('mouseover', (function(usergax) {
+      return function() {
+       // console.log(usergax.Descriptiondejob);
+        var titltjobx = userArrayAJob[i].Titledejob;
+        var Salairedejob = userArrayAJob[i].Salairedejob;
+        var destjobx = userArrayAJob[i].Descriptiondejob;
+        localStorage.setItem('titltjobx', titltjobx);
+        localStorage.setItem('destjobx', destjobx);
+      };
+    })(userArrayAJob[i]));
+  
+    userListUlx.appendChild(userLix);
+  }
+
+  // Append the list to the parent container
+  indicatClassJob.appendChild(userListUlx);
+
+})
+
 }
 }
 const shwonotification = document.getElementById('shwonotificationid');
@@ -553,21 +516,87 @@ var menubtnId = document.getElementById('menu-btnId');
 menubtnId.addEventListener('click', function(){
 containerId.style.display = "none"
 Swal.fire({
-  title: "Info ",
-  html: `Recharge your account for <strong style="color: blue;">am walette adress</strong>.`,
-  icon: "Info",
-  confirmButtonText: "Yes",
-  cancelButtonText: "Back",
-  showCancelButton: true,
-  footer:`<a href="mailto:amobilewallet.inter@gmail.com">ask for address to assistance <strong style="color: blue;">am walette </strong>.`,
-  allowOutsideClick: false, 
-  }).then((result)=>{
-    if(result.isConfirmed){
-      window.location.reload();
-    }else{ 
-      window.location.reload();
+  title: "Your amount",
+  html: `
+    <style>
+      .swal2-input {
+        width: 100% !important;
+      }
+    </style>
+    <p>Recharge your account for <strong style="color: blue;">am wallet address</strong>.</p>
+    <input type="number" id="amount-input" class="swal2-input" min="1" step="1" />
+  `,
+  preConfirm: () => {
+    const input = document.getElementById('amount-input').value;
+    if (input <= 0) {
+      Swal.showValidationMessage('Please enter a positive number!');
+      return false;
     }
- })
+    return input;
+  },
+  showCancelButton: true,
+  confirmButtonText: 'Recharge',
+  cancelButtonText: 'Cancel'
+}).then((result) => {
+  if (result.isConfirmed) {
+       var inputValue = result.value;
+       const  amount = inputValue *555
+        openKkiapayWidget({
+        amount: `${amount}`,
+        position: "center",
+        callback: "javascript:sendmycommandinCentremodale()",
+        data: ``,
+        theme: "blue",
+        key: "878e7b7232e5a1e067f29d44816f4b801a029e09",
+        });
+
+    addSuccessListener(response => {
+    const unserconnectuserIdE = localStorage.getItem("unserconnectuserId")
+    const balanceIDAWWW = localStorage.getItem('balanceIDAWWW')
+    var myComptaConvertis = parseFloat(balanceIDAWWW);
+    var addCommissionConvertis = parseFloat(inputValue)
+    var myCommissionAdd = myComptaConvertis + addCommissionConvertis
+    console.log('myComptaConvertis entered:', myComptaConvertis);
+    console.log('addCommissionConvertis entered:', addCommissionConvertis);
+    console.log('myCommissionAdd entered:', myCommissionAdd);
+    const newData = {
+      ACCOUNTPRINCIPAL: myCommissionAdd, 
+    };
+    const userRefx = database.ref(`/utilisateurs/${unserconnectuserIdE}`);
+    userRefx.update(newData, (error) => {
+      if (error){
+        Swal.fire({
+            title: "Ooops",
+            confirmButtonText: "OK",
+            allowOutsideClick: false,
+            text: "Your recharge  has failed.",
+            icon: 'error'
+            }).then((result)=>{
+            if(result.isConfirmed){
+                window.location.reload(); 
+            }
+         })
+      }else{
+        Swal.fire({
+            icon: 'success',
+            title:"Succès",
+            confirmButtonText: "OK",
+            allowOutsideClick: true,
+            text : `Your recharge has been completed successfully.`,
+            }).then((result)=>{
+            if(result.isConfirmed){
+            window.location.reload();
+            }
+        })
+
+      }
+    }) 
+  })
+  }
+});
+
+
+
 })
 assistanceId.addEventListener('click', function(){
 containerId.style.display = "none"
