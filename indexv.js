@@ -430,7 +430,7 @@ if (snapshot.exists()) {
     showConfirmButton: false,
     allowOutsideClick: false,
     icon: 'error',
-    footer:`<a href="https://wa.me/+447418315534">Contact technical support.</a>`
+    footer:`<a href="mailto:amobilewallet.inter@gmail.com">Contact technical support.</a>`
     }) 
 }
 function getJobs(){
