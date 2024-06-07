@@ -432,7 +432,7 @@ if (snapshot.exists()) {
     icon: 'error',
     footer:`<a href="mailto:amobilewallet.inter@gmail.com">Contact technical support.</a>`
     }) 
-}//sdfg
+}
 function getJobs(){
   var userArrayJob = []
 var userArrayAJob = []
