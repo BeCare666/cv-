@@ -70,7 +70,28 @@ const userRef = database.ref(`/lesjobsx/`);
 })
 const indicatClassJob = document.getElementById("indicatClassJob");
 const userListUlx = document.createElement("span");
+            // Fonction de conversion de la date et de l'heure en objet Date
+            function convertToDate(dateStr, timeStr) {
+              let [day, month, year] = dateStr.split('/');
+              let [hours, minutes] = timeStr.split(':');
+              return new Date(year, month - 1, day, hours, minutes);
+          }
 
+          // Convertir les dates en objets Date et trier le tableau
+          userArrayAJob.sort((a, b) => {
+              let [dateA, timeA] = a.time.split(' ');
+              timeA = timeA.replace('h:', ':').replace('min', '');
+              let [dateB, timeB] = b.time.split(' ');
+              timeB = timeB.replace('h:', ':').replace('min', '');
+
+              let dateObjA = convertToDate(dateA, timeA);
+              let dateObjB = convertToDate(dateB, timeB);
+
+              // Débogage : Afficher les objets Date
+              console.log("dateObjA:", dateObjA, "dateObjB:", dateObjB);
+
+              return dateObjB - dateObjA; // Pour trier en ordre décroissant (du plus récent au plus ancien)
+          });
   for(let i = 0; i < userArrayAJob.length; i++  ){
     const userLix = document.createElement("p");
     userLix.id = userArrayAJob[i].jobId;

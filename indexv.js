@@ -106,7 +106,7 @@ if(!snapshot.exists()){
 
 }else{
 if(snapshot.val().USERSTATUS){
-  getJobs()
+getJobs()
 document.getElementById('sameToBody').style.display = "none"
 var useremail = snapshot.val().email;
 var username = snapshot.val().username; 
@@ -449,10 +449,35 @@ const userRef = database.ref(`/lesjobsx/`);
 const indicatClassJob = document.getElementById("indicatClassJob");
 const userListUlx = document.createElement("span");
 
+            // Fonction de conversion de la date et de l'heure en objet Date
+            function convertToDate(dateStr, timeStr) {
+              let [day, month, year] = dateStr.split('/');
+              let [hours, minutes] = timeStr.split(':');
+              return new Date(year, month - 1, day, hours, minutes);
+          }
+
+          // Convertir les dates en objets Date et trier le tableau
+          userArrayAJob.sort((a, b) => {
+              let [dateA, timeA] = a.time.split(' ');
+              timeA = timeA.replace('h:', ':').replace('min', '');
+              let [dateB, timeB] = b.time.split(' ');
+              timeB = timeB.replace('h:', ':').replace('min', '');
+
+              let dateObjA = convertToDate(dateA, timeA);
+              let dateObjB = convertToDate(dateB, timeB);
+
+              // Débogage : Afficher les objets Date
+              console.log("dateObjA:", dateObjA, "dateObjB:", dateObjB);
+
+              return dateObjB - dateObjA; // Pour trier en ordre décroissant (du plus récent au plus ancien)
+          });
+
+
   for(let i = 0; i < userArrayAJob.length; i++  ){
-   //console.log(userArrayAJob[i]) 
+   
     const userLix = document.createElement("p");
     userLix.id = userArrayAJob[i].uniqueId;
+    //console.log(userArrayAJob[i].time) 
     userLix.innerHTML = `
       <img src="img/logo_of_wallet.jpg" alt="" style="height: 25%; width: 25%; border-radius: 100%;">
       <p class="card__number">${userArrayAJob[i].Titledejob} </p>
