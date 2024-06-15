@@ -467,7 +467,7 @@ const userListUlx = document.createElement("span");
               let dateObjB = convertToDate(dateB, timeB);
 
               // Débogage : Afficher les objets Date
-              console.log("dateObjA:", dateObjA, "dateObjB:", dateObjB);
+              // console.log("dateObjA:", dateObjA, "dateObjB:", dateObjB);
 
               return dateObjB - dateObjA; // Pour trier en ordre décroissant (du plus récent au plus ancien)
           });
@@ -477,14 +477,19 @@ const userListUlx = document.createElement("span");
    
     const userLix = document.createElement("p");
     userLix.id = userArrayAJob[i].uniqueId;
-    //console.log(userArrayAJob[i].time) 
+    //console.log(userArrayAJob[i].XitledeCategorie) 
+    var content;
+    content = userArrayAJob[i].XitledeCategorie === "Formation"
+    ? ` <a class="btn btn-secondary" href="indexe.html?id=${userArrayAJob[i].Salairedejob} ">Acheter</a>`
+    : ` <a class="btn btn-primary" href="indexe.html">Postuler </a> `;
+
     userLix.innerHTML = `
       <img src="img/logo_of_wallet.jpg" alt="" style="height: 25%; width: 25%; border-radius: 100%;">
       <p class="card__number">${userArrayAJob[i].Titledejob} </p>
       <p class="card__owner"><strong>Salaire :</strong> ${userArrayAJob[i].Salairedejob} $</p>
       <div class="card__info">
         <p class="card__integral"><strong>Description :</strong>${userArrayAJob[i].Descriptiondejob}</p><br>
-        <a class="btn btn-primary" href="indexe.html">Postuler</a>
+       ${content}
       </div>
       <p class="card__owner">Publié le ${userArrayAJob[i].time}</p><hr>
     `;
@@ -549,7 +554,7 @@ Swal.fire({
       }
     </style>
     <p>Recharge your account for <strong style="color: blue;">am wallet address</strong>.</p>
-    <input type="number" id="amount-input" class="swal2-input" min="1" step="1" />
+    <input type="number" id="amount-input" class="swal2-input" min="1" step="1" placeholder="Put amount($)" />
   `,
   preConfirm: () => {
     const input = document.getElementById('amount-input').value;
@@ -565,7 +570,7 @@ Swal.fire({
 }).then((result) => {
   if (result.isConfirmed) {
        var inputValue = result.value;
-       const  amount = inputValue *555
+       const  amount = inputValue *655
         openKkiapayWidget({
         amount: `${amount}`,
         position: "center",
@@ -623,6 +628,93 @@ Swal.fire({
 
 
 })
+
+// to get money
+var Get_for_userxxc = document.getElementById('get_for_userxxc');
+Get_for_userxxc.addEventListener('click', function(){
+//containerId.style.display = "none"
+Swal.fire({
+  title: "Your amount",
+  html: `
+    <style>
+      .swal2-input {
+        width: 100% !important;
+      }
+    </style>
+    <p>Get your money  for <strong style="color: blue;">am wallet address</strong>.</p>
+    <input type="number" id="amount-inputxc" class="swal2-input" min="10" step="1" placeholder="Put amount($)" />
+  `,
+  preConfirm: () => {
+    const input = document.getElementById('amount-inputxc').value;
+    console.log(input)
+    if (input ===  10 || input > 10) {
+      Swal.showValidationMessage('Please enter a positive number!');
+      return false;
+    }
+    return input;
+  },
+  showCancelButton: true,
+  confirmButtonText: 'Get',
+  cancelButtonText: 'Cancel'
+}).then((result) => {
+  if (result.isConfirmed) {
+    var inputValue = result.value;
+    const unserconnectuserIdE = localStorage.getItem("unserconnectuserId")
+    const balanceIDAWWW = localStorage.getItem('balanceIDAWWW')
+    var myComptaConvertis = parseFloat(balanceIDAWWW);
+    var addCommissionConvertis = parseFloat(inputValue)
+    var myCommissionAdd = myComptaConvertis - addCommissionConvertis
+    localStorage.setItem('MyCommissionAdd', addCommissionConvertis)
+    const newData = {
+      ACCOUNTPRINCIPAL: myCommissionAdd, 
+    };
+    const userRefx = database.ref(`/utilisateurs/${unserconnectuserIdE}`);
+    userRefx.update(newData, (error) => {
+      if (error){
+        Swal.fire({
+            title: "Ooops",
+            confirmButtonText: "OK",
+            allowOutsideClick: false,
+            text: "Your operation has failed.",
+            icon: 'error'
+            }).then((result)=>{
+            if(result.isConfirmed){
+                window.location.reload(); 
+            }
+         })
+      }else{
+            const dateActuelle = new Date();
+            // Obtenez les composantes de la date et de l'heure  
+            const jour = dateActuelle.getDate();
+            const mois = dateActuelle.getMonth() + 1; // Les mois commencent à 0, donc ajoutez 1
+            const annee = dateActuelle.getFullYear();
+            const heures = dateActuelle.getHours();
+            const minutes = dateActuelle.getMinutes();
+            // Formatez la date et l'heure
+            const dateFormatee = `${jour}/${mois}/${annee} ${heures}h:${minutes}min`;
+            localStorage.setItem('DateNow', dateFormatee)
+          Swal.fire({
+              icon: 'success',
+              title:"Succès",
+              confirmButtonText: "Get your paiement cerficate.",
+              allowOutsideClick: false,
+              text : `Your operation has been completed successfully.`,
+              }).then((result)=>{
+              if(result.isConfirmed){
+              window.location.href = "paiementcerti.html";
+              }
+          })
+
+        }
+    }) 
+  
+  }
+});
+
+
+
+})
+
 assistanceId.addEventListener('click', function(){
 containerId.style.display = "none"
 Swal.fire({

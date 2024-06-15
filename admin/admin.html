@@ -136,7 +136,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Poster un job</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Poster un job/formation</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -144,19 +144,28 @@
       <div class="modal-body">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Title de job </span>
+            <span class="input-group-text" id="basic-addon1">Catégorie</span>
           </div>
-          <input id="Title_de_job" type="text" class="form-control" placeholder="Title de job" aria-label="Username" aria-describedby="basic-addon1">
+          <select id="Title_de_Categorie" type="text" class="form-control" aria-describedby="basic-addon1">
+            <option value="Job" selected>Job</option>
+            <option value="Formation">Formation</option> 
+          </select>
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Job Salaire</span>
+            <span class="input-group-text" id="basic-addon1">Title de job/formation </span>
           </div>
-          <input id="Salaire_de_job" type="text" class="form-control" placeholder="Job Salaire" aria-label="Username" aria-describedby="basic-addon1">
+          <input id="Title_de_job" type="text" class="form-control" placeholder="Title " aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Job Salaire/Prix formation</span>
+          </div>
+          <input id="Salaire_de_job" type="text" class="form-control" placeholder="Job Salaire/Prix formation" aria-label="Username" aria-describedby="basic-addon1">
         </div>
         <div class="input-group">
           <div class="input-group-prepend">
-            <span class="input-group-text">Job Description</span>
+            <span class="input-group-text">Job Description/formation</span>
           </div>
           <textarea id="Description_de_job" class="form-control" aria-label="With textarea" maxlength="450"></textarea>
         </div>

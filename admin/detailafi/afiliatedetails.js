@@ -49,6 +49,7 @@ const firebaseConfig = {
           //console.log("Utilisateur récupéré :", user);
           document.getElementById('preloader').style.display = "none"
           var UserCOMMISSON = user.ACCOUNTPRINCIPALX
+          localStorage.setItem("xxserCOMMISSON", UserCOMMISSON)
           var Amount = document.getElementById('amount');
           var ImgNodata = document.getElementById('imgNodata');
           var PhistoryId = document.getElementById('phistoryId');
@@ -60,6 +61,71 @@ const firebaseConfig = {
           }else{
             IdTogetwallet.disabled = false
           }
+
+          // to update Gains
+        var updateGains = document.getElementById('updateGains');
+        updateGains.addEventListener('click', function(){
+        //containerId.style.display = "none"
+        Swal.fire({
+          title: "Vider le compte",
+          html: `
+            <style>
+              .swal2-input {
+                width: 100% !important;
+              }
+            </style>
+            <p>Vider le compte de gains de <strong style="color: blue;">am wallet address</strong>.</p>
+            
+          `,
+ 
+          showCancelButton: true,
+          confirmButtonText: 'Vider le compte',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {           
+            const unserconnectuserIdE = localStorage.getItem("takeidAfil")
+            
+            const newData = {
+              ACCOUNTPRINCIPALX: 0, 
+            };
+            const userRefx = database.ref(`/utilisateurs/${unserconnectuserIdE}`);
+            userRefx.update(newData, (error) => {
+              if (error){
+                Swal.fire({
+                    title: "Ooops",
+                    confirmButtonText: "OK",
+                    allowOutsideClick: false,
+                    text: "Your operation has failed.",
+                    icon: 'error'
+                    }).then((result)=>{
+                    if(result.isConfirmed){
+                        window.location.reload(); 
+                    }
+                })
+              }else{
+                  Swal.fire({
+                      icon: 'success',
+                      title:"Succès",
+                      confirmButtonText: "OK",
+                      allowOutsideClick: false,
+                      text : `Your operation has been completed successfully.`,
+                      }).then((result)=>{
+                      if(result.isConfirmed){
+                        window.location.reload(); 
+                      }
+                  })
+
+                }
+            }) 
+          
+          }
+        });
+
+
+
+        })
+
+
           //function to creat the liste p
           // Sélectionnez la balise p
           const userListP = document.getElementById("phistoryId");

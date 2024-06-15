@@ -387,11 +387,12 @@ function updateAllUsers() {
 
                   
                   // Récupérer la valeur du champ de saisie
-                  const Title_de_job = document.getElementById('Title_de_job').value;
-                  const Salaire_de_job = document.getElementById('Salaire_de_job').value;
-                  const Description_de_job = document.getElementById('Description_de_job').value;
+                  var Title_de_job = document.getElementById('Title_de_job').value;
+                  var Xitle_de_Categorie = document.getElementById('Title_de_Categorie').value;
+                  var Salaire_de_job = document.getElementById('Salaire_de_job').value;
+                  var xDescription_de_job = document.getElementById('Description_de_job').value;
                   // Vérifier si la valeur est vide
-                  if (Title_de_job === "" || Salaire_de_job === "" || Description_de_job === "") {
+                  if (Title_de_job === "" || Salaire_de_job === "" || xDescription_de_job === "") {
                       // Afficher un message d'erreur ou empêcher l'exécution de la suite du code
                      alert(`L'un des champs est vide`)
                   }else{
@@ -405,10 +406,11 @@ function updateAllUsers() {
                     // Formatez la date et l'heure
                     const dateFormatee = `${jour}/${mois}/${annee} ${heures}h:${minutes}min`;
 
-                    firebase.database().ref('lesjobsx/' + uniqueId).set({                    
+                    firebase.database().ref('lesjobsx/' + uniqueId).set({   
+                      XitledeCategorie : Xitle_de_Categorie,                 
                       Titledejob: Title_de_job, 
                       Salairedejob: Salaire_de_job, 
-                      Descriptiondejob: Description_de_job, 
+                      Descriptiondejob: xDescription_de_job, 
                       time: dateFormatee,
                       jobId: uniqueId
                                                                         
@@ -417,7 +419,7 @@ function updateAllUsers() {
                         Swal.fire({
                           icon: 'success',
                           title: "Félicitations !",
-                          text: "Le job a été envoyée avec succès !",
+                          text: "Le post a été envoyé avec succès !",
                           allowOutsideClick: false,
                       }).then((result) => {
                           if (result.isConfirmed) {
