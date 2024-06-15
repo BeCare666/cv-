@@ -647,10 +647,11 @@ Swal.fire({
   preConfirm: () => {
     const input = document.getElementById('amount-inputxc').value;
     console.log(input)
-    if (input ===  10 || input > 10) {
-      Swal.showValidationMessage('Please enter a positive number!');
+    if (input < 10) {
+      Swal.showValidationMessage('Please enter a number greater than or equal to 10!');
       return false;
     }
+    
     return input;
   },
   showCancelButton: true,
