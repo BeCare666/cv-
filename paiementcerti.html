@@ -56,7 +56,7 @@
     const MyCommissionAdd = localStorage.getItem('MyCommissionAdd')
     const usernameT = localStorage.getItem('usernameT')
     document.getElementById('Prabsaran').innerHTML = ` <strong>Date</strong> : ${DateNow} `
-    document.getElementById('Student').innerHTML = ` <strong>Prix</strong> : ${MyCommissionAdd} $`
+    document.getElementById('Student').innerHTML = ` <strong>Montant retiré</strong> : ${MyCommissionAdd} $`
     document.getElementById('Studentx').innerHTML = ` <strong>Nom</strong> : ${usernameT}`
     if(MyCommissionAdd){
     document.getElementById('download').addEventListener('click', () => {

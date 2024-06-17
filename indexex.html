@@ -33,8 +33,8 @@ function handleclick(){
   const balanceIDAWWW = localStorage.getItem('balanceIDAWWW')
    if(postId){
    var inputValue =  postId
-   if(inputValue  <= balanceIDAWWW){
-    if(balanceIDAWWW !=0){
+   var inputValuexc = parseFloat(inputValue)
+    if(inputValuexc <= balanceIDAWWW){
     const titltjobxv = localStorage.getItem("titltjobx")
     const destjobxv = localStorage.getItem("destjobx")
       const unserconnectuserIdE = localStorage.getItem("unserconnectuserId")
@@ -87,18 +87,6 @@ function handleclick(){
         }
     })  
     }
-   }else{
-    Swal.fire({
-        title: "Info ",
-        text: "Your balance is insufficient",
-        icon: "error",
-        allowOutsideClick: false,
-      }).then((result)=>{
-        if(result.isConfirmed){
-            window.location.href = "index.html";
-        }
-    }) 
-   }
    }
 
     }handleclick()
