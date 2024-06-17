@@ -155,7 +155,7 @@ iconitem.forEach((T)=>{
        }
   })
 })
-usernameID.innerHTML = `${username} || Gains : ${balanceIDBWXW} $`
+usernameID.innerHTML = `${username} || Affiliés : ${balanceIDBWXW}  `
 balanceID.innerHTML = `&dollar; ${balanceIDAW} `
 
 var MESSAGESAMWALLET = snapshot.val().MESSAGESAMWALLET;
@@ -446,8 +446,8 @@ const userRef = database.ref(`/lesjobsx/`);
 
 })
 
-const indicatClassJob = document.getElementById("indicatClassJob");
-const userListUlx = document.createElement("span");
+          const indicatClassJob = document.getElementById("indicatClassJob");
+          const userListUlx = document.createElement("span");
 
             // Fonction de conversion de la date et de l'heure en objet Date
             function convertToDate(dateStr, timeStr) {
@@ -480,13 +480,18 @@ const userListUlx = document.createElement("span");
     //console.log(userArrayAJob[i].XitledeCategorie) 
     var content;
     content = userArrayAJob[i].XitledeCategorie === "Formation"
-    ? ` <a class="btn btn-secondary" href="indexe.html?id=${userArrayAJob[i].Salairedejob} ">Acheter</a>`
+    ? ` <a class="btn btn-secondary" href="indexex.html?id=${userArrayAJob[i].Salairedejob} ">Acheter</a>`
     : ` <a class="btn btn-primary" href="indexe.html">Postuler </a> `;
+
+    var contentxc;
+    contentxc = userArrayAJob[i].XitledeCategorie === "Formation"
+    ? ` <p class="card__owner"><strong>Prix  :</strong> ${userArrayAJob[i].Salairedejob} $</p>`
+    : ` <p class="card__owner"><strong>Salaire :</strong> ${userArrayAJob[i].Salairedejob} $</p> `;
 
     userLix.innerHTML = `
       <img src="img/logo_of_wallet.jpg" alt="" style="height: 25%; width: 25%; border-radius: 100%;">
       <p class="card__number">${userArrayAJob[i].Titledejob} </p>
-      <p class="card__owner"><strong>Salaire :</strong> ${userArrayAJob[i].Salairedejob} $</p>
+      ${contentxc}
       <div class="card__info">
         <p class="card__integral"><strong>Description :</strong>${userArrayAJob[i].Descriptiondejob}</p><br>
        ${content}
@@ -662,6 +667,7 @@ Swal.fire({
     var inputValue = result.value;
     const unserconnectuserIdE = localStorage.getItem("unserconnectuserId")
     const balanceIDAWWW = localStorage.getItem('balanceIDAWWW')
+    if(inputValue <= balanceIDAWWW){
     var myComptaConvertis = parseFloat(balanceIDAWWW);
     var addCommissionConvertis = parseFloat(inputValue)
     var myCommissionAdd = myComptaConvertis - addCommissionConvertis
@@ -708,7 +714,18 @@ Swal.fire({
 
         }
     }) 
-  
+   }{
+    Swal.fire({
+      title: "Info ",
+      text: "Your balance is insufficient",
+      icon: "error",
+      allowOutsideClick: false,
+    }).then((result)=>{
+      if(result.isConfirmed){
+          window.location.href = "index.html";
+      }
+  }) 
+   }
   }
 });
 

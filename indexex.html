@@ -28,8 +28,12 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 function handleclick(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const postId = urlParams.get("id");
   const balanceIDAWWW = localStorage.getItem('balanceIDAWWW')
-  var inputValue = "1"
+   if(postId){
+   var inputValue =  postId
+   if(inputValue  <= balanceIDAWWW){
     if(balanceIDAWWW !=0){
     const titltjobxv = localStorage.getItem("titltjobx")
     const destjobxv = localStorage.getItem("destjobx")
@@ -65,7 +69,7 @@ function handleclick(){
             icon: 'success',
             }).then((result)=>{
             if(result.isConfirmed){
-                window.location.href = "pdf.html"; 
+                window.location.href = "pdfx.html"; 
           }
          })
   
@@ -83,6 +87,19 @@ function handleclick(){
         }
     })  
     }
+   }else{
+    Swal.fire({
+        title: "Info ",
+        text: "Your balance is insufficient",
+        icon: "error",
+        allowOutsideClick: false,
+      }).then((result)=>{
+        if(result.isConfirmed){
+            window.location.href = "index.html";
+        }
+    }) 
+   }
+   }
 
     }handleclick()
 
