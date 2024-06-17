@@ -650,7 +650,7 @@ Swal.fire({
     <input type="number" id="amount-inputxc" class="swal2-input" min="10" step="1" placeholder="Put amount($)" />
   `,
   preConfirm: () => {
-    const input = document.getElementById('amount-inputxc').value;
+    const input = document.getElementById('amount-inputxc').value;  
     console.log(input)
     if (input < 10) {
       Swal.showValidationMessage('Please enter a number greater than or equal to 10!');
@@ -667,7 +667,9 @@ Swal.fire({
     var inputValue = result.value;
     const unserconnectuserIdE = localStorage.getItem("unserconnectuserId")
     const balanceIDAWWW = localStorage.getItem('balanceIDAWWW')
-    if(inputValue <= balanceIDAWWW){
+    var balanceIDAWWWx = parseFloat(balanceIDAWWW)
+    var inputValue = parseFloat(inputValue)
+    if(inputValue <= balanceIDAWWWx){
     var myComptaConvertis = parseFloat(balanceIDAWWW);
     var addCommissionConvertis = parseFloat(inputValue)
     var myCommissionAdd = myComptaConvertis - addCommissionConvertis
