@@ -54,7 +54,8 @@ const firebaseConfig = {
           var ImgNodata = document.getElementById('imgNodata');
           var PhistoryId = document.getElementById('phistoryId');
           var IdTogetwallet = document.getElementById('idTogetwallet');
-          Amount.innerHTML = `${UserCOMMISSON} $`
+           var amount = UserCOMMISSON * 555
+          Amount.innerHTML = `${amount} $`
           
           if(UserCOMMISSON == 0){
             IdTogetwallet.disabled = true
