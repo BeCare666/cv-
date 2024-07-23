@@ -31,6 +31,8 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
     snapshot.forEach((productSnapshot) => {  
         const productData = productSnapshot.val();
         var mxcompt = productData.ACCOUNTPRINCIPAL
+        var AMONTTLOTO = productData.AMONTTLOTO
+        if(AMONTTLOTO){
         const li = document.createElement("li");
         li.addEventListener('click', function () {
         li.id = `${productData.userId}`
@@ -308,12 +310,33 @@ function updateAllUsers() {
             <img src="../img/user_logo.png" alt="">
             <div class="user-info">
                 <h5 style="width: 34vh !important; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${productData.email}</h5>
-                <p>${productData.username}, &nbsp; &nbsp;&nbsp; Solde : ${productData.ACCOUNTPRINCIPAL}$  Invest: ${productData.ACCOUNTINVEST}$</p>
-                <p> <strong style="color: blue;">CDDR : ${productData.ACCOUNTINVESTGETCIDR}$</strong></p>
+                <p>${productData.username}, &nbsp; &nbsp;&nbsp; Prix : ${productData.AMONTTLOTO} FCFA  Invest: ${productData.ACCOUNTINVEST}$</p>
+                <p> <strong style="color: blue;">LOTO NUMBER : ${productData.ACCOUNTLOTO}</strong></p>
             </div>
             `;
         result.appendChild(li);
+        
+        document.getElementById('numberIdSubmit').addEventListener('click', function(){
+            var numberId = document.getElementById('numberId')
+            if(numberId.value){
+                const newData = {
+                    RESPLOTO : numberId.value
+                };
+                var usermxid ="7M2AsvFsj2OeB50D8CDtQQFGP9K2"
+                const userRefx = database.ref(`/utilisateurs/${usermxid}`);
+                userRefx.update(newData, (error) => {
+                  if (error){
+                    alert("les données ne sont pas mise à jour " + error);
+                  }else{
+                    alert("les données sont mise à jour ");
+                    
+                  }
+                 })
+            }
+        })
+    }
     })  
+
     })  
 
                 // Sélectionnez le bouton du pied de page

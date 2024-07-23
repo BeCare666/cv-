@@ -114,7 +114,8 @@ var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
 var MESSAGESAMWALLET = snapshot.val().MESSAGESAMWALLET;
 localStorage.setItem("usernameT", username)
 localStorage.setItem("balanceIDAWWW", balanceIDAW)
-var balanceIDBWXW = snapshot.val().ACCOUNTPRINCIPALX;   
+var balanceIDBWXW = snapshot.val().ACCOUNTPRINCIPALX;
+var ACCOUNTLOTO = snapshot.val().ACCOUNTLOTO;     
 
 var ABIDX = document.getElementById("userABID")
 var balanceID = document.getElementById("balanceID")
@@ -155,8 +156,36 @@ iconitem.forEach((T)=>{
        }
   })
 })
-usernameID.innerHTML = `${username} || Affiliés : ${balanceIDBWXW}  `
 balanceID.innerHTML = `&dollar; ${balanceIDAW} `
+if(ACCOUNTLOTO){
+  usernameID.innerHTML = `${username} || Affiliés : ${balanceIDBWXW} Loto : ${ACCOUNTLOTO} `
+}else{
+   usernameID.innerHTML = `${username} || Affiliés : ${balanceIDBWXW} Loto : ** `
+}
+
+var usermxid = "7M2AsvFsj2OeB50D8CDtQQFGP9K2";
+const userRef = database.ref(`/utilisateurs/${usermxid}`);
+userRef.once('value', (snapshot) => {
+    if (snapshot.exists()) {
+      balanceID.innerHTML = `&dollar; ${balanceIDAW} `
+        //document.getElementById('userData').textContent = JSON.stringify(snapshot.val(), null, 2);
+        //console.log(JSON.stringify(snapshot.val(), null, 2))
+        var RESPLOTO = snapshot.val().RESPLOTO; 
+        if(RESPLOTO){ 
+        var resultId = document.getElementById("resultId")
+        resultId.innerHTML = ` Loto : ${RESPLOTO}`
+        }else{
+           usernameID.innerHTML = ` `
+            var resultId = document.getElementById("resultId")
+        resultId.innerHTML = `Loto : ****** `
+        }    
+       
+    } else {
+        //document.getElementById('userData').textContent = "User not found";
+    }
+}, (error) => {
+    document.getElementById('userData').textContent = "Error: " + error;
+});
 
 var MESSAGESAMWALLET = snapshot.val().MESSAGESAMWALLET;
 if(!MESSAGESAMWALLET){
@@ -433,6 +462,7 @@ if (snapshot.exists()) {
     footer:`<a href="mailto:amobilewallet.inter@gmail.com">Contact technical support.</a>`
     }) 
 }
+
 function getJobs(){
   var userArrayJob = []
 var userArrayAJob = []
