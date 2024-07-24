@@ -32,12 +32,56 @@ document.getElementById('numberIdSubmit').addEventListener('click', function(){
               const userRef = database.ref(`/utilisateurs/${userSnapshot.key}`);
               userRef.update(newData, (error) => {
                   if (error) {
-                      console.error(`Failed to update user ${userSnapshot.key}:`, error);
+                      //console.error(`Failed to update user ${userSnapshot.key}:`, error);
+                      Swal.fire({
+                        icon: 'error',
+                        text: "Failed to update tables",
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                   } else {
-                      console.log(`User ${userSnapshot.key} updated successfully.`);
+                      //console.log(`User ${userSnapshot.key} updated successfully.`);
+                      Swal.fire({
+                        icon: 'success',
+                        text: "tables updated successfully",
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                   }
               });
           });
       });
   }
 });
+
+     //function to generate affilition link
+     const linkInput = document.getElementById('linkInput');
+     const copyButton = document.getElementById('affiliateID');
+     linkInput.value = `Cliquer et Copier ici votre le tableau.`
+     linkInput.style.color ="green"
+     linkInput.style.textAlign ="center"  
+     linkInput.style.fontSize ="12px"
+     // function to hide border when you click
+     copyButton.addEventListener('click', () => {
+     let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+     // Mélanger le tableau
+     array = shuffleArray(array);
+     // Afficher le tableau mélangé
+     linkInput.value = `[${array.join(', ')}]`
+     linkInput.select(); // Sélectionne le texte dans l'input
+     document.execCommand('copy'); // Copie le texte sélectionné dans le presse-papiers
+     });
+     // Fonction pour mélanger le tableau (algorithme de Fisher-Yates)
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Échange les éléments
+      }
+      return array;
+    }
