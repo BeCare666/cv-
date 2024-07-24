@@ -17,7 +17,8 @@
 <body>
     <canvas id="spinner" width="300" height="300"></canvas>
     <strong style=" text-align: center !important; color: white;" id="TransferId">
-    <button class="btn btn" style="background: #1f5c80; color: white; position: absolute; bottom: 140px !important;  width: 100% !important;">[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]</button> </strong>
+    <button id="tableN" class="btn btn" style="background: #1f5c80; color: white; position: absolute; bottom: 140px !important;  width: 100% !important;">[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]</button> 
+    <button id="tableNx" class="btn btn" style="display: none; background: #1f5c80; color: white; position: absolute; bottom: 140px !important;  width: 100% !important;"></button> 
     <strong  style=" text-align: center !important; color: white; position: absolute; bottom: 70px !important; left: 20%; right: 20%; display: none;" id="parisId">
     <input class="btn btn-primary" type="button" value="Pariez ici" data-toggle="modal" data-target="#exampleModalCenter"></button> </strong>
   
@@ -32,7 +33,7 @@
         </div>
         <div class="modal-body">
          <img style="width: 100%; height: 40vh;" src="https://static.johnnybet.com/system/articles/thumbnails/21153/normal/1612178800-Parier-gratuitement-en-ligne.jpg" alt=""><hr>
-         <input id="numberId" type="number" step="0" class="form-control" placeholder="Mettez un nombre " aria-label="Username" aria-describedby="basic-addon1" maxlength="2"><br>
+         <input id="numberId" type="number" step="0" class="form-control" placeholder="Mettez un nombre " aria-label="Username" aria-describedby="basic-addon1" maxlength="15"><br>
          <input id="numberIdx" type="number" step="0" class="form-control" placeholder="Mettez le montant" aria-label="Username" aria-describedby="basic-addon1">
         </div>
         <div class="modal-footer">

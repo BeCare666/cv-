@@ -89,7 +89,11 @@ window.onload = function() {
             localStorage.setItem('degreesxv', degrees);
             degreesxv.push(degreesxv)
             console.log("2", degrees)
-            button.textContent = `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`;
+            var tableN = document.getElementById('tableN')
+            var tableNx = document.getElementById('tableNx')
+            tableN.style.display = "none"
+            tableNx.style.display = "block"
+            tableNx.innerHTML = `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`;
             document.getElementById('parisId').style.display = "block"
             stopRandomIncrement();
         } else {
@@ -138,60 +142,56 @@ window.onload = function() {
         var numberIdSubmit = document.getElementById('numberIdSubmit');
         numberIdSubmit.addEventListener('click', function(){ 
             var Amont = document.getElementById('numberId');
-            var numberIdx = document.getElementById('numberIdx');         
+            var numberIdx = document.getElementById('numberIdx').value;         
             //var valeurx = "5"
             var Amonti = parseFloat(Amont.value);
             //var valeurxi = parseFloat(valeurx)
             //var sommes = Amonti + valeurxi
             //console.log(sommes)
-            if(Amont.value && numberIdx.value){
-                openKkiapayWidget({
-                    amount: `${numberIdx.value}`,
-                    position: "center",
-                    callback: "javascript:sendmycommandinCentremodale()",
-                    data: "",
-                    theme: "blue",
-                    sandbox : "false",
-                    key: "878e7b7232e5a1e067f29d44816f4b801a029e09",
-                  });
-                 
-                  //la reponse du payement kkiapay
-                  addSuccessListener((response) => {
-                    const dateActuelle = new Date();
-                    const newData = {
-                        ACCOUNTLOTO: Amonti,
-                        AMONTTLOTO: numberIdx.value,
-                        dateActuelle:dateActuelle,
-                        };
-                    userRef.update(newData, (error) => {
-                        if (error){
-                          Swal.fire({
-                              title: "Ooops",
-                              text:"error",
-                              confirmButtonText: "OK",
-                              allowOutsideClick: false,
-                              icon: 'error'
-                              }).then((result)=>{
-                              if(result.isConfirmed){
-                                  window.location.reload(); 
-                            }
-                           })
-                        }else{          
-                               Swal.fire({
-                                   title: "Congratulation",
-                                   text:"succes",
-                                   confirmButtonText: "OK",
-                                   allowOutsideClick: false,
-                                   icon: 'succes'
-                                   }).then((result)=>{
-                                   if(result.isConfirmed){
-                                       window.location.href = "../index.html"; 
-                               }
-                               })
+            const balanceIDAWW = localStorage.getItem('balanceIDAWWW')
+            console.log(balanceIDAWW)
+            if( numberIdx <= balanceIDAWW ){
+            if(Amont.value && numberIdx){
+                const dateActuelle = new Date();
+                var myComptaConvertis = parseFloat(balanceIDAWW);
+                var addCommissionConvertis = parseFloat(numberIdx)
+                var myCommissionAdd = myComptaConvertis - addCommissionConvertis
+                const newData = {
+                ACCOUNTPRINCIPAL: myCommissionAdd,
+                ACCOUNTLOTO: Amonti,
+                AMONTTLOTO: numberIdx,
+                dateActuelleloto:dateActuelle,
+                };
+                const userRefx = database.ref(`/utilisateurs/${userId}`);
+                userRefx.update(newData, (error) => {
+                  if (error){
+                    Swal.fire({
+                        title: "Ooops",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: false,
+                        text: "Your bet has failed.",
+                        icon: 'error'
+                        }).then((result)=>{
+                        if(result.isConfirmed){
+                            window.location.reload(); 
                         }
-                        })
-                  });
-            
+                     })
+                  }else{
+                    localStorage.setItem('Amonti', Amonti)
+                    localStorage.setItem('numberIdx', numberIdx)
+                    Swal.fire({
+                        icon: 'success',
+                        title:"Succès",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: true,
+                        text : `Your bet has been completed successfully.`,
+                        }).then((result)=>{
+                        if(result.isConfirmed){
+                        window.location.href = "../pdfloto.html"
+                        }
+                    })
+                  }
+                }) 
             }else {
                 Swal.fire({
                     title: "Information",
@@ -205,10 +205,22 @@ window.onload = function() {
                   }
                  })
             }
-    
+            }else{
+                Swal.fire({
+                    title: "Info ",
+                    text: "Your balance is insufficient",
+                    icon: "error",
+                    allowOutsideClick: false,
+                }).then((result)=>{
+                    if(result.isConfirmed){
+                    // window.location.reload(); 
+                    }
+                })
+            }
+        
+            })
+            }
         })
-        }
-       })
      
     }else{
         window.location.href = "../login.html"
@@ -240,7 +252,7 @@ window.onload = function() {
         }
 
         // Limit to 2 digits
-        if (input.value.length > 2) {
+        if (input.value.length > 2 ) {
             input.value = input.value.slice(0, 2);
         }
     });

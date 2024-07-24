@@ -48,7 +48,7 @@
             </div>
             <h3 id="Student"></h3>
             <h3 id="Prabsaran" ></h3>
-            <h3>BT19GCS121</h3> 
+            <h3 id="BT19GCS121"></h3> 
             <hr>
             <p><strong>am-walette</strong> Neemrana, NH-8 Delhi-Jaipur highway <p>
             <p>District Alwar, Rajasthan <strong>301705</strong></p>
@@ -57,18 +57,44 @@
         <button id="downloadx">Retour</button> <button id="download">Download PDF</button>
     </div>
     <script>
+        const numberIdx = localStorage.getItem('numberIdx')
+        const Amonti = localStorage.getItem('Amonti')
+        //--------------function to generate unique ID
+        function generateCustomID() {
+        // Générer un nombre aléatoire entre 0 et 0xFFFFFF (couleur hexadécimale maximale)
+        const randomNum = Math.floor(Math.random() * 0xFFFFFF);
+
+        // Convertir en chaîne hexadécimale et s'assurer qu'il a 6 caractères
+        const hexID = randomNum.toString(16).toUpperCase().padStart(6, '0');
+
+        // Ajouter '#' au début
+        return `${hexID}`;
+        }
+    const idproduct = generateCustomID()
+    var d = new Date();
+    var date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    var hours = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+    var fullDate = date + ' ' + hours;
     const titltjobx = localStorage.getItem('titltjobxttt')
     const destjobx = localStorage.getItem('destjobxttt')
     const usernameT = localStorage.getItem('usernameT')
-    document.getElementById('Prabsaran').innerHTML = `${titltjobx} `
-    document.getElementById('Student').innerHTML = `${destjobx}`
+    document.getElementById('Prabsaran').innerHTML = `<button style="background-color: blue; border: none; color: white;">Montant : ${Amonti}</button> <button style="background-color: red; border: none; color: white;">Boule : ${numberIdx}</button>`
+    document.getElementById('Student').innerHTML = `${fullDate}`
     document.getElementById('Studentx').innerHTML = `${usernameT}`
-    if(titltjobx){
+    document.getElementById('BT19GCS121').innerHTML = `#${idproduct}`
+
+        var tableTakeIdproduct = []
+
+        const errorMsgElement = document.querySelector('span#errorMsg');
+
+        //---------function to insert the product in the site--------//
+
+    if(Amonti){
     document.getElementById('download').addEventListener('click', () => {
         const element = document.getElementById('idCard');
         const options = {
             margin: 0.5,
-            filename: 'Formation_Card.pdf',
+            filename: 'Loto_Card.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2, useCORS: true },
             jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
@@ -76,10 +102,12 @@
 
         html2pdf().set(options).from(element).save()
             .then(() => {
-               localStorage.removeItem('titltjobxttt')
-               localStorage.removeItem('destjobxttt')
-               localStorage.removeItem('titltjobx')
-               localStorage.removeItem('destjobx')
+               localStorage.removeItem('Amonti')
+               localStorage.removeItem('numberIdx')
+               setTimeout(()=>{
+                window.location.href = "index.html"; 
+               },500)
+               
             })
             .catch((error) => {
                 // Code à exécuter en cas d'erreur
@@ -91,7 +119,7 @@
         window.location.href = "index.html";   
     }
     document.getElementById('downloadx').addEventListener('click', () => {  
-       //window.location.href = "index.html";   
+       window.location.href = "index.html";   
     });
     </script>
 </body>

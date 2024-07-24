@@ -31,7 +31,7 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
     snapshot.forEach((productSnapshot) => {  
         const productData = productSnapshot.val();
         var mxcompt = productData.ACCOUNTPRINCIPAL
-        var AMONTTLOTO = productData.AMONTTLOTO
+        var AMONTTLOTO = productData.AMONTTLOTO    
         if(AMONTTLOTO){
         const li = document.createElement("li");
         li.addEventListener('click', function () {
@@ -310,7 +310,7 @@ function updateAllUsers() {
             <img src="../img/user_logo.png" alt="">
             <div class="user-info">
                 <h5 style="width: 34vh !important; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${productData.email}</h5>
-                <p>${productData.username}, &nbsp; &nbsp;&nbsp; Prix : ${productData.AMONTTLOTO} FCFA  Invest: ${productData.ACCOUNTINVEST}$</p>
+                <p>${productData.username}, &nbsp; &nbsp;&nbsp; Montant de loto : ${productData.AMONTTLOTO} $ </p>
                 <p> <strong style="color: blue;">LOTO NUMBER : ${productData.ACCOUNTLOTO}</strong></p>
             </div>
             `;
@@ -327,9 +327,10 @@ function updateAllUsers() {
                 userRefx.update(newData, (error) => {
                   if (error){
                     alert("les données ne sont pas mise à jour " + error);
+                    window.location.reload();
                   }else{
                     alert("les données sont mise à jour ");
-                    
+                    window.location.reload();
                   }
                  })
             }
@@ -500,3 +501,28 @@ function validerSaisie(input) {
                   keyboard: false,
                   });
                   });
+       //function to generate affilition link
+       const linkInput = document.getElementById('linkInput');
+       const copyButton = document.getElementById('affiliateID');
+       linkInput.value = `Cliquer et Copier ici votre le tableau.`
+       linkInput.style.color ="green"
+       linkInput.style.textAlign ="center"  
+       linkInput.style.fontSize ="12px"
+       // function to hide border when you click
+       copyButton.addEventListener('click', () => {
+       let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+       // Mélanger le tableau
+       array = shuffleArray(array);
+       // Afficher le tableau mélangé
+       linkInput.value = `[${array.join(', ')}]`
+       linkInput.select(); // Sélectionne le texte dans l'input
+       document.execCommand('copy'); // Copie le texte sélectionné dans le presse-papiers
+       });
+       // Fonction pour mélanger le tableau (algorithme de Fisher-Yates)
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]]; // Échange les éléments
+        }
+        return array;
+      }

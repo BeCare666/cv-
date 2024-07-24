@@ -173,11 +173,11 @@ userRef.once('value', (snapshot) => {
         var RESPLOTO = snapshot.val().RESPLOTO; 
         if(RESPLOTO){ 
         var resultId = document.getElementById("resultId")
-        resultId.innerHTML = ` Loto : ${RESPLOTO}`
+        resultId.innerHTML = ` Resultat Loto : <button class="btn btn-primary"> ${RESPLOTO}</button>`
         }else{
            usernameID.innerHTML = ` `
             var resultId = document.getElementById("resultId")
-        resultId.innerHTML = `Loto : ****** `
+        resultId.innerHTML = `Resultat Loto : ****** `
         }    
        
     } else {
