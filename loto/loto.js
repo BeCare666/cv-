@@ -85,6 +85,7 @@ window.onload = function() {
     function animate_to() {
         if (degrees >= new_degrees) {
             clearInterval(animation_loop);
+            const TABLESLOTO = localStorage.getItem('TABLESLOTO')
             // Enregistrer la valeur de degrees dans le localStorage
             localStorage.setItem('degreesxv', degrees);
             degreesxv.push(degreesxv)
@@ -93,7 +94,7 @@ window.onload = function() {
             var tableNx = document.getElementById('tableNx')
             tableN.style.display = "none"
             tableNx.style.display = "block"
-            tableNx.innerHTML = `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`;
+            tableNx.innerHTML = `${TABLESLOTO} `;
             document.getElementById('parisId').style.display = "block"
             stopRandomIncrement();
         } else {

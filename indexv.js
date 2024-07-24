@@ -111,12 +111,13 @@ document.getElementById('sameToBody').style.display = "none"
 var useremail = snapshot.val().email;
 var username = snapshot.val().username; 
 var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
-var MESSAGESAMWALLET = snapshot.val().MESSAGESAMWALLET;
+var MESSAGESAMWALLET = snapshot.val().MESSAGESAMWALLET; 
 localStorage.setItem("usernameT", username)
 localStorage.setItem("balanceIDAWWW", balanceIDAW)
 var balanceIDBWXW = snapshot.val().ACCOUNTPRINCIPALX;
 var ACCOUNTLOTO = snapshot.val().ACCOUNTLOTO;     
-
+var TABLESLOTO = snapshot.val().TABLESLOTO;
+localStorage.setItem("TABLESLOTO", TABLESLOTO)
 var ABIDX = document.getElementById("userABID")
 var balanceID = document.getElementById("balanceID")
 var usernameID = document.getElementById("usernameID")
