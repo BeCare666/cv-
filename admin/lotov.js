@@ -343,11 +343,28 @@ function updateAllUsers() {
                 const userRefx = database.ref(`/utilisateurs/${usermxid}`);
                 userRefx.update(newData, (error) => {
                   if (error){
-                    alert("les données ne sont pas mise à jour " + error);
-                    window.location.reload();
+                    Swal.fire({
+                      icon: 'error',
+                      title: "error !",
+                      text: "les données ne sont pas mise à jour",
+                      allowOutsideClick: false,
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          location.reload();
+                      }
+                  });
                   }else{
-                    alert("les données sont mise à jour ");
-                    window.location.reload();
+                    Swal.fire({
+                      icon: 'success',
+                      title: "Félicitations !",
+                      text: "les données sont mise à jour ",
+                      allowOutsideClick: false,
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          location.reload();
+                      }
+                  });
+                    
                   }
                  })
             }
