@@ -8,8 +8,8 @@ const firebaseConfig = {
     appId: "1:877693231070:web:47c59ac6220ed09af9c74f"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+    //firebase.initializeApp(firebaseConfig);
+    //const database = firebase.database();
     const result = document.getElementById("result");
     const filter = document.getElementById("filter");
     const listItems = [];
@@ -18,7 +18,7 @@ const firebaseConfig = {
   firebase.auth().onAuthStateChanged(function(user) { 
   if(user){
         //var userId = user.uid;
-    getData();
+   // getData();
 
 filter.addEventListener("input", (e) => filterData(e.target.value));
 
