@@ -23,7 +23,7 @@ const userRef = database.ref(`/utilisateurs/${userId}`);
 userRef.once("value")
 .then((snapshot) => {
 if(!snapshot.exists()){
-        document.getElementById('sameToBody').style.display = "none"
+        document.getElementById('sameToBody').style.display = "block"
         Swal.fire({
               title: "Your username",
               input: 'text',
@@ -107,7 +107,7 @@ if(!snapshot.exists()){
 }else{
 if(snapshot.val().USERSTATUS){
 getJobs()
-document.getElementById('sameToBody').style.display = "none"
+document.getElementById('sameToBody').style.display = "block"
 var useremail = snapshot.val().email;
 var username = snapshot.val().username; 
 var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
