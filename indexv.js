@@ -15,7 +15,7 @@ var tableEmail = []
 // document.getElementById('sameToBody').style.display = "none"
 firebase.auth().onAuthStateChanged(function(user) { 
 if(user){
-var userId = user.uid;
+var userId = user.uid; 
 localStorage.setItem('unserconnectuserId', userId)
 var useremail = user.email;
 tableEmail.push(useremail)
@@ -23,7 +23,7 @@ const userRef = database.ref(`/utilisateurs/${userId}`);
 userRef.once("value")
 .then((snapshot) => {
 if(!snapshot.exists()){
-        document.getElementById('sameToBody').style.display = "block"
+        document.getElementById('sameToBody').style.display = "none"
         Swal.fire({
               title: "Your username",
               input: 'text',
@@ -107,7 +107,7 @@ if(!snapshot.exists()){
 }else{
 if(snapshot.val().USERSTATUS){
 getJobs()
-document.getElementById('sameToBody').style.display = "block"
+document.getElementById('sameToBody').style.display = "none"
 var useremail = snapshot.val().email;
 var username = snapshot.val().username; 
 var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
