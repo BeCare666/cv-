@@ -21,6 +21,14 @@ firebase.auth().onAuthStateChanged(function (user) {
         document.getElementById("sameToBody").style.display = "none";
         var userData = snapshot.val();
         var currentPoints = userData.points;
+        var ACCOUNTPRINCIPAL = userData.ACCOUNTPRINCIPAL;
+        var currentPointsDiv = currentPoints * 12;
+        var currentPointsDiv1 = currentPointsDiv / 100;
+        var currentPointsDiv2 = currentPointsDiv1 / 12;
+        var aCCOUNTPRINCIPALX = parseFloat(ACCOUNTPRINCIPAL);
+        var addCommissionConvertis = parseFloat(currentPointsDiv2);
+        var myCommissionAdd = aCCOUNTPRINCIPALX + addCommissionConvertis;
+
         //let pointsClass = document.querySelector(".pointsClass");
         //pointsClass.textContent = `Get ${currentPoints} points`;
 
@@ -36,6 +44,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             if (result.isConfirmed) {
               const newData = {
                 ACCOUNTPRINCIPAL: myCommissionAdd,
+                points: 0,
               };
               const userRefx = database.ref(`/utilisateurs/${unserconnectId}`);
               userRefx.update(newData, (error) => {

@@ -127,8 +127,13 @@ firebase.auth().onAuthStateChanged(function (user) {
           var balanceIDA = document.getElementById("balanceIDA");
           var balanceIDB = document.getElementById("balanceIDB");
 
-          var PointsId = document.getElementById("PointsId");
-          PointsId.textContent = `${snapshot.val().points} pts`;
+          if (snapshot.val().points) {
+            var PointsId = document.getElementById("PointsId");
+            PointsId.textContent = `${snapshot.val().points} pts`;
+          } else {
+            var PointsId = document.getElementById("PointsId");
+            PointsId.textContent = `0 pts`;
+          }
 
           var iconitem = document.querySelectorAll(".icon-item");
           iconitem.forEach((T) => {
