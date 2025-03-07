@@ -29,8 +29,25 @@ firebase.auth().onAuthStateChanged(function (user) {
         var addCommissionConvertis = parseFloat(currentPointsDiv2);
         var myCommissionAdd = aCCOUNTPRINCIPALX + addCommissionConvertis;
 
-        //let pointsClass = document.querySelector(".pointsClass");
-        //pointsClass.textContent = `Get ${currentPoints} points`;
+        var lastActionDate = userData.lastActionDate || null;
+        var currentPoints = userData.points || 0;
+        var countdownEnd = userData.countdownEnd || null;
+
+        let today = new Date().toISOString().split("T")[0]; // Format YYYY-MM-DD
+        let now = Date.now();
+
+        // Vérifier si le compte à rebours est terminé
+        if (countdownEnd && now < countdownEnd) {
+          startCountdown(countdownEnd);
+          alert("Vous devez attendre la fin du compte à rebours !");
+          return;
+        }
+
+        if (lastActionDate === today) {
+          alert("Action déjà effectuée aujourd'hui !");
+          location.reload();
+          return;
+        }
 
         if (currentPoints >= 1080) {
           Swal.fire({
@@ -38,8 +55,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             title: "Congratulations",
             confirmButtonText: "",
             allowOutsideClick: false,
-            text: `You have reached your points threshold. Your points will be converted into 
-                dollars and added to your account. 12 points = $0.12`,
+            text: `You have reached your points threshold. Your points will be converted into dollars and added to your account. 12 points = $0.12`,
           }).then((result) => {
             if (result.isConfirmed) {
               const newData = {
@@ -53,7 +69,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                     title: "Ooops",
                     confirmButtonText: "OK",
                     allowOutsideClick: false,
-                    text: "Your recharge  has failed.",
+                    text: "Your recharge has failed.",
                     icon: "error",
                   }).then((result) => {
                     if (result.isConfirmed) {
@@ -77,12 +93,53 @@ firebase.auth().onAuthStateChanged(function (user) {
             }
           });
         }
+
+        // 🎯 Fonction pour démarrer un compte à rebours de 24h
+        function startNewCountdown() {
+          let countdownEnd = Date.now() + 24 * 60 * 60 * 1000; // 24 heures
+          userRef.update({ countdownEnd });
+          startCountdown(countdownEnd);
+        }
+
+        // 🎯 Fonction pour gérer le compte à rebours
+        function startCountdown(endTime) {
+          function updateCountdown() {
+            let now = Date.now();
+            let remainingTime = endTime - now;
+
+            if (remainingTime <= 0) {
+              document.getElementById("countdown").innerText = "Temps écoulé!";
+              clearInterval(interval);
+              return;
+            }
+
+            let hours = Math.floor((remainingTime / (1000 * 60 * 60)) % 24);
+            let minutes = Math.floor((remainingTime / (1000 * 60)) % 60);
+            let seconds = Math.floor((remainingTime / 1000) % 60);
+
+            document.getElementById(
+              "countdown"
+            ).innerText = `${hours}h ${minutes}m ${seconds}s`;
+
+            document.getElementById("textId").style.opacity = "0";
+          }
+
+          updateCountdown();
+          var interval = setInterval(updateCountdown, 1000);
+        }
+
+        // 🎯 Lancer le compte à rebours au chargement de la page
+        if (countdownEnd && now < countdownEnd) {
+          startCountdown(countdownEnd);
+        }
+
+        // 🎯 Gérer l'événement du bouton Start
         document
           .querySelector(".start-btn")
           .addEventListener("click", function () {
             let pointsClass = document.querySelector(".pointsClass");
             pointsClass.textContent = `Loading...`;
-            let today = new Date().toISOString().split("T")[0]; // Format YYYY-MM-DD
+
             userRef.once("value").then((userSnapshot) => {
               let userData = userSnapshot.val();
               let lastActionDate = userData.lastActionDate || null;
@@ -111,6 +168,9 @@ firebase.auth().onAuthStateChanged(function (user) {
                   });
 
                   pointsClass.textContent = `${newPoints} points`;
+
+                  // 🔥 Démarrer un nouveau compte à rebours
+                  startNewCountdown();
                 } else {
                   percentage++;
                   textElement.textContent = percentage + "%";

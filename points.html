@@ -37,7 +37,14 @@
         position: absolute;
         z-index: 2;
       }
-
+      #countdown {
+        font-size: 50px;
+        color: white;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5),
+          0px 0px 10px rgba(0, 0, 0, 0.5);
+        position: absolute;
+        z-index: 2;
+      }
       .background {
         position: fixed;
         top: 0;
@@ -144,7 +151,8 @@
   </head>
   <body>
     <div class="background"></div>
-    <div class="text">0%</div>
+    <div class="text" id="textId">0%</div>
+    <div id="countdown"></div>
     <button class="start-btn pointsClass">Get 12 points</button>
 
     <section id="sameToBody">
