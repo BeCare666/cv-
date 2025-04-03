@@ -623,6 +623,7 @@ menubtnId.addEventListener("click", function () {
     cancelButtonText: "Cancel",
   }).then((result) => {
     if (result.isConfirmed) {
+      document.getElementById("sameToBody").style.display = "block";
       var inputValue = result.value;
       const amount = inputValue * 655;
       // Initialisation de FEEPay
@@ -650,8 +651,12 @@ menubtnId.addEventListener("click", function () {
         setTimeout(function () {
           const button = document.querySelector("#render .feexpay_button");
           if (button) {
+            document.getElementById("sameToBody").style.display = "none";
             button.click();
           } else {
+            document.getElementById("sameToBody").style.display = "none";
+            var iphoneID = document.getElementById("iphoneIDm");
+            iphoneID.style.display = "none";
             console.log("Le bouton n'a pas été trouvé !");
           }
         }, 1000); // Délai de 1 seconde, ajuste selon le besoin
