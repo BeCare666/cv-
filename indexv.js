@@ -598,7 +598,7 @@ var containerId = document.getElementById("containerId");
 var assistanceId = document.getElementById("assistanceId");
 var menubtnId = document.getElementById("menu-btnId");
 menubtnId.addEventListener("click", function () {
-  containerId.style.display = "none";
+  //containerId.style.display = "none";
   Swal.fire({
     title: "Your amount",
     html: `
