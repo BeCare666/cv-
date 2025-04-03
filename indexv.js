@@ -625,16 +625,40 @@ menubtnId.addEventListener("click", function () {
     if (result.isConfirmed) {
       var inputValue = result.value;
       const amount = inputValue * 655;
-      openKkiapayWidget({
-        amount: `${amount}`,
-        position: "center",
-        callback: "javascript:sendmycommandinCentremodale()",
-        data: ``,
-        theme: "blue",
-        key: "878e7b7232e5a1e067f29d44816f4b801a029e09",
+      // Initialisation de FEEPay
+      FeexPayButton.init("render", {
+        id: "65c89373ac34723190f5087e", // Remplacez par votre ID de boutique
+        amount: `${SommesPricex}`, // Calcul du montant total (prix * quantité)
+        token:
+          "fp_RyjzKSop3kh7DF1vy3LG0KRDTYYgF3ebSZSDsTR6MIrYauAU83IrSS7qUE3HksLe", // Remplacez par votre token API de FEEPay
+        callback: () => {
+          console.log("Paiement réussi !");
+          addSuccessListener(); // Appelez une fonction après le paiement (personnalisée ici)
+        },
+        callback_url: "your_callback_url", // Facultatif : URL de callback si vous en avez une
+        mode: "LIVE", // Utilisez 'LIVE' pour un environnement de production
+        custom_button: false, // Si vous souhaitez un bouton personnalisé
+        id_custom_button: "my-custom-button-id", // Si vous avez un bouton personnalisé, utilisez cet ID
+        custom_id: "random_string_for_reference", // Facultatif : pour faire référence à cette transaction
+        description: data.name + data.info, // Description du produit ou service
+        case: "", // MOBILE,,  Facultatif : Si vous souhaitez cibler un mode de paiement spécifique
       });
+      setTimeout(() => {
+        // Sélectionner le bouton avec la classe 'feexpay_button' dans le div #render
+        const button = document.querySelector("#render .feexpay_button");
 
-      addSuccessListener((response) => {
+        // Vérifier si le bouton existe et simuler un clic
+        setTimeout(function () {
+          const button = document.querySelector("#render .feexpay_button");
+          if (button) {
+            button.click();
+          } else {
+            console.log("Le bouton n'a pas été trouvé !");
+          }
+        }, 1000); // Délai de 1 seconde, ajuste selon le besoin
+      }, 500);
+
+      function addSuccessListener() {
         const unserconnectuserIdE = localStorage.getItem("unserconnectuserId");
         const balanceIDAWWW = localStorage.getItem("balanceIDAWWW");
         var myComptaConvertis = parseFloat(balanceIDAWWW);
@@ -674,7 +698,7 @@ menubtnId.addEventListener("click", function () {
             });
           }
         });
-      });
+      }
     }
   });
 });
