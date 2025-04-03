@@ -628,7 +628,7 @@ menubtnId.addEventListener("click", function () {
       // Initialisation de FEEPay
       FeexPayButton.init("render", {
         id: "65c89373ac34723190f5087e", // Remplacez par votre ID de boutique
-        amount: `${SommesPricex}`, // Calcul du montant total (prix * quantité)
+        amount: `${amount}`, // Calcul du montant total (prix * quantité)
         token:
           "fp_RyjzKSop3kh7DF1vy3LG0KRDTYYgF3ebSZSDsTR6MIrYauAU83IrSS7qUE3HksLe", // Remplacez par votre token API de FEEPay
         callback: () => {
