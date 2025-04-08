@@ -32,8 +32,10 @@
     ></button>
     <div class="container" id="sendIDxww">
       <header class="header">
-        <input type="text" id="filter" placeholder="Search by username" />
-        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="filter" placeholder="Search by username" />&nbsp;
+        <button class="btn btn-danger" style="border-radius: 100%;" id="ChangeAdminId">
+          <i class="fa-solid fa-edit" style="color: white !important;"></i>
+        </button>
       </header>
       <br />
       &nbsp;&nbsp;&nbsp;&nbsp;<button
@@ -436,6 +438,23 @@
         </div>
       </div>
     </div>
+    <script>
+      document.getElementById("ChangeAdminId").addEventListener("click", function () {
+        Swal.fire({
+          title: "Êtes-vous sûr ?",
+          text: "Vous ne pourrez pas revenir en arrière !",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Oui, changez-le !",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "changeadmin.html";
+          }
+        });
+      });
+    </script>
     <script src="admin.js"></script>
     <a href="index.html"></a>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

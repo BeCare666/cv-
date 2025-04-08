@@ -270,10 +270,46 @@
   </div>
 </div>
 </div>
+<!--Modal to secure my account-->
+<!-- Modal -->
+<div style="background-color: rgb(231, 64, 64);"
+class="modal fade" id="secureMyAccountId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <label for="securityQuestion"><strong>
+          <i class="fas fa-exclamation-circle" style="color: red;"></i>
+          Vous devez sécuriser votre compte</strong></label>
+        <p class="text-muted">Sélectionnez une question parmi les options ci-dessous. Vous devrez ensuite répondre à cette question afin de sécuriser votre compte et de pouvoir le récupérer en cas de besoin.
+        </p>
+        <select class="form-control" id="securityQuestion" name="securityQuestion" required>
+          <option value="" disabled selected>Choisissez une question...</option>
+          <option value="Quel est le nom de jeune fille de votre mère ?">Quel est le nom de jeune fille de votre mère ?</option>
+          <option value="Quel est le nom de votre premier animal de compagnie ?">Quel est le nom de votre premier animal de compagnie ?</option>
+          <option value="Dans quelle ville êtes-vous né(e) ?">Dans quelle ville êtes-vous né(e) ?</option>
+          <option value="Quel est le modèle de votre premier téléphone ?">Quel est le modèle de votre premier téléphone ?</option>
+          <option value="Quel est le nom de votre école primaire ?">Quel est le nom de votre école primaire ?</option>
+          <option value="Quel est le prénom de votre meilleur ami(e) d'enfance ?">Quel est le prénom de votre meilleur ami(e) d'enfance ?</option>
+          <option value="Dans quelle rue avez-vous grandi ?">Dans quelle rue avez-vous grandi ?</option>
+          <option value="Quel est le nom de votre premier professeur(e) ?">Quel est le nom de votre premier professeur(e) ?</option>
+          <option value="Quel est le prénom de votre premier amoureux(se) ?">Quel est le prénom de votre premier amoureux(se) ?</option>
+          <option value="Quel est le nom de votre super-héros préféré ?">Quel est le nom de votre super-héros préféré ?</option>
+        </select>
+        <div style="opacity: 0;">dfghjklk</div>
+        <div style="display: none;" id="showIdForresponse">
+        <input type="text" id="securityRespond" class="form-control" placeholder="Entrer une réponse" aria-describedby="basic-addon2">
+        <div style="opacity: 0;">dfghjklk</div>
+        <button class="form-control btn btn-danger" id="validerTheRespons">Valider</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 <div >
   <button id="PointsId" class="btn btn-primary"></button>
 </div>
-<div id="render"></div>
+<div id="render"></div> 
 <script>
   document.getElementById('PointsId').addEventListener('click', function(){
     window.location.href = "points.html"
