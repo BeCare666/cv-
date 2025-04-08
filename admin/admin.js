@@ -38,84 +38,62 @@ firebase.auth().onAuthStateChanged(function (user) {
             tableTakeIdUserDelete.push(productData.userId)
             console.log(li.id);
             var usermxid = li.id;
-            Swal.fire({
-              title: "Vous êtes sur le point de modifier",
-              icon: "info",
-              showDenyButton: true,
-              showCancelButton: true,
-              confirmButtonText: "Modifier",
-              denyButtonText: `Supprimer l'user`,
-            }).then((result) => {
-              /* Read more about isConfirmed, isDenied below */
-              if (result.isConfirmed) {
-                Swal.fire({
-                  title: "Modification",
-                  html: `Modier le compte de <strong style="color: blue;">${productData.username}</strong>`,
-                  showDenyButton: true,
-                  showCancelButton: true,
-                  confirmButtonText: "Augmenter",
-                  denyButtonText: `Diminuer`,
-                  cancelButtonText: "Vider",
-                  allowOutsideClick: false,
-                  footer: `
-                <button id="notificationidx" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
-              </svg></button>&nbsp;&nbsp;
-                <a href=""><button id="footerButton" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-              </svg></button></a> &nbsp;&nbsp;
-                <button id="footerButtonMessages" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
-              </svg></button> &nbsp;&nbsp;
-                <button id="footerButtonwallet" style="color: white; background-color: blue; border: none; padding: 12px; cursor: pointer; border-radius: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 16 16">
-                <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
-              </svg></button>&nbsp;&nbsp;
-                <button id="footerButtonstatus" style="color: white; background-color: blue; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">status</button>
-                `,
-                }).then((result) => {
-                  /* Read more about isConfirmed, isDenied below */
-                  if (result.isConfirmed) {
-                    // Swal.fire("Saved!", "", "success");
-                    $("#exampleModaladd").modal({
-                      show: true,
-                      backdrop: "static",
-                      keyboard: false,
-                    });
-                  } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    //  Swal.fire("OK", "", "info");
-                    var sendunityforuserlup = document.getElementById(
-                      "sendunityforuserlupdateO"
-                    );
-                    sendunityforuserlup.click();
-                  } else if (result.isDenied) {
-                    // Swal.fire("Changes are not saved", "", "info");
-                    $("#exampleModalupdate").modal({
-                      show: true,
-                      backdrop: "static",
-                      keyboard: false,
-                    });
-                  }
-                });
-              } else if (result.isDenied) {
-                const lastElementUserId = tableTakeIdUserDelete.slice(-1)[0];
-                alert(lastElementUserId);
-                const userRef = database.ref(`/utilisateurs/`);
-                // Supposons que vous ayez une variable userId qui contient l'ID de l'utilisateur à supprimer
-                //const userId = 'ID_DE_L_UTILISATEUR';  // Remplacez par l'ID réel
+           
+              Swal.fire({
+                title: "Modification",
+                html: `Modier le compte de <strong style="color: blue;">${productData.username}</strong>`,
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Augmenter",
+                denyButtonText: `Diminuer`,
+                cancelButtonText: "Vider",
+                allowOutsideClick: false,
+                footer: `
+              <button id="notificationidx" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+              <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
+            </svg></button>&nbsp;&nbsp;
+              <button id="footerButton" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+            </svg></button> &nbsp;&nbsp;
+              <button id="footerButtonMessages" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+              <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+            </svg></button> &nbsp;&nbsp;
+              <button id="footerButtonwallet" style="color: white; background-color: blue; border: none; padding: 12px; cursor: pointer; border-radius: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 16 16">
+              <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+            </svg></button>&nbsp;&nbsp;
+              <button id="footerButtonstatus" style="color: white; background-color: blue; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">status</button>&nbsp;&nbsp;
+              <button id="footerButtonDeleteUser" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                <path d="M5.5 0a.5.5 0 0 1 .5.5V1h5V.5a.5.5 0 0 1 1 0V1h2a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5H14v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2H1a.5.5 0 0 1-.5-.5V1a.5.5 0 0 1 .5-.5h2V.5a.5.5 0 0 1 .5-.5h3zM4 2v11h8V2H4z"/>
+              </svg>
+            </button>
 
-                // Référence à l'utilisateur spécifique
-                const userToDeleteRef = userRef.child(lastElementUserId);
-
-                // Supprimer l'utilisateur
-                userToDeleteRef.remove()
-                  .then(() => {
-                    Swal.fire("Utilisateur supprimé avec succès !" , "", "info");
-                  })
-                  .catch((error) => {
-                    Swal.fire("Erreur lors de la suppression de l'utilisateur :" , "", "info");
+              `,
+              }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                  // Swal.fire("Saved!", "", "success");
+                  $("#exampleModaladd").modal({
+                    show: true,
+                    backdrop: "static",
+                    keyboard: false,
                   });
-              }
-            });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                  //  Swal.fire("OK", "", "info");
+                  var sendunityforuserlup = document.getElementById(
+                    "sendunityforuserlupdateO"
+                  );
+                  sendunityforuserlup.click();
+                } else if (result.isDenied) {
+                  // Swal.fire("Changes are not saved", "", "info");
+                  $("#exampleModalupdate").modal({
+                    show: true,
+                    backdrop: "static",
+                    keyboard: false,
+                  });
+                }
+              });
+          
 
 
 
@@ -171,7 +149,52 @@ firebase.auth().onAuthStateChanged(function (user) {
                 }
               });
             });
-            // End function to activate or desactivate account users
+            // End function to activate or desactivate account users 
+            
+            // function to delete user
+            var footerButtonDeleteUser = document.getElementById(
+              "footerButtonDeleteUser"
+            );
+            footerButtonDeleteUser.addEventListener("click", footerButtonDeleteUserFunction);
+            function footerButtonDeleteUserFunction() {
+              const lastElementUserId = tableTakeIdUserDelete.slice(-1)[0];
+              alert(lastElementUserId);
+              const userRef = database.ref(`/utilisateurs/`);
+              // Supposons que vous ayez une variable userId qui contient l'ID de l'utilisateur à supprimer
+              //const userId = 'ID_DE_L_UTILISATEUR';  // Remplacez par l'ID réel
+
+              // Référence à l'utilisateur spécifique
+              const userToDeleteRef = userRef.child(lastElementUserId);
+
+              // Supprimer l'utilisateur
+              userToDeleteRef.remove()
+                .then(() => {
+                  Swal.fire({
+                    title: "supprimé",
+                    text: "Utilisateur supprimé avec succès",
+                    allowOutsideClick: false,
+                    icon: "info",
+                  }).then((result) => {
+                    if(result.isConfirmed){
+                      location.reload();
+                    }
+                  })
+                  
+                })
+                .catch((error) => {
+                  
+                  Swal.fire({
+                    title: "Oooops",
+                    text: "Erreur lors de la suppression de l'utilisateur",
+                    allowOutsideClick: false,
+                    icon: "error",
+                  }).then((result) => {
+                    if(result.isConfirmed){
+                      location.reload();
+                    }
+                  })
+                });
+            }
 
             var footerButtonMessages = document.getElementById(
               "footerButtonMessages"
