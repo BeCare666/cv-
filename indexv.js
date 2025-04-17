@@ -25,6 +25,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         document.getElementById("sameToBody").style.display = "none";
         Swal.fire({
           title: "Your username",
+          text:"Put your username",
           input: "text",
           inputAttributes: {
             autocapitalize: "off",
@@ -188,6 +189,18 @@ firebase.auth().onAuthStateChanged(function (user) {
           var balanceIDA = document.getElementById("balanceIDA");
           var balanceIDB = document.getElementById("balanceIDB");
 
+          //start function to show loto result
+          var RESPLOTO = snapshot.val().RESPLOTO;
+          if (RESPLOTO) {
+            var resultId = document.getElementById("resultId");
+            resultId.innerHTML = ` LTA : <button class="btn btn-primary"> ${RESPLOTO}</button>`;
+          } else {
+            usernameID.innerHTML = ` `;
+            var resultId = document.getElementById("resultId");
+            resultId.innerHTML = `LTA : ****** `;
+          }
+          //end function to show loto result
+          
           if (snapshot.val().points) {
             var PointsId = document.getElementById("PointsId");
             PointsId.textContent = `${snapshot.val().points} pts`;
@@ -235,8 +248,8 @@ firebase.auth().onAuthStateChanged(function (user) {
           } else {
             usernameID.innerHTML = `${username} || Affiliés : ${balanceIDBWXW} Loto : ** `;
           }
-
-          var usermxid = "7M2AsvFsj2OeB50D8CDtQQFGP9K2";
+          {/*const usermxid = localStorage.getItem("unserconnect");
+          //var usermxid = "7M2AsvFsj2OeB50D8CDtQQFGP9K2";
           const userRef = database.ref(`/utilisateurs/${usermxid}`);
           userRef.once(
             "value",
@@ -248,11 +261,11 @@ firebase.auth().onAuthStateChanged(function (user) {
                 var RESPLOTO = snapshot.val().RESPLOTO;
                 if (RESPLOTO) {
                   var resultId = document.getElementById("resultId");
-                  resultId.innerHTML = ` Resultat Loto : <button class="btn btn-primary"> ${RESPLOTO}</button>`;
+                  resultId.innerHTML = ` LTA : <button class="btn btn-primary"> ${RESPLOTO}</button>`;
                 } else {
                   usernameID.innerHTML = ` `;
                   var resultId = document.getElementById("resultId");
-                  resultId.innerHTML = `Resultat Loto : ****** `;
+                  resultId.innerHTML = `LTA : ****** `;
                 }
               } else {
                 //document.getElementById('userData').textContent = "User not found";
@@ -262,7 +275,7 @@ firebase.auth().onAuthStateChanged(function (user) {
               document.getElementById("userData").textContent =
                 "Error: " + error;
             }
-          );
+          );*/}
 
           var MESSAGESAMWALLET = snapshot.val().MESSAGESAMWALLET;
           if (!MESSAGESAMWALLET) {
