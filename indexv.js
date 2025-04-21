@@ -200,7 +200,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             resultId.innerHTML = `LTA : ****** `;
           }
           //end function to show loto result
-          
+
           if (snapshot.val().points) {
             var PointsId = document.getElementById("PointsId");
             PointsId.textContent = `${snapshot.val().points} pts`;
@@ -297,7 +297,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             document.getElementById(
               "investId"
             ).innerHTML = `  <svg style="height: 2vh; width: 2vh; border-radius: 100%; background-color:yellow"></svg>
-  <span style="font-size: 16px; color: white;"> Investments :${ACCOUNTINVEST} $ </span>&nbsp; `;
+           <span style="font-size: 16px; color: white;"> Investments :${ACCOUNTINVEST} $ </span>&nbsp; `;
             var affiliateIDxQ = document.getElementById("affiliateIDxQ");
           } else if (!ACCOUNTINVESTSATUS && ACCOUNTINVEST != 0) {
             var affiliateIDxQ = document.getElementById("affiliateIDxQ");
@@ -306,7 +306,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             document.getElementById(
               "investId"
             ).innerHTML = `  <svg style="height: 2vh; width: 2vh; border-radius: 100%; background-color:yellow"></svg>
-  <span style="font-size: 16px; color: white;"> Investments :${ACCOUNTINVEST} $ </span>&nbsp; `;
+            <span style="font-size: 16px; color: white;"> Investments :${ACCOUNTINVEST} $ </span>&nbsp; `;
             var affiliateIDxQ = document.getElementById("affiliateIDxQ");
             affiliateIDxQ.addEventListener("click", function () {
               Swal.fire({
@@ -359,13 +359,13 @@ firebase.auth().onAuthStateChanged(function (user) {
             var affiliateIDxQ = document.getElementById("affiliateIDxQ");
             affiliateIDxQ.innerHTML = `No investments in progress `;
             document.getElementById("investId").innerHTML = `
-  <svg style="height: 2vh; width: 2vh; background-color: rgb(150, 147, 147); border-radius: 100%;"></svg>
-  <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp;`;
+          <svg style="height: 2vh; width: 2vh; background-color: rgb(150, 147, 147); border-radius: 100%;"></svg>
+          <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp;`;
           } else if (ACCOUNTINVESTSATUS && ACCOUNTINVEST != 0) {
             document.getElementById("investId").innerHTML = `
-  <svg style="height: 2vh; width: 2vh; background-color: #06D778; border-radius: 100%;"></svg>
-  <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp; 
-  `;
+          <svg style="height: 2vh; width: 2vh; background-color: #06D778; border-radius: 100%;"></svg>
+          <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp; 
+          `;
           }
 
           // end function to get invest
@@ -409,6 +409,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           userArray.forEach((T) => {
             userArrayA.push(T);
           });
+      
 
           for (const userId in userArrayA) {
             const usergal = userArrayA[userId];
@@ -419,7 +420,7 @@ firebase.auth().onAuthStateChanged(function (user) {
               //console.log(userga.notificationid)
               const userLi = document.createElement("p");
               userLi.innerHTML = `<p class="txn-list" style="cursor: pointer !important; border-radius: 5px !important;">
-    <strong id="IDTRANSLATEWALLETU">${userga.notificationid}</strong><br><br><span class="debit-amount" style="color: green !important; position:relative; right:0 !important;">${userga.time}</span></p><hr style="color:white;">`;
+              <strong id="IDTRANSLATEWALLETU">${userga.notificationid}</strong><br><br><span class="debit-amount" style="color: green !important; position:relative; right:0 !important;">${userga.time}</span></p><hr style="color:white;">`;
               userListUl.appendChild(userLi);
             }
             const indicatClass = document.getElementById("indicatClass");

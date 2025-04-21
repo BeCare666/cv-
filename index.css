@@ -29,6 +29,12 @@ body {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
 
+#shwonotificationid {
+  position: fixed;
+  top: 5px;
+  right: 46px;
+  
+}
 /*@media (max-width: 600px) {
   #PointsId {
     width: 40px;
