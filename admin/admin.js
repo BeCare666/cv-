@@ -158,13 +158,13 @@ firebase.auth().onAuthStateChanged(function (user) {
             footerButtonDeleteUser.addEventListener("click", footerButtonDeleteUserFunction);
             function footerButtonDeleteUserFunction() {
               const lastElementUserId = tableTakeIdUserDelete.slice(-1)[0];
-              alert(lastElementUserId);
+              //alert(lastElementUserId);
               const userRef = database.ref(`/utilisateurs/`);
               // Supposons que vous ayez une variable userId qui contient l'ID de l'utilisateur à supprimer
               //const userId = 'ID_DE_L_UTILISATEUR';  // Remplacez par l'ID réel
 
               // Référence à l'utilisateur spécifique
-              const userToDeleteRef = userRef.child(lastElementUserId);
+              var userToDeleteRef = userRef.child(lastElementUserId);
 
               // Supprimer l'utilisateur
               userToDeleteRef.remove()
@@ -175,6 +175,13 @@ firebase.auth().onAuthStateChanged(function (user) {
                     allowOutsideClick: false,
                     icon: "info",
                   }).then((result) => {
+                    firebase
+                    .database()
+                    .ref("userdelete/")
+                    .push({
+                      userId: lastElementUserId,
+                    });
+
                     if(result.isConfirmed){
                       location.reload();
                     }

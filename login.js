@@ -39,25 +39,57 @@ const firebaseConfig = {
         //const userId = userSnapshot.key;
         document.getElementById('login__username').value = ""
         document.getElementById('login__password').value = ""
-        Swal.fire({
-            icon: 'success',
-            title:"Succès",
-            allowOutsideClick: false,
-            text : `Vous êtes connecté avec succès !`,
-        })
-        localStorage.setItem('unserconnect', useruid)
-        localStorage.setItem('unserconnectmail', email)
-        // funnction to get cookies options     
-        localStorage.setItem("Email", email);
-        localStorage.setItem("Password", password);
-        const Bffiliate_id = localStorage.getItem('Affiliate_id');
-        if(Bffiliate_id){
-          localStorage.setItem('Cffiliate_id', Bffiliate_id)
-          localStorage.removeItem('Affiliate_id')
-        }
-        setTimeout(()=>{
-        window.location.href = "index.html"
-        },5000)
+       
+        firebase
+          .database()
+          .ref("userdelete/")
+          .once("value")
+          .then((snapshot) => {
+            let found = false;
+
+            snapshot.forEach((child) => {
+              const data = child.val();
+              if (data.userId === useruid) {
+                found = true;
+                return true; // arrête le forEach
+              }
+            });
+
+            if (found) {
+              console.log("✅ userId trouvé dans userdelete.");
+              Swal.fire({
+                icon: 'error',
+                title:"error",
+                allowOutsideClick: false,
+                text : `Vous n'avez plus accès à votre compte !`,
+                })
+            } else {
+              console.log("❌ userId non trouvé dans userdelete.");
+              Swal.fire({
+                icon: 'success',
+                title:"Succès",
+                allowOutsideClick: false,
+                text : `Vous êtes connecté avec succès !`,
+                })
+                localStorage.setItem('unserconnect', useruid)
+                localStorage.setItem('unserconnectmail', email)
+                // funnction to get cookies options     
+                localStorage.setItem("Email", email);
+                localStorage.setItem("Password", password);
+                const Bffiliate_id = localStorage.getItem('Affiliate_id');
+                if(Bffiliate_id){
+                  localStorage.setItem('Cffiliate_id', Bffiliate_id)
+                  localStorage.removeItem('Affiliate_id')
+                }
+                setTimeout(()=>{
+                window.location.href = "index.html"
+                },5000)
+            }
+          })
+      .catch((error) => {
+        console.error("Erreur Firebase :", error);
+      });
+
         }else{
          // document.getElementById('sameToBody').style.display = "none"
           document.getElementById('login__username').value = ""
