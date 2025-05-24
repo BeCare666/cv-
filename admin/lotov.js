@@ -17,7 +17,8 @@ const firebaseConfig = {
     var tableEmail = []
   firebase.auth().onAuthStateChanged(function(user) { 
   if(user){
-        //var userId = user.uid;
+    var userId = user.uid;
+    //alert("Bienvenue dans la section admin, " + userId);
     getData();
 
 filter.addEventListener("input", (e) => filterData(e.target.value));
@@ -31,8 +32,11 @@ filter.addEventListener("input", (e) => filterData(e.target.value));
     snapshot.forEach((productSnapshot) => {  
         const productData = productSnapshot.val();
         var mxcompt = productData.ACCOUNTPRINCIPAL
-        var AMONTTLOTO = productData.AMONTTLOTO    
+        var AMONTTLOTO = productData.AMONTTLOTO 
+        //8d9YAUcERKXPOZC0ib2XxEcFFpJ3 
+        console.log(mxcompt)  
         if(AMONTTLOTO){
+          
         const li = document.createElement("li");
         li.addEventListener('click', function () {
         li.id = `${productData.userId}`
@@ -333,10 +337,17 @@ function updateAllUsers() {
             `;
         result.appendChild(li);
         
-        document.getElementById('numberIdSubmit').addEventListener('click', function(){
+ 
+    }
+
+           document.getElementById('numberIdSubmit').addEventListener('click', function(){
+          //alert("vous avez cliqué sur le bouton")
             var numberId = document.getElementById('numberId')
             if(numberId.value){
-                const newData = {
+              window.location.href = `resultloto.html?id_resultlot=${numberId.value}`;  
+              {/*
+                
+                                const newData = {
                     RESPLOTO : numberId.value
                 };
                 var usermxid ="7M2AsvFsj2OeB50D8CDtQQFGP9K2"
@@ -349,6 +360,7 @@ function updateAllUsers() {
                       text: "les données ne sont pas mise à jour",
                       allowOutsideClick: false,
                   }).then((result) => {
+                    console.log("voici le loto number" + numberId.value)
                       if (result.isConfirmed) {
                           location.reload();
                       }
@@ -367,9 +379,9 @@ function updateAllUsers() {
                     
                   }
                  })
+                */}
             }
         })
-    }
     })  
 
     })  

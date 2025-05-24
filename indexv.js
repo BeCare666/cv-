@@ -222,9 +222,11 @@ firebase.auth().onAuthStateChanged(function (user) {
       
                 //start function to show loto result
                 var RESPLOTO = snapshot.val().RESPLOTO;
+                console.log("voici le loto number", RESPLOTO)
                 if (RESPLOTO) {
                   var resultId = document.getElementById("resultId");
                   resultId.innerHTML = ` LTA : <button class="btn btn-primary"> ${RESPLOTO}</button>`;
+                  
                 } else {
                   usernameID.innerHTML = ` `;
                   var resultId = document.getElementById("resultId");

@@ -24,6 +24,7 @@ document.getElementById('numberIdSubmit').addEventListener('click', function(){
           ACCOUNTLOTO: "",
           AMONTTLOTO: "",
           dateActuelle:"",
+          RESPLOTO: ""
       };
 
       // Get all users
