@@ -299,7 +299,41 @@ firebase.auth().onAuthStateChanged(function (user) {
                 keyboard: false,
               });
             });
-
+            const userRefxv = database.ref(`/utilisateurs/${usermxid}`);
+            userRefxv
+              .once("value")
+              .then((snapshot) => {
+                snapshot.forEach((roductSnapshot) => {
+                  const userData = roductSnapshot.val();
+                  console.log(userData)
+                  document
+                    .getElementById("ModalfooterButtonAddpointsSend")
+                    .addEventListener("click", function () {
+                      var variableunity =
+                        document.getElementById("recivePointId").value;
+                      var myCompta = parseFloat(userData.ACCOUNTPRINCIPAL);
+                      var addunityForuser = parseFloat(variableunity);
+                      var sommesUnity = myCompta + addunityForuser;
+                      var sommesUnityxc = parseFloat(sommesUnity);
+                      const newData = {
+                        points: sommesUnityxc,
+                      };
+                      const userRefx = database.ref(
+                        `/utilisateurs/${usermxid}`
+                      );
+                      userRefx.update(newData, (error) => {
+                        if (error) {
+                          alert("les données ne sont pas mise à jour " + error);
+                        } else {
+                          window.location.reload();
+                        }
+                      });
+                    });
+                });
+              })
+              .catch(() => {
+                alert("il y une erreur");
+              });
 
             // end function to send points
             sendnotificationidx.addEventListener("click", function () {
