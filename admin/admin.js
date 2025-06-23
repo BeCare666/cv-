@@ -298,42 +298,53 @@ firebase.auth().onAuthStateChanged(function (user) {
                 backdrop: "static",
                 keyboard: false,
               });
-            });
-            const userRefxv = database.ref(`/utilisateurs/${usermxid}`);
-            userRefxv
-              .once("value")
-              .then((snapshot) => {
-                snapshot.forEach((roductSnapshot) => {
-                  const userData = roductSnapshot.val();
-                  console.log(userData)
-                  document
-                    .getElementById("ModalfooterButtonAddpointsSend")
-                    .addEventListener("click", function () {
-                      var variableunity =
-                        document.getElementById("recivePointId").value;
-                      var myCompta = parseFloat(userData.ACCOUNTPRINCIPAL);
-                      var addunityForuser = parseFloat(variableunity);
-                      var sommesUnity = myCompta + addunityForuser;
-                      var sommesUnityxc = parseFloat(sommesUnity);
-                      const newData = {
-                        points: sommesUnityxc,
-                      };
-                      const userRefx = database.ref(
-                        `/utilisateurs/${usermxid}`
-                      );
-                      userRefx.update(newData, (error) => {
-                        if (error) {
-                          alert("les données ne sont pas mise à jour " + error);
-                        } else {
-                          window.location.reload();
-                        }
-                      });
+
+              const userRefxv = database.ref(`/utilisateurs/${usermxid}`);
+              userRefxv
+                .once("value")
+                .then((snapshot) => {
+                  const userData = snapshot.val();
+
+                  if (!userData) {
+                    alert("Utilisateur introuvable");
+                    return;
+                  }
+
+                  const currentPoints = parseFloat(userData.points) || 0; // Valeur actuelle ou 0
+
+                  // Ajoute l'écouteur une seule fois
+                  document.getElementById("ModalfooterButtonAddpointsSend").addEventListener("click", function () {
+                    const inputValue = document.getElementById("recivePointId").value;
+                    const pointsToAdd = parseFloat(inputValue);
+
+                    // Vérification si l’entrée est un nombre valide
+                    if (isNaN(pointsToAdd) || pointsToAdd <= 0) {
+                      alert("Veuillez entrer un nombre valide supérieur à 0");
+                      return;
+                    }
+
+                    // Calcul + arrondi
+                    const newPoints = parseFloat((currentPoints + pointsToAdd).toFixed(2));
+
+                    // Mise à jour dans Firebase
+                    const userRefx = database.ref(`/utilisateurs/${usermxid}`);
+                    userRefx.update({ points: newPoints }, (error) => {
+                      if (error) {
+                        alert("Les données n'ont pas été mises à jour : " + error);
+                      } else {
+                        alert("Les données ont été mises à jour : ");
+                        window.location.reload();
+                      }
                     });
+                  });
+                })
+                .catch((err) => {
+                  console.error(err);
+                  alert("Une erreur est survenue lors de la récupération des données");
                 });
-              })
-              .catch(() => {
-                alert("il y une erreur");
-              });
+
+            });
+
 
             // end function to send points
             sendnotificationidx.addEventListener("click", function () {
