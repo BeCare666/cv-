@@ -1025,7 +1025,7 @@ Get_for_userxxc_points.addEventListener("click", function () {
         var myCommissionAdd = myComptaConvertis - newcommission;
         localStorage.setItem("MyCommissionAdd", addCommissionConvertis);
         const newData = {
-          ACCOUNTPRINCIPAL: myCommissionAdd,
+          ACCOUNTPRINCIPAL: myCommissionAdd + newcommission,
         };
         const userRefx = database.ref(`/utilisateurs/${unserconnectuserIdE}`);
         userRefx.update(newData, (error) => {
