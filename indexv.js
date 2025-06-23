@@ -265,7 +265,9 @@ firebase.auth().onAuthStateChanged(function (user) {
                 var username = snapshot.val().username;
                 var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
                 var MESSAGESAMWALLET = snapshot.val().MESSAGESAMWALLET;
+                var points = snapshot.val().points;
                 localStorage.setItem("usernameT", username);
+                localStorage.setItem("points", points);
                 localStorage.setItem("balanceIDAWWW", balanceIDAW);
                 var balanceIDBWXW = snapshot.val().ACCOUNTPRINCIPALX;
                 var ACCOUNTLOTO = snapshot.val().ACCOUNTLOTO;
@@ -860,10 +862,11 @@ Get_for_userxxc.addEventListener("click", function () {
       const phone = result.value.phone;
       const unserconnectuserIdE = localStorage.getItem("unserconnectuserId");
       const balanceIDAWWW = localStorage.getItem("balanceIDAWWW");
-      var balanceIDAWWWx = parseFloat(balanceIDAWWW);
+      const points = localStorage.getItem("points");
+      //var balanceIDAWWWx = parseFloat(balanceIDAWWW);
       var inputValue = parseFloat(inputValue);
-      if (inputValue <= balanceIDAWWWx) {
-        var myComptaConvertis = parseFloat(balanceIDAWWW);
+      if (inputValue <= points) {
+        var myComptaConvertis = parseFloat(points);
         var addCommissionConvertis = parseFloat(inputValue);
         var myCommissionAdd = myComptaConvertis - addCommissionConvertis;
         localStorage.setItem("MyCommissionAdd", addCommissionConvertis);
@@ -988,24 +991,51 @@ Get_for_userxxc_points.addEventListener("click", function () {
               }
             });
           } else {
-            const dateActuelle = new Date();
-            // Obtenez les composantes de la date et de l'heure
-            const jour = dateActuelle.getDate();
-            const mois = dateActuelle.getMonth() + 1; // Les mois commencent à 0, donc ajoutez 1
-            const annee = dateActuelle.getFullYear();
-            const heures = dateActuelle.getHours();
-            const minutes = dateActuelle.getMinutes();
-            // Formatez la date et l'heure
-            const dateFormatee = `${jour}/${mois}/${annee} ${heures}h:${minutes}min`;
-            localStorage.setItem("DateNow", dateFormatee);
-            Swal.fire({
-              icon: "success",
-              title: "Succès",
-              confirmButtonText: "OK",
-              allowOutsideClick: false,
-              text: `Your operation has been completed successfully.`,
-            })
+            var myComptaConvertis = parseFloat(balanceIDAWWW);
+            var addCommissionConvertis = parseFloat(inputValue);
+            var myCommissionAdd = myComptaConvertis + addCommissionConvertis;
+            localStorage.setItem("MyCommissionAdd", addCommissionConvertis);
+            const newData = {
+              points: myCommissionAdd,
+            };
+            const userRefx = database.ref(`/utilisateurs/${unserconnectuserIdE}`);
+            userRefx.update(newData, (error) => {
+              if (error) {
+                Swal.fire({
+                  title: "Ooops",
+                  confirmButtonText: "OK",
+                  allowOutsideClick: false,
+                  text: "Your operation has failed.",
+                  icon: "error",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.reload();
+                  }
+                });
+              } else {
+
+                const dateActuelle = new Date();
+                // Obtenez les composantes de la date et de l'heure
+                const jour = dateActuelle.getDate();
+                const mois = dateActuelle.getMonth() + 1; // Les mois commencent à 0, donc ajoutez 1
+                const annee = dateActuelle.getFullYear();
+                const heures = dateActuelle.getHours();
+                const minutes = dateActuelle.getMinutes();
+                // Formatez la date et l'heure
+                const dateFormatee = `${jour}/${mois}/${annee} ${heures}h:${minutes}min`;
+                localStorage.setItem("DateNow", dateFormatee);
+                Swal.fire({
+                  icon: "success",
+                  title: "Succès",
+                  confirmButtonText: "OK",
+                  allowOutsideClick: false,
+                  text: `Your operation has been completed successfully.`,
+                })
+              }
+
+            });
           }
+
         });
       } else {
         Swal.fire({
