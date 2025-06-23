@@ -862,11 +862,11 @@ Get_for_userxxc.addEventListener("click", function () {
       const phone = result.value.phone;
       const unserconnectuserIdE = localStorage.getItem("unserconnectuserId");
       const balanceIDAWWW = localStorage.getItem("balanceIDAWWW");
-      const points = localStorage.getItem("points");
-      //var balanceIDAWWWx = parseFloat(balanceIDAWWW);
+
+      var balanceIDAWWWx = parseFloat(balanceIDAWWW);
       var inputValue = parseFloat(inputValue);
-      if (inputValue <= points) {
-        var myComptaConvertis = parseFloat(points);
+      if (inputValue <= balanceIDAWWWx) {
+        var myComptaConvertis = parseFloat(balanceIDAWWW);
         var addCommissionConvertis = parseFloat(inputValue);
         var myCommissionAdd = myComptaConvertis - addCommissionConvertis;
         localStorage.setItem("MyCommissionAdd", addCommissionConvertis);
@@ -941,8 +941,8 @@ Get_for_userxxc_points.addEventListener("click", function () {
         width: 100% !important;
       }
     </style>
-    <strong>Buy points from 12 points.
-    12 points ==== 1 $</strong>
+    <strong>Buy points from 36 points.
+    36 points ==== 0,10 $</strong>
     <p>Get your points for <strong style="color: blue;">am wallet address</strong>.</p>
     <input type="number" id="amount-inputxc" class="swal2-input" min="10" step="1" placeholder="Put points" />
   `,
@@ -966,12 +966,16 @@ Get_for_userxxc_points.addEventListener("click", function () {
       var inputValue = result.value;
       const unserconnectuserIdE = localStorage.getItem("unserconnectuserId");
       const balanceIDAWWW = localStorage.getItem("balanceIDAWWW");
+      const points = localStorage.getItem("points");
       var balanceIDAWWWx = parseFloat(balanceIDAWWW);
       var inputValue = parseFloat(inputValue);
-      if (inputValue <= balanceIDAWWWx && inputValue >= 12) {
-        var myComptaConvertis = parseFloat(balanceIDAWWW);
-        var addCommissionConvertis = parseFloat(inputValue);
-        var myCommissionAdd = myComptaConvertis - addCommissionConvertis;
+      var pointsx = parseFloat(points);
+      var myComptaConvertis = parseFloat(balanceIDAWWW);
+      var addCommissionConvertis = parseFloat(inputValue);
+      var newcommission = addCommissionConvertis * 0.010
+
+      if (inputValue >= 36 && balanceIDAWWWx >= newcommission) {
+        var myCommissionAdd = myComptaConvertis - newcommission;
         localStorage.setItem("MyCommissionAdd", addCommissionConvertis);
         const newData = {
           ACCOUNTPRINCIPAL: myCommissionAdd,
@@ -991,9 +995,9 @@ Get_for_userxxc_points.addEventListener("click", function () {
               }
             });
           } else {
-            var myComptaConvertis = parseFloat(balanceIDAWWW);
+            const points = localStorage.getItem("points");
             var addCommissionConvertis = parseFloat(inputValue);
-            var myCommissionAdd = myComptaConvertis + addCommissionConvertis;
+            var myCommissionAdd = points + addCommissionConvertis;
             localStorage.setItem("MyCommissionAdd", addCommissionConvertis);
             const newData = {
               points: myCommissionAdd,
@@ -1040,7 +1044,7 @@ Get_for_userxxc_points.addEventListener("click", function () {
       } else {
         Swal.fire({
           title: "Info ",
-          text: "Your balance is insufficient or you must enter a number greater than or equal to 12 points",
+          text: "Your points is insufficient or you must enter a number greater than or equal to 12 points",
           icon: "error",
           allowOutsideClick: false,
         }).then((result) => {
