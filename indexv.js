@@ -1036,7 +1036,11 @@ Get_for_userxxc_points.addEventListener("click", function () {
                   confirmButtonText: "OK",
                   allowOutsideClick: false,
                   text: `Your operation has been completed successfully.`,
-                })
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.href = "index.html";
+                  }
+                });
               }
 
             });
