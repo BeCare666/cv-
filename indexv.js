@@ -438,11 +438,57 @@ firebase.auth().onAuthStateChanged(function (user) {
                   for (const userI in usergal) {
                     const userga = usergal[userI];
                     userArrayAXXXX.push(userga.notificationid);
-                    //console.log(userga.f)
-                    const userLi = document.createElement("p");
-                    userLi.innerHTML = `<p class="txn-list" style="cursor: pointer !important; border-radius: 5px !important;">
+                    console.log(userga.message)
+                    if (userga.notificationid) {
+                      const userLi = document.createElement("p");
+                      userLi.innerHTML = `<p class="txn-list" style="cursor: pointer !important; border-radius: 5px !important;">
                     <strong id="IDTRANSLATEWALLETU">${userga.notificationid}</strong><br><br><span class="debit-amount" style="color: green !important; position:relative; right:0 !important;">${userga.time}</span></p><hr style="color:white;">`;
-                    userListUl.appendChild(userLi);
+                      userListUl.appendChild(userLi);
+                    } else if (userga.message) {
+                      const userLi = document.createElement("p");
+                      userLi.innerHTML = `
+                  <div class="txn-card" style="
+                    background-color: #ffffff;
+                    border-radius: 8px;
+                    padding: 15px;
+                    margin-bottom: 12px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                    transition: transform 0.2s ease;
+                    cursor: pointer;
+                  " title="Message de transfert">
+                    <h4 style="
+                      margin: 0 0 10px 0;
+                      font-size: 16px;
+                      font-weight: 600;
+                      color: #005cb5;
+                    ">
+                      💸 Message de Transfert
+                    </h4>
+                    <p style="
+                      margin: 0;
+                      font-size: 15px;
+                      color: #333;
+                      line-height: 1.4;
+                    ">
+                      ${userga.message}
+                    </p>
+                    <div style="
+                      margin-top: 10px;
+                      text-align: right;
+                    ">
+                      <span style="
+                        font-size: 13px;
+                        color: #28a745;
+                      ">
+                        ${userga.time}
+                      </span>
+                    </div>
+                  </div>
+                `;
+
+                      userListUl.appendChild(userLi);
+                    }
+
                   }
                   const indicatClass = document.getElementById("indicatClass");
                   indicatClass.innerHTML = `&nbsp;${userArrayAXXXX.length}`;
@@ -811,6 +857,7 @@ menubtnId.addEventListener("click", function () {
 });
 
 // to get money
+var tableSolde = []
 var Get_for_userxxc = document.getElementById("get_for_userxxc");
 Get_for_userxxc.addEventListener("click", function () {
   //containerId.style.display = "none"
@@ -832,13 +879,7 @@ Get_for_userxxc.addEventListener("click", function () {
       const selectedCode = document.getElementById("country-select").value;
       const phone = document.getElementById("phone-input").value.trim();
       const amount = document.getElementById("amount-input").value;
-
-      // Vérification téléphone
-      if (!phone.startsWith(selectedCode)) {
-        Swal.showValidationMessage(`Le numéro doit commencer par ${selectedCode}`);
-        return false;
-      }
-
+      tableSolde.push(amount)
       // Vérification montant
       if (amount <= 0) {
         Swal.showValidationMessage("Veuillez entrer un montant positif !");
@@ -857,23 +898,28 @@ Get_for_userxxc.addEventListener("click", function () {
     cancelButtonText: "Cancel",
   }).then((result) => {
     if (result.isConfirmed) {
-      var inputValue = result.value.amount;
+      const inputValue = tableSolde[tableSolde.length - 1];
       const selectedCode = result.value.country;
       const phone = result.value.phone;
       const unserconnectuserIdE = localStorage.getItem("unserconnectuserId");
       const balanceIDAWWW = localStorage.getItem("balanceIDAWWW");
 
       var balanceIDAWWWx = parseFloat(balanceIDAWWW);
-      var inputValue = parseFloat(inputValue);
-      if (inputValue <= balanceIDAWWWx) {
+      var inputValuec = parseFloat(inputValue);
+      if (inputValuec <= balanceIDAWWWx) {
         var myComptaConvertis = parseFloat(balanceIDAWWW);
-        var addCommissionConvertis = parseFloat(inputValue);
+        var addCommissionConvertis = parseFloat(inputValuec);
         var myCommissionAdd = myComptaConvertis - addCommissionConvertis;
         localStorage.setItem("MyCommissionAdd", addCommissionConvertis);
+        var myCommissionAddam = myCommissionAdd * 0.05
+        var myCommissionAddamy = parseFloat(myCommissionAddam);
+        const somme = myCommissionAdd + myCommissionAddamy;
+        const sommeArrondie = parseFloat(somme.toFixed(2));
         const newData = {
           //ACCOUNTPRINCIPAL sera appliqué avec 5% de commission
-          ACCOUNTPRINCIPAL: myCommissionAdd * 0.05, // Appliquer une commission de 5%
-          PHONE: selectedCode + phone, // Combine le code du pays et le numéro de téléphone
+          // Appliquer une commission de 5% à ACCOUNTPRINCIPAL 
+          ACCOUNTPRINCIPAL: sommeArrondie,
+          //PHONE: selectedCode + phone, // Combine le code du pays et le numéro de téléphone
         };
         const userRefx = database.ref(`/utilisateurs/${unserconnectuserIdE}`);
         userRefx.update(newData, (error) => {
