@@ -16,7 +16,7 @@ const listItems = [];
 var tableOfPrice = [];
 var tableEmail = [];
 var urlImage = [];
-var tableTakeIdUserDelete = []; 
+var tableTakeIdUserDelete = [];
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     var userId = user.uid;
@@ -38,17 +38,17 @@ firebase.auth().onAuthStateChanged(function (user) {
             tableTakeIdUserDelete.push(productData.userId)
             console.log(li.id);
             var usermxid = li.id;
-           
-              Swal.fire({
-                title: "Modification",
-                html: `Modier le compte de <strong style="color: blue;">${productData.username}</strong>`,
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: "Augmenter",
-                denyButtonText: `Diminuer`,
-                cancelButtonText: "Vider",
-                allowOutsideClick: false,
-                footer: `
+
+            Swal.fire({
+              title: "Modification",
+              html: `Modier le compte de <strong style="color: blue;">${productData.username}</strong>`,
+              showDenyButton: true,
+              showCancelButton: true,
+              confirmButtonText: "Augmenter",
+              denyButtonText: `Diminuer`,
+              cancelButtonText: "Vider",
+              allowOutsideClick: false,
+              footer: `
               <button id="notificationidx" style="color: white; background-color: #FFB6C1; border: none; padding: 12px; cursor: pointer; border-radius: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
               <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
             </svg></button>&nbsp;&nbsp;
@@ -66,34 +66,42 @@ firebase.auth().onAuthStateChanged(function (user) {
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                 <path d="M5.5 0a.5.5 0 0 1 .5.5V1h5V.5a.5.5 0 0 1 1 0V1h2a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5H14v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2H1a.5.5 0 0 1-.5-.5V1a.5.5 0 0 1 .5-.5h2V.5a.5.5 0 0 1 .5-.5h3zM4 2v11h8V2H4z"/>
               </svg>
-            </button>
+            </button>&nbsp;&nbsp;
+            <button id="footerButtonAddpoints"
+            style="color: white; background-color: green; border: none; padding: 12px; cursor: pointer; border-radius: 5px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+              <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0V7H5a.5.5 0 0 0 0 1h2.5v2.5a.5.5 0 0 0 1 0V8H11a.5.5 0 0 0 0-1H8.5V4.5z" />
+            </svg>
+          </button>
 
               `,
-              }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                  // Swal.fire("Saved!", "", "success");
-                  $("#exampleModaladd").modal({
-                    show: true,
-                    backdrop: "static",
-                    keyboard: false,
-                  });
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                  //  Swal.fire("OK", "", "info");
-                  var sendunityforuserlup = document.getElementById(
-                    "sendunityforuserlupdateO"
-                  );
-                  sendunityforuserlup.click();
-                } else if (result.isDenied) {
-                  // Swal.fire("Changes are not saved", "", "info");
-                  $("#exampleModalupdate").modal({
-                    show: true,
-                    backdrop: "static",
-                    keyboard: false,
-                  });
-                }
-              });
-          
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                // Swal.fire("Saved!", "", "success");
+                $("#exampleModaladd").modal({
+                  show: true,
+                  backdrop: "static",
+                  keyboard: false,
+                });
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+                //  Swal.fire("OK", "", "info");
+                var sendunityforuserlup = document.getElementById(
+                  "sendunityforuserlupdateO"
+                );
+                sendunityforuserlup.click();
+              } else if (result.isDenied) {
+                // Swal.fire("Changes are not saved", "", "info");
+                $("#exampleModalupdate").modal({
+                  show: true,
+                  backdrop: "static",
+                  keyboard: false,
+                });
+              }
+            });
+
 
 
 
@@ -150,7 +158,7 @@ firebase.auth().onAuthStateChanged(function (user) {
               });
             });
             // End function to activate or desactivate account users 
-            
+
             // function to delete user
             var footerButtonDeleteUser = document.getElementById(
               "footerButtonDeleteUser"
@@ -176,27 +184,27 @@ firebase.auth().onAuthStateChanged(function (user) {
                     icon: "info",
                   }).then((result) => {
                     firebase
-                    .database()
-                    .ref("userdelete/")
-                    .push({
-                      userId: lastElementUserId,
-                    });
+                      .database()
+                      .ref("userdelete/")
+                      .push({
+                        userId: lastElementUserId,
+                      });
 
-                    if(result.isConfirmed){
+                    if (result.isConfirmed) {
                       location.reload();
                     }
                   })
-                  
+
                 })
                 .catch((error) => {
-                  
+
                   Swal.fire({
                     title: "Oooops",
                     text: "Erreur lors de la suppression de l'utilisateur",
                     allowOutsideClick: false,
                     icon: "error",
                   }).then((result) => {
-                    if(result.isConfirmed){
+                    if (result.isConfirmed) {
                       location.reload();
                     }
                   })
@@ -264,6 +272,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             });
             // Sélectionnez le bouton du pied de page
             const notificationidx = document.getElementById("notificationidx");
+
             const sendnotificationidx =
               document.getElementById("sendnotificationid");
             // Ajoutez un gestionnaire d'événements clic pour le bouton du pied de page
@@ -277,6 +286,22 @@ firebase.auth().onAuthStateChanged(function (user) {
                 keyboard: false,
               });
             });
+
+
+            // function to send points 
+            const footerButtonAddpoints =
+              document.getElementById("footerButtonAddpoints");
+            footerButtonAddpoints.addEventListener("click", function () {
+              Swal.close();
+              $("#ModalfooterButtonAddpoints").modal({
+                show: true,
+                backdrop: "static",
+                keyboard: false,
+              });
+            });
+
+
+            // end function to send points
             sendnotificationidx.addEventListener("click", function () {
               const notificationid =
                 document.getElementById("notificationid").value;
@@ -392,7 +417,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           });
 
           listItems.push(li);
-          li.style.cursor = "pointer";     
+          li.style.cursor = "pointer";
           li.innerHTML = `
             <img src="../img/user_logo.png" alt="">
             <div class="user-info">
@@ -400,7 +425,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                 <p>${productData.username}, &nbsp; &nbsp;&nbsp; Solde : ${productData.ACCOUNTPRINCIPAL}$  Invest: ${productData.ACCOUNTINVEST}$</p>
                 <p style="display: flex !important;"> 
                 <strong style="color: blue;">CDDR : ${productData.ACCOUNTINVESTGETCIDR}$</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <strong style="color: blue;">POINTS: ${ productData.points ? productData.points : " 0"} </strong>
+                <strong style="color: blue;">POINTS: ${productData.points ? productData.points : " 0"} </strong>
                 
                 </p>
             </div>

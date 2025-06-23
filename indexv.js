@@ -36,14 +36,14 @@ firebase.auth().onAuthStateChanged(function (user) {
           document.getElementById("sameToBody").style.display = "none";
           Swal.fire({
             icon: 'error',
-            title:"error",
+            title: "error",
             allowOutsideClick: false,
-            text : `Vous n'avez plus accès à votre compte. Créez un nouveau compte.`,
+            text: `Vous n'avez plus accès à votre compte. Créez un nouveau compte.`,
             showCancelButton: false,
-            }).then((result) => {
+          }).then((result) => {
             if (result.isConfirmed) {
               window.location.href = "signup.html";
-            } 
+            }
           })
         } else {
           console.log("❌ userId non trouvé dans userdelete.");
@@ -54,9 +54,10 @@ firebase.auth().onAuthStateChanged(function (user) {
           userRef.once("value").then((snapshot) => {
             if (!snapshot.exists()) {
               document.getElementById("sameToBody").style.display = "none";
+
               Swal.fire({
                 title: "Your username",
-                text:"Put your username",
+                text: "Put your username",
                 input: "text",
                 inputAttributes: {
                   autocapitalize: "off",
@@ -90,7 +91,6 @@ firebase.auth().onAuthStateChanged(function (user) {
                         console.log("I was closed by the timer");
                       }
                     });
-      
                     firebase
                       .database()
                       .ref("utilisateurs/" + userId)
@@ -140,25 +140,25 @@ firebase.auth().onAuthStateChanged(function (user) {
               });
             } else {
               // function to secure my account
-              if (snapshot.val().securemyaccountR){
-      
-              }else{
+              if (snapshot.val().securemyaccountR) {
+
+              } else {
                 $("#secureMyAccountId").modal({
                   show: true,
                   backdrop: "static",
                   keyboard: false,
-                }); 
-                document.getElementById("securityQuestion").addEventListener("change", function() {
+                });
+                document.getElementById("securityQuestion").addEventListener("change", function () {
                   var selectedOption = this.value; // Récupérer la valeur de l'option sélectionnée
                   var laReponse = document.getElementById('securityRespond').value
-                  if (selectedOption) { 
+                  if (selectedOption) {
                     //alert("Vous avez sélectionné : " + selectedOption); // Afficher l'alerte avec la valeur sélectionnée
                     document.getElementById("showIdForresponse").style.display = "block";
-                    document.getElementById("validerTheRespons").addEventListener('click', function(){
+                    document.getElementById("validerTheRespons").addEventListener('click', function () {
                       var laReponse = document.getElementById('securityRespond').value
-                      if(laReponse == ""){
-                        Swal.fire("Vous devez fournir une réponse" , "", "info");
-                      }else{
+                      if (laReponse == "") {
+                        Swal.fire("Vous devez fournir une réponse", "", "info");
+                      } else {
                         const newData = {
                           securemyaccountQ: selectedOption,
                           securemyaccountR: laReponse,
@@ -195,13 +195,71 @@ firebase.auth().onAuthStateChanged(function (user) {
                         });
                       }
                     })
-      
-      
+
+
                   }
                 });
               }
               if (snapshot.val().USERSTATUS) {
                 getJobs();
+                // function to validate code of transfert
+                if (!snapshot.val().transfert_code_id) {
+                  const unserconnectuserId = localStorage.getItem("unserconnectuserId");
+                  // function to get 8 digit number from code
+                  async function get8DigitNumberFromCode(code) {
+                    const encoder = new TextEncoder();
+                    const data = encoder.encode(code);
+                    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    const digits = hashArray
+                      .map(b => b.toString().padStart(3, '0'))
+                      .join('')
+                      .replace(/\D/g, ''); // Ne garde que les chiffres
+
+                    return digits.slice(0, 8).padEnd(8, '0');
+                  }
+
+                  // Utilisation
+                  get8DigitNumberFromCode(`${unserconnectuserId}`).then(code => {
+                    console.log("Code à 8 chiffres :", code); // ex: "03972642" 
+                    localStorage.setItem("transfert_code_id", code);
+                  });
+                  const transfert_code_id = localStorage.getItem("transfert_code_id");
+                  const newData = {
+                    transfert_code_id: transfert_code_id,
+                  };
+                  const userRefx = database.ref(`/utilisateurs/${unserconnectId}`);
+                  userRefx.update(newData, (error) => {
+                    if (error) {
+                      Swal.fire({
+                        title: "Ooops",
+                        text: "error",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: false,
+                        icon: "error",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          window.location.reload();
+                        }
+                      });
+                    } else {
+                      Swal.fire({
+                        title: "Supper",
+                        text: "Code is validate",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: false,
+                        icon: "success",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          window.location.reload();
+                        }
+                      });
+                    }
+                  });
+
+                }
+                // end function to validate code of transfert
+
                 document.getElementById("sameToBody").style.display = "none";
                 var useremail = snapshot.val().email;
                 var username = snapshot.val().username;
@@ -219,21 +277,21 @@ firebase.auth().onAuthStateChanged(function (user) {
                 var marqueeId = document.getElementById("marqueeId");
                 var balanceIDA = document.getElementById("balanceIDA");
                 var balanceIDB = document.getElementById("balanceIDB");
-      
+
                 //start function to show loto result
                 var RESPLOTO = snapshot.val().RESPLOTO;
                 console.log("voici le loto number", RESPLOTO)
                 if (RESPLOTO) {
                   var resultId = document.getElementById("resultId");
                   resultId.innerHTML = ` LTA : <button class="btn btn-primary"> ${RESPLOTO}</button>`;
-                  
+
                 } else {
                   usernameID.innerHTML = ` `;
                   var resultId = document.getElementById("resultId");
                   resultId.innerHTML = `LTA : ****** `;
                 }
                 //end function to show loto result
-      
+
                 if (snapshot.val().points) {
                   var PointsId = document.getElementById("PointsId");
                   PointsId.textContent = `${snapshot.val().points} pts`;
@@ -241,7 +299,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                   var PointsId = document.getElementById("PointsId");
                   PointsId.textContent = `0 pts`;
                 }
-      
+
                 var iconitem = document.querySelectorAll(".icon-item");
                 iconitem.forEach((T) => {
                   T.addEventListener("click", function () {
@@ -275,11 +333,13 @@ firebase.auth().onAuthStateChanged(function (user) {
                     }
                   });
                 });
-                balanceID.innerHTML = `&dollar; ${balanceIDAW} `;
+                balanceID.innerHTML = ` <p style="font-size: 26px !important;">
+                &dollar; ${balanceIDAW}
+                </p> `;
                 if (ACCOUNTLOTO) {
-                  usernameID.innerHTML = `${username} || Affiliés : ${balanceIDBWXW} Loto : ${ACCOUNTLOTO} `;
+                  usernameID.innerHTML = `${username}   `;
                 } else {
-                  usernameID.innerHTML = `${username} || Affiliés : ${balanceIDBWXW} Loto : ** `;
+                  usernameID.innerHTML = `${username}  `;
                 }
                 {/*const usermxid = localStorage.getItem("unserconnect");
                 //var usermxid = "7M2AsvFsj2OeB50D8CDtQQFGP9K2";
@@ -309,7 +369,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                       "Error: " + error;
                   }
                 );*/}
-      
+
                 var MESSAGESAMWALLET = snapshot.val().MESSAGESAMWALLET;
                 if (!MESSAGESAMWALLET) {
                   marqueeId.innerHTML = `Welcome to amwallet !`;
@@ -320,91 +380,17 @@ firebase.auth().onAuthStateChanged(function (user) {
                 var ACCOUNTINVESTSATUS = snapshot.val().ACCOUNTINVESTSATUS;
                 var ACCOUNTINVEST = snapshot.val().ACCOUNTINVEST;
                 var ACCOUNTINVESTGETCIDR = snapshot.val().ACCOUNTINVESTGETCIDR;
-                if (!ACCOUNTINVESTSATUS && ACCOUNTINVESTGETCIDR != 0) {
-                  var affiliateIDxQ = document.getElementById("affiliateIDxQ");
-                  affiliateIDxQ.innerHTML = `Click to invest `;
-                  affiliateIDxQ.style.color = "blue";
-                  affiliateIDxQ.addEventListener("click", function () {
-                    window.location.href = "./invest/invest.html";
-                  });
-                  document.getElementById(
-                    "investId"
-                  ).innerHTML = `  <svg style="height: 2vh; width: 2vh; border-radius: 100%; background-color:yellow"></svg>
-                 <span style="font-size: 16px; color: white;"> Investments :${ACCOUNTINVEST} $ </span>&nbsp; `;
-                  var affiliateIDxQ = document.getElementById("affiliateIDxQ");
-                } else if (!ACCOUNTINVESTSATUS && ACCOUNTINVEST != 0) {
-                  var affiliateIDxQ = document.getElementById("affiliateIDxQ");
-                  affiliateIDxQ.innerHTML = `Click to get your 5$`;
-      
-                  document.getElementById(
-                    "investId"
-                  ).innerHTML = `  <svg style="height: 2vh; width: 2vh; border-radius: 100%; background-color:yellow"></svg>
-                  <span style="font-size: 16px; color: white;"> Investments :${ACCOUNTINVEST} $ </span>&nbsp; `;
-                  var affiliateIDxQ = document.getElementById("affiliateIDxQ");
-                  affiliateIDxQ.addEventListener("click", function () {
-                    Swal.fire({
-                      title: "informations",
-                      text: "Assurez vous d'être en contact direct avec l'un des agents de amwallet.",
-                      confirmButtonText: "Lancer l'opération",
-                      allowOutsideClick: false,
-                      icon: "info",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        var ACCOUNTINVESTGETCIDR =
-                          snapshot.val().ACCOUNTINVESTGETCIDR;
-                        if (ACCOUNTINVESTGETCIDR != 0) {
-                        } else {
-                          var ACCOUNTINVEST = snapshot.val().ACCOUNTINVEST;
-                          var valeurx = "5";
-                          var aCCOUNTPRINCIPALX = parseFloat(ACCOUNTINVEST);
-                          var addCommissionConvertis = parseFloat(valeurx);
-                          var myCommissionAdd =
-                            aCCOUNTPRINCIPALX - addCommissionConvertis;
-                          const newData = {
-                            ACCOUNTINVEST: myCommissionAdd,
-                            ACCOUNTINVESTGETCIDR: addCommissionConvertis,
-                          };
-                          const userRefx = database.ref(
-                            `/utilisateurs/${unserconnectId}`
-                          );
-                          userRefx.update(newData, (error) => {
-                            if (error) {
-                              Swal.fire({
-                                title: "Ooops",
-                                text: "error",
-                                confirmButtonText: "OK",
-                                allowOutsideClick: false,
-                                icon: "error",
-                              }).then((result) => {
-                                if (result.isConfirmed) {
-                                  window.location.reload();
-                                }
-                              });
-                            } else {
-                              window.location.reload();
-                            }
-                          });
-                        }
-                      }
-                    });
-                  });
-                } else if (!ACCOUNTINVESTSATUS && ACCOUNTINVEST == 0) {
-                  var affiliateIDxQ = document.getElementById("affiliateIDxQ");
-                  affiliateIDxQ.innerHTML = `No investments in progress `;
-                  document.getElementById("investId").innerHTML = `
-                <svg style="height: 2vh; width: 2vh; background-color: rgb(150, 147, 147); border-radius: 100%;"></svg>
-                <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp;`;
-                } else if (ACCOUNTINVESTSATUS && ACCOUNTINVEST != 0) {
-                  document.getElementById("investId").innerHTML = `
-                <svg style="height: 2vh; width: 2vh; background-color: #06D778; border-radius: 100%;"></svg>
-                <span style="font-size: 16px; color: white;"> Investments : ${ACCOUNTINVEST} $ </span>&nbsp; 
-                `;
-                }
-      
+                var balanceIDBWXW = snapshot.val().ACCOUNTPRINCIPALX;
+                var ACCOUNTLOTO = snapshot.val().ACCOUNTLOTO;
+                document.getElementById(
+                  "investId"
+                ).innerHTML = `  <svg style="height: 2vh; width: 2vh; border-radius: 100%; background-color:yellow"></svg>
+                 <span style="font-size: 16px; color: white;"> Affiliés : ${balanceIDBWXW} Loto : ${ACCOUNTLOTO || '**'} </span>&nbsp; `;
+
                 // end function to get invest
                 //balanceIDA.innerHTML = ` &nbsp; &nbsp; &nbsp; &nbsp;${balanceIDAW} <span class="dollar">&dollar;<span class="dollar"> `
                 //balanceIDB.innerHTML = `${balanceIDBW} &dollar;  `
-      
+
                 // Function to get messages
                 var userArray = [];
                 var userArrayA = [];
@@ -412,7 +398,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                 const userListUl = document.createElement("span");
                 var MESSAGES = snapshot.val().MESSAGES;
                 var deletenotfifId = document.getElementById("deletenotfifId");
-      
+
                 deletenotfifId.addEventListener("click", function () {
                   const newData = {
                     MESSAGES: "",
@@ -442,15 +428,15 @@ firebase.auth().onAuthStateChanged(function (user) {
                 userArray.forEach((T) => {
                   userArrayA.push(T);
                 });
-            
-      
+
+
                 for (const userId in userArrayA) {
                   const usergal = userArrayA[userId];
                   var userArrayAXXXX = [];
                   for (const userI in usergal) {
                     const userga = usergal[userI];
                     userArrayAXXXX.push(userga.notificationid);
-                    //console.log(userga.notificationid)
+                    //console.log(userga.f)
                     const userLi = document.createElement("p");
                     userLi.innerHTML = `<p class="txn-list" style="cursor: pointer !important; border-radius: 5px !important;">
                     <strong id="IDTRANSLATEWALLETU">${userga.notificationid}</strong><br><br><span class="debit-amount" style="color: green !important; position:relative; right:0 !important;">${userga.time}</span></p><hr style="color:white;">`;
@@ -461,7 +447,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                   // Ajoutez la liste à la balise p
                   userListP.appendChild(userListUl);
                 }
-      
+
                 var balanceIDAW = snapshot.val().ACCOUNTPRINCIPAL;
                 //function to generate affilition link
                 const linkInput = document.getElementById("linkInput");
@@ -471,23 +457,23 @@ firebase.auth().onAuthStateChanged(function (user) {
                 //linkInput.value = `Copier ici votre lien d'affiliation.`
                 // function to hide border when you click
                 copyButtonx.addEventListener("click", () => {
-                  linkInputx.value = `https://amwallet.netlify.app/signup.html?affiliate-id=${unserconnectId}`;
+                  linkInputx.value = `https://amwallet.netlify.app/?user-id=${unserconnectId}`;
                   linkInputx.select(); // Sélectionne le texte dans l'input
                   document.execCommand("copy"); // Copie le texte sélectionné dans le presse-papiers
                   Swal.fire({
                     title: "Super !",
-                    text: "Your link has been copied to the clipboard",
+                    text: "Your link has been copied to the clipboard ",
                     icon: "success",
                     confirmButtonText: "OK",
                   });
                 });
                 copyButton.addEventListener("click", () => {
-                  linkInput.value = `https://amwallet.netlify.app/?user-id=${unserconnectId}`;
+                  linkInput.value = `${snapshot.val().transfert_code_id}`;
                   linkInput.select(); // Sélectionne le texte dans l'input
                   document.execCommand("copy"); // Copie le texte sélectionné dans le presse-papiers
                   Swal.fire({
                     title: "Super !",
-                    text: "Your link has been copied to the clipboard",
+                    text: "Your transfert code has been copied to the clipboard",
                     icon: "success",
                     confirmButtonText: "OK",
                   });
@@ -592,7 +578,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                   footer: `<a href="mailto:amobilewallet.inter@gmail.com">Contact technical support.</a>`,
                 });
               }
-      
+
               function getJobs() {
                 var userArrayJob = [];
                 var userArrayAJob = [];
@@ -603,33 +589,33 @@ firebase.auth().onAuthStateChanged(function (user) {
                     const productData = productSnapshot.val();
                     userArrayAJob.push(productData);
                   });
-      
+
                   const indicatClassJob = document.getElementById("indicatClassJob");
                   const userListUlx = document.createElement("span");
-      
+
                   // Fonction de conversion de la date et de l'heure en objet Date
                   function convertToDate(dateStr, timeStr) {
                     let [day, month, year] = dateStr.split("/");
                     let [hours, minutes] = timeStr.split(":");
                     return new Date(year, month - 1, day, hours, minutes);
                   }
-      
+
                   // Convertir les dates en objets Date et trier le tableau
                   userArrayAJob.sort((a, b) => {
                     let [dateA, timeA] = a.time.split(" ");
                     timeA = timeA.replace("h:", ":").replace("min", "");
                     let [dateB, timeB] = b.time.split(" ");
                     timeB = timeB.replace("h:", ":").replace("min", "");
-      
+
                     let dateObjA = convertToDate(dateA, timeA);
                     let dateObjB = convertToDate(dateB, timeB);
-      
+
                     // Débogage : Afficher les objets Date
                     // console.log("dateObjA:", dateObjA, "dateObjB:", dateObjB);
-      
+
                     return dateObjB - dateObjA; // Pour trier en ordre décroissant (du plus récent au plus ancien)
                   });
-      
+
                   for (let i = 0; i < userArrayAJob.length; i++) {
                     const userLix = document.createElement("p");
                     userLix.id = userArrayAJob[i].uniqueId;
@@ -639,13 +625,13 @@ firebase.auth().onAuthStateChanged(function (user) {
                       userArrayAJob[i].XitledeCategorie === "Formation"
                         ? ` <a class="btn btn-secondary" href="indexex.html?id=${userArrayAJob[i].Salairedejob} ">Acheter</a>`
                         : ` <a class="btn btn-primary" href="indexe.html">Postuler </a> `;
-      
+
                     var contentxc;
                     contentxc =
                       userArrayAJob[i].XitledeCategorie === "Formation"
                         ? ` <p class="card__owner"><strong>Prix  :</strong> ${userArrayAJob[i].Salairedejob} $</p>`
                         : ` <p class="card__owner"><strong>Salaire :</strong> ${userArrayAJob[i].Salairedejob} $</p> `;
-      
+
                     userLix.innerHTML = `
             <img src="img/logo_of_wallet.jpg" alt="" style="height: 25%; width: 25%; border-radius: 100%;">
             <p class="card__number">${userArrayAJob[i].Titledejob} </p>
@@ -656,7 +642,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             </div>
             <p class="card__owner">Publié le ${userArrayAJob[i].time}</p><hr>
           `;
-      
+
                     // Attach the mouseover event listener
                     userLix.addEventListener(
                       "mouseover",
@@ -671,10 +657,10 @@ firebase.auth().onAuthStateChanged(function (user) {
                         };
                       })(userArrayAJob[i])
                     );
-      
+
                     userListUlx.appendChild(userLix);
                   }
-      
+
                   // Append the list to the parent container
                   indicatClassJob.appendChild(userListUlx);
                 });
@@ -682,7 +668,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             }
             const shwonotification = document.getElementById("shwonotificationid");
             // Ajoutez un gestionnaire d'événements clic pour le bouton du pied de page
-      
+
             // start function to send notification
             shwonotification.addEventListener("click", function () {
               $("#Modalnotificationid").modal({
@@ -699,9 +685,9 @@ firebase.auth().onAuthStateChanged(function (user) {
       });
 
 
-    } else {
-      window.location.href = "login.html";
-    }
+  } else {
+    window.location.href = "login.html";
+  }
 });
 
 var transfer_systems = document.getElementById("transfer_systems");
@@ -829,32 +815,49 @@ Get_for_userxxc.addEventListener("click", function () {
   Swal.fire({
     title: "Your amount",
     html: `
-    <style>
-      .swal2-input {
-        width: 100% !important;
-      }
-    </style>
-    <p>Get your money  for <strong style="color: blue;">am wallet address</strong>.</p>
-    <input type="number" id="amount-inputxc" class="swal2-input" min="10" step="1" placeholder="Put amount($)" />
-  `,
+      
+
+      <label id="swal-label" for="country-select">🌍 Choisissez votre pays</label>
+      <select id="country-select" class="swal2-select" style="margin-bottom:10px; width:60%; max-width:300px;">${countryOptions}</select>
+
+      <label id="swal-label" for="phone-input">📱 Numéro de téléphone</label>
+      <input type="text" id="phone-input" class="swal2-input" placeholder="Ex: +22990123456" style="margin-bottom:10px; width:60%; max-width:300px;"/>
+
+      <label id="swal-label" for="amount-input">💵 Montant à recharger</label>
+      <input type="number" id="amount-input" class="swal2-input" min="1" placeholder="Montant en $" style="margin-bottom:10px; width:60%; max-width:300px;"/>
+    `,
     preConfirm: () => {
-      const input = document.getElementById("amount-inputxc").value;
-      console.log(input);
-      if (input < 10) {
+      const selectedCode = document.getElementById("country-select").value;
+      const phone = document.getElementById("phone-input").value.trim();
+      const amount = document.getElementById("amount-input").value;
+
+      // Vérification téléphone
+      if (!phone.startsWith(selectedCode)) {
+        Swal.showValidationMessage(`Le numéro doit commencer par ${selectedCode}`);
+        return false;
+      }
+
+      // Vérification montant
+      if (amount <= 0) {
+        Swal.showValidationMessage("Veuillez entrer un montant positif !");
+        return false;
+      }
+      if (amount < 10) {
         Swal.showValidationMessage(
           "Please enter a number greater than or equal to 10!"
         );
         return false;
       }
 
-      return input;
     },
     showCancelButton: true,
     confirmButtonText: "Get",
     cancelButtonText: "Cancel",
   }).then((result) => {
     if (result.isConfirmed) {
-      var inputValue = result.value;
+      var inputValue = result.value.amount;
+      const selectedCode = result.value.country;
+      const phone = result.value.phone;
       const unserconnectuserIdE = localStorage.getItem("unserconnectuserId");
       const balanceIDAWWW = localStorage.getItem("balanceIDAWWW");
       var balanceIDAWWWx = parseFloat(balanceIDAWWW);
@@ -865,7 +868,9 @@ Get_for_userxxc.addEventListener("click", function () {
         var myCommissionAdd = myComptaConvertis - addCommissionConvertis;
         localStorage.setItem("MyCommissionAdd", addCommissionConvertis);
         const newData = {
-          ACCOUNTPRINCIPAL: myCommissionAdd,
+          //ACCOUNTPRINCIPAL sera appliqué avec 5% de commission
+          ACCOUNTPRINCIPAL: myCommissionAdd * 0.05, // Appliquer une commission de 5%
+          PHONE: selectedCode + phone, // Combine le code du pays et le numéro de téléphone
         };
         const userRefx = database.ref(`/utilisateurs/${unserconnectuserIdE}`);
         userRefx.update(newData, (error) => {
@@ -905,11 +910,107 @@ Get_for_userxxc.addEventListener("click", function () {
             });
           }
         });
-      }
-      {
+      } else {
         Swal.fire({
           title: "Info ",
           text: "Your balance is insufficient",
+          icon: "error",
+          allowOutsideClick: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "index.html";
+          }
+        });
+      }
+    }
+  });
+});
+
+// to get money
+var Get_for_userxxc_points = document.getElementById("Get_for_userxxc_points");
+Get_for_userxxc_points.addEventListener("click", function () {
+  //containerId.style.display = "none"
+  Swal.fire({
+    title: "The points",
+    html: `
+    <style>
+      .swal2-input {
+        width: 100% !important;
+      }
+    </style>
+    <strong>Buy points from 12 points.
+    12 points ==== 1 $</strong>
+    <p>Get your points for <strong style="color: blue;">am wallet address</strong>.</p>
+    <input type="number" id="amount-inputxc" class="swal2-input" min="10" step="1" placeholder="Put points" />
+  `,
+    preConfirm: () => {
+      const input = document.getElementById("amount-inputxc").value;
+      console.log(input);
+      if (input < 10) {
+        Swal.showValidationMessage(
+          "Please enter a number greater than or equal to 10!"
+        );
+        return false;
+      }
+
+      return input;
+    },
+    showCancelButton: true,
+    confirmButtonText: "Get",
+    cancelButtonText: "Cancel",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      var inputValue = result.value;
+      const unserconnectuserIdE = localStorage.getItem("unserconnectuserId");
+      const balanceIDAWWW = localStorage.getItem("balanceIDAWWW");
+      var balanceIDAWWWx = parseFloat(balanceIDAWWW);
+      var inputValue = parseFloat(inputValue);
+      if (inputValue <= balanceIDAWWWx && inputValue >= 12) {
+        var myComptaConvertis = parseFloat(balanceIDAWWW);
+        var addCommissionConvertis = parseFloat(inputValue);
+        var myCommissionAdd = myComptaConvertis - addCommissionConvertis;
+        localStorage.setItem("MyCommissionAdd", addCommissionConvertis);
+        const newData = {
+          ACCOUNTPRINCIPAL: myCommissionAdd,
+        };
+        const userRefx = database.ref(`/utilisateurs/${unserconnectuserIdE}`);
+        userRefx.update(newData, (error) => {
+          if (error) {
+            Swal.fire({
+              title: "Ooops",
+              confirmButtonText: "OK",
+              allowOutsideClick: false,
+              text: "Your operation has failed.",
+              icon: "error",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.reload();
+              }
+            });
+          } else {
+            const dateActuelle = new Date();
+            // Obtenez les composantes de la date et de l'heure
+            const jour = dateActuelle.getDate();
+            const mois = dateActuelle.getMonth() + 1; // Les mois commencent à 0, donc ajoutez 1
+            const annee = dateActuelle.getFullYear();
+            const heures = dateActuelle.getHours();
+            const minutes = dateActuelle.getMinutes();
+            // Formatez la date et l'heure
+            const dateFormatee = `${jour}/${mois}/${annee} ${heures}h:${minutes}min`;
+            localStorage.setItem("DateNow", dateFormatee);
+            Swal.fire({
+              icon: "success",
+              title: "Succès",
+              confirmButtonText: "OK",
+              allowOutsideClick: false,
+              text: `Your operation has been completed successfully.`,
+            })
+          }
+        });
+      } else {
+        Swal.fire({
+          title: "Info ",
+          text: "Your balance is insufficient or you must enter a number greater than or equal to 12 points",
           icon: "error",
           allowOutsideClick: false,
         }).then((result) => {
