@@ -947,6 +947,7 @@ Get_for_userxxc_points.addEventListener("click", function () {
     <input type="number" id="amount-inputxc" class="swal2-input" min="10" step="1" placeholder="Put points" />
   `,
     preConfirm: () => {
+      document.getElementById('sameToBody').style.display = "block"
       const input = document.getElementById("amount-inputxc").value;
       console.log(input);
       if (input < 10) {
@@ -997,7 +998,8 @@ Get_for_userxxc_points.addEventListener("click", function () {
           } else {
             const points = localStorage.getItem("points");
             var addCommissionConvertis = parseFloat(inputValue);
-            var myCommissionAdd = points + addCommissionConvertis;
+            var pointsadd = parseFloat(points);
+            var myCommissionAdd = pointsadd + addCommissionConvertis;
             localStorage.setItem("MyCommissionAdd", addCommissionConvertis);
             const newData = {
               points: myCommissionAdd,
@@ -1017,7 +1019,7 @@ Get_for_userxxc_points.addEventListener("click", function () {
                   }
                 });
               } else {
-
+                document.getElementById('sameToBody').style.display = "none"
                 const dateActuelle = new Date();
                 // Obtenez les composantes de la date et de l'heure
                 const jour = dateActuelle.getDate();
