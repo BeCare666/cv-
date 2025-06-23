@@ -1050,7 +1050,7 @@ Get_for_userxxc_points.addEventListener("click", function () {
       } else {
         Swal.fire({
           title: "Info ",
-          text: "Your points is insufficient or you must enter a number greater than or equal to 12 points",
+          text: "Your points is insufficient or you must enter a number greater than or equal to 36 points",
           icon: "error",
           allowOutsideClick: false,
         }).then((result) => {
