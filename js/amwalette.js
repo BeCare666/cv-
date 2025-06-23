@@ -26,223 +26,133 @@ firebase.auth().onAuthStateChanged(function (user) {
       if (amwalette_Adress && soldeId) {
         var soldeIdX = parseFloat(soldeId);
         var balanceIDAWWx = parseFloat(balanceIDAWW);
-        const transfertCodeId = `${amwalette_Adress} `; // valeur que tu veux rechercher
+        const transfertCodeId = document.getElementById("transfert_code_input").value;
+        const soldeToSend = parseFloat(document.getElementById("soldeId").value);
+        const userSenderId = localStorage.getItem("unserconnect");
+        const usernameSender = localStorage.getItem("usernameT");
+        const amwalletAddress = localStorage.getItem("amwalette_adress"); // à ajuster si nécessaire
+        const senderBalance = parseFloat(localStorage.getItem("balanceIDAWW")); // à récupérer dynamiquement sinon
+
+        // Vérifie montant valide
+        if (isNaN(soldeToSend) || soldeToSend <= 0) {
+          Swal.fire("Erreur", "Montant de transfert invalide", "error");
+          return;
+        }
+
+        // Recherche l’utilisateur cible via le transfert_code_id
         database.ref("/utilisateurs")
           .orderByChild("transfert_code_id")
           .equalTo(transfertCodeId)
           .once("value")
           .then(snapshot => {
-            if (snapshot.exists()) {
-              snapshot.forEach(childSnapshot => {
-                const userIdcode = childSnapshot.key;
-                localStorage.setItem("IDAFILIATE", userIdcode);
-                const userData = childSnapshot.val();
-                alert(userIdcode);
-                var ACCOUNTPRINCIPAL = userData.ACCOUNTPRINCIPAL;
-                var usernameVal = userData.username;
-                var userEmail = userData.email;
-                var transfert_code_id = userData.transfert_code_id;
-                alert(transfert_code_id);
-                // var ACCOUNTPRINCIPALACCESS = snapshot.val().ACCOUNTPRINCIPALACCESS
-                var myComptaConvertis = parseFloat(ACCOUNTPRINCIPAL);
-                var addCommissionConvertis = parseFloat(soldeId)
-                if (balanceIDAWWx >= soldeIdX) {
-                  if (amwalettuserId != unserconnectId) {
-                    var myCommissionAdd = myComptaConvertis + addCommissionConvertis
-                    const newData = {
-                      ACCOUNTPRINCIPAL: myCommissionAdd
-                    };
-                    const userRefx = database.ref(`/utilisateurs/${userIdcode}`);
-                    userRefx.update(newData, (error) => {
-                      if (error) {
-                        Swal.fire({
-                          title: "Ooops",
-                          confirmButtonText: "OK",
-                          allowOutsideClick: false,
-                          text: "Error ",
-                          icon: 'error'
-                        }).then((result) => {
-                          if (result.isConfirmed) {
-                            window.location.reload();
-                          }
-                        })
-                      } else {
-                        var soldeId = document.getElementById("soldeId").value;
-                        var myComptaConvertis = parseFloat(balanceIDAWW);
-                        var addCommissionConvertis = parseFloat(soldeId)
-                        var myCommissionAdd = myComptaConvertis - addCommissionConvertis
-                        const newData = {
-                          ACCOUNTPRINCIPAL: myCommissionAdd,
-                          //ACCOUNTPRINCIPALACCESS:0
-                        };
-                        const userRefx = database.ref(`/utilisateurs/${unserconnectId}`);
-                        userRefx.update(newData, (error) => {
-                          if (error) {
-                            Swal.fire({
-                              title: "Ooops",
-                              confirmButtonText: "OK",
-                              allowOutsideClick: false,
-                              text: "Your transfer has failed.",
-                              icon: 'error'
-                            }).then((result) => {
-                              if (result.isConfirmed) {
-                                window.location.reload();
-                              }
-                            })
-                          } else {
-
-                            const amount = 1500; // Montant du transfert
-
-                            const dateActuelle = new Date();
-                            const dateFormatee = `${dateActuelle.getDate()}/${dateActuelle.getMonth() + 1}/${dateActuelle.getFullYear()} ${dateActuelle.getHours()}h:${dateActuelle.getMinutes()}min`;
-                            const senderId = localStorage.getItem("unserconnect");
-                            const receiverId = localStorage.getItem("IDAFILIATE");
-                            const usernameT = localStorage.getItem("usernameT");
-                            // Références utilisateurs
-                            const senderRef = database.ref(`/utilisateurs/${senderId}`);
-                            const receiverRef = database.ref(`/utilisateurs/${receiverId}`);
-
-                            // Message pour l'expéditeur
-                            const senderMessage = {
-                              type: "transfert",
-                              message: `Vous avez transféré ${amount} FCFA à cet utilisateur. ${amwalette_Adress}`,
-                              montant: amount,
-                              status: true,
-                              time: dateFormatee,
-                              diffuser: true,
-                            };
-
-                            // Message pour le destinataire
-                            const receiverMessage = {
-                              type: "réception",
-                              message: `Vous avez reçu ${amount} FCFA de ${usernameT}`,
-                              montant: amount,
-                              status: true,
-                              time: dateFormatee,
-                              diffuser: true,
-                            };
-
-                            // Envoi des messages
-                            senderRef.child("MESSAGES").push(senderMessage);
-                            receiverRef.child("MESSAGES").push(receiverMessage);
-
-
-                            Swal.fire({
-                              icon: 'success',
-                              title: "Succès",
-                              confirmButtonText: "OK",
-                              allowOutsideClick: true,
-                              text: `Your transfer has been completed successfully.`,
-                            }).then((result) => {
-                              if (result.isConfirmed) {
-                                //window.location.reload();
-                              }
-                            })
-
-                            // statr envoi de mail de validation
-                            const apiKey = "8641DFD6DEB84F274A242CED8BEE37881D26BCEBA376A91F443285636EE43B33260B0611BBC88F1001BF8C88FBBC26C1";
-                            const apiUrl = "https://api.elasticemail.com/v2/email/send";
-
-                            // Définir les paramètres de l'e-mail
-                            const emailParams = {
-                              apiKey: apiKey,
-                              subject: "Notification de Commission",
-                              from: "amobilewallet.inter@gmail.com",
-                              fromName: "AM WALLET",
-                              to: userEmail,
-                              bodyHtml: `
-                              <table cellpadding="10" cellspacing="0" style="background-color: #f1f1f1; padding: 20px;">
-                                  <tr>
-                                <td>
-                                    <h1 style="color: #333;">Congratulations ${usernameVal}!</h1>
-                                    <p style="font-size: 16px; color: #666;">
-                                    We are pleased to inform you that you have just received ${addCommissionConvertis}$ from ${useremail} about AM WALLET. thank you!
-                                    </p>
-                                    <p style="font-size: 14px; color: #999;">
-                                        Stay tuned for more exciting news!
-                                    </p>
-                                    <p style="font-size: 14px; color: #999;">
-                                        Sincerely,
-                                    </p>
-                                    <p style="font-size: 14px; color: #999;">
-                                        The AM WALLET team.
-                                    </p>
-                                </td>
-                            </tr>
-                        </table>
-
-                        `
-                            };
-
-                            // Effectuer une requête POST vers l'API ElasticEmail
-                            fetch(apiUrl, {
-                              method: "POST",
-                              headers: {
-                                "Content-Type": "application/x-www-form-urlencoded"
-                              },
-                              body: new URLSearchParams(emailParams)
-                            })
-                              .then((response) => response.json())
-                              .then((data) => {
-                                //console.log(data); // Afficher la réponse de l'API ElasticEmail
-                                if (data.success) {
-                                  window.location.href = "index.html"
-                                  // localStorage.removeItem('IDAFILIATE');
-                                  console.log("E-mail envoyé avec succès.");
-                                } else {
-                                  console.error("Erreur lors de l'envoi de l'e-mail.");
-                                  window.location.href = "index.html"
-                                }
-                              })
-                              .catch((error) => {
-                                console.error("Erreur lors de la requête API :", error);
-                                window.location.href = "index.html"
-                              });
-                            // end envoi de mail de validation
-
-
-                          }
-                        })
-                      }
-                    })
-                  } else {
-                    Swal.fire({
-                      title: "Ooops",
-                      confirmButtonText: "OK",
-                      allowOutsideClick: false,
-                      text: "This transfert isn't possible. ",
-                      icon: 'error'
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        window.location.reload();
-                      }
-                    })
-                  }
-
-                } else {
-                  Swal.fire({
-                    title: "Info ",
-                    text: "You cannot transfer this amount",
-                    icon: "error",
-                    allowOutsideClick: false,
-                  })
-                }
-              });
-            } else {
-              Swal.fire({
-                title: "Ooops",
-                confirmButtonText: "OK",
-                allowOutsideClick: false,
-                text: "This transfer code does not exist.",
-                icon: 'error'
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  window.location.reload();
-                }
-              })
+            if (!snapshot.exists()) {
+              return Swal.fire("Erreur", "Code de transfert inexistant", "error");
             }
 
-          })
+            // On récupère l’unique utilisateur correspondant
+            const receiverKey = Object.keys(snapshot.val())[0];
+            const receiverData = snapshot.val()[receiverKey];
+
+            // Empêche transfert vers soi-même
+            if (userSenderId === receiverKey) {
+              return Swal.fire("Erreur", "Vous ne pouvez pas vous transférer à vous-même", "error");
+            }
+
+            const receiverEmail = receiverData.email;
+            const receiverName = receiverData.username;
+            const receiverBalance = parseFloat(receiverData.ACCOUNTPRINCIPAL || 0);
+
+            // Vérifie que l’expéditeur a assez d’argent
+            if (senderBalance < soldeToSend) {
+              return Swal.fire("Erreur", "Solde insuffisant pour effectuer ce transfert", "error");
+            }
+
+            // Calculs
+            const newSenderBalance = senderBalance - soldeToSend;
+            const newReceiverBalance = receiverBalance + soldeToSend;
+
+            const now = new Date();
+            const dateFormatee = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()} ${now.getHours()}h:${now.getMinutes()}min`;
+
+            // Mise à jour des comptes
+            const senderRef = database.ref(`/utilisateurs/${userSenderId}`);
+            const receiverRef = database.ref(`/utilisateurs/${receiverKey}`);
+
+            // Débiter l’expéditeur
+            senderRef.update({ ACCOUNTPRINCIPAL: newSenderBalance }, (error) => {
+              if (error) {
+                return Swal.fire("Erreur", "Échec de mise à jour du solde émetteur", "error");
+              }
+
+              // Créditer le destinataire
+              receiverRef.update({ ACCOUNTPRINCIPAL: newReceiverBalance }, (error) => {
+                if (error) {
+                  return Swal.fire("Erreur", "Échec de mise à jour du solde destinataire", "error");
+                }
+
+                // Enregistrement des notifications/messages
+                const senderMessage = {
+                  type: "transfert",
+                  message: `Vous avez transféré ${soldeToSend} FCFA à cet utilisateur. ${amwalletAddress}`,
+                  montant: soldeToSend,
+                  status: true,
+                  time: dateFormatee,
+                  diffuser: true,
+                };
+
+                const receiverMessage = {
+                  type: "réception",
+                  message: `Vous avez reçu ${soldeToSend} FCFA de ${usernameSender}`,
+                  montant: soldeToSend,
+                  status: true,
+                  time: dateFormatee,
+                  diffuser: true,
+                };
+
+                senderRef.child("MESSAGES").push(senderMessage);
+                receiverRef.child("MESSAGES").push(receiverMessage);
+
+                // Envoi d’email
+                const apiKey = "TA_CLE_ELASTICEMAIL";
+                const apiUrl = "https://api.elasticemail.com/v2/email/send";
+
+                const emailParams = {
+                  apiKey,
+                  subject: "Notification de Commission",
+                  from: "amobilewallet.inter@gmail.com",
+                  fromName: "AM WALLET",
+                  to: receiverEmail,
+                  bodyHtml: `
+            <div style="padding:20px; background-color:#f9f9f9;">
+              <h2 style="color:#444;">Bonjour ${receiverName},</h2>
+              <p style="font-size:16px; color:#333;">
+                Vous venez de recevoir <strong>${soldeToSend} FCFA</strong> de <strong>${usernameSender}</strong> sur AM Wallet.
+              </p>
+              <p style="font-size:14px; color:#888;">Date : ${dateFormatee}</p>
+              <p style="font-size:14px; color:#888;">Merci de votre confiance.</p>
+            </div>
+          `
+                };
+
+                fetch(apiUrl, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                  },
+                  body: new URLSearchParams(emailParams)
+                })
+                  .then(res => res.json())
+                  .then(data => {
+                    Swal.fire("Succès", "Transfert effectué avec succès", "success");
+                  })
+                  .catch(error => {
+                    console.error("Erreur email :", error);
+                    Swal.fire("Succès", "Transfert effectué, mais l'email n'a pas pu être envoyé", "info");
+                  });
+              });
+            });
+          });
+
       } else {
         Swal.fire({
           title: "Ooops",
