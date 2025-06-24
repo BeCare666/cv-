@@ -15,130 +15,132 @@ const unserconnectId = localStorage.getItem("unserconnect")
 //const bilanuserId = "JyPM9obdRafgNHOZZ8e4piR1SVA3"
 //alert(unserconnectId)
 firebase.auth().onAuthStateChanged(function (user) {
-if (user) {
-var useremail = user.email
-var submitid = document.getElementById("submitid");
-submitid.addEventListener("click", submitmy)
-function submitmy() { 
-const transfertCodeId = document.getElementById("amwalette_Adress")?.value?.trim();
-const soldeInput = document.getElementById("soldeId")?.value?.trim(); 
-const userSenderId = localStorage.getItem("unserconnect");
-const usernameSender = localStorage.getItem("usernameT");
-const amwalletAddress = localStorage.getItem("amwalette_adress");
-const senderBalanceStr = localStorage.getItem("balanceIDAWWW");
-console.log(userSenderId);
-console.log(usernameSender);
-console.log(amwalletAddress);
-console.log(senderBalanceStr);
+  if (user) {
+    var useremail = user.email
+    var submitid = document.getElementById("submitid");
+    submitid.addEventListener("click", submitmy)
+    function submitmy() {
+      const transfertCodeId = document.getElementById("amwalette_Adress")?.value?.trim();
+      const soldeInput = document.getElementById("soldeId")?.value?.trim();
+      const userSenderId = localStorage.getItem("unserconnect");
+      const usernameSender = localStorage.getItem("usernameT");
+      const amwalletAddress = localStorage.getItem("amwalette_adress");
+      const senderBalanceStr = localStorage.getItem("balanceIDAWWW");
+      console.log(userSenderId);
+      console.log(usernameSender);
+      console.log(amwalletAddress);
+      console.log(senderBalanceStr);
 
 
-if (!transfertCodeId || !soldeInput || !userSenderId || !senderBalanceStr) {
-  Swal.fire("Erreur", "Données manquantes ou invalides", "error");
-  return;
-}
-
-const soldeToSend = parseFloat(soldeInput);
-const senderBalance = parseFloat(senderBalanceStr);
-
-if (isNaN(soldeToSend) || soldeToSend <= 0) {
-  Swal.fire("Erreur", "Montant invalide", "error");
-  return;
-}
-
-if (isNaN(senderBalance)) {
-  Swal.fire("Erreur", "Solde actuel invalide", "error");
-  return;
-}
-
-if (senderBalance < soldeToSend) {
-  Swal.fire("Erreur", "Solde insuffisant", "error");
-  return;
-}
-
-// 🔎 Recherche du destinataire
-database.ref("/utilisateurs")
-  .orderByChild("transfert_code_id")
-  .equalTo(transfertCodeId)
-  .once("value")
-  .then((snapshot) => {
-    if (!snapshot.exists()) {
-      Swal.fire("Erreur", "Code de transfert inexistant", "error");
-      return;
-    }
-
-    const receiverKey = Object.keys(snapshot.val())[0];
-    const receiverData = snapshot.val()[receiverKey];
-
-    if (receiverKey === userSenderId) {
-      Swal.fire("Erreur", "Vous ne pouvez pas vous envoyer de l'argent", "error");
-      return;
-    }
-
-    const receiverEmail = receiverData.email;
-    const receiverName = receiverData.username;
-    const receiverBalance = parseFloat(receiverData.ACCOUNTPRINCIPAL || "0");
-
-    if (isNaN(receiverBalance)) {
-      Swal.fire("Erreur", "Solde du destinataire invalide", "error");
-      return;
-    }
-
-    const newSenderBalance = senderBalance - soldeToSend;
-    const newReceiverBalance = receiverBalance + soldeToSend;
-
-    const now = new Date();
-    const dateFormatted = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()} ${now.getHours()}h${now.getMinutes()}m`;
-
-    const senderRef = database.ref(`/utilisateurs/${userSenderId}`);
-    const receiverRef = database.ref(`/utilisateurs/${receiverKey}`);
-
-    // 💸 Mise à jour du solde de l’émetteur
-    senderRef.update({ ACCOUNTPRINCIPAL: newSenderBalance }, (err1) => {
-      if (err1) {
-        Swal.fire("Erreur", "Échec de mise à jour de l'expéditeur", "error");
+      if (!transfertCodeId || !soldeInput || !userSenderId || !senderBalanceStr) {
+        Swal.fire("Erreur", "Données manquantes ou invalides", "error");
         return;
       }
 
-      // 💰 Mise à jour du solde du destinataire
-      receiverRef.update({ ACCOUNTPRINCIPAL: newReceiverBalance }, (err2) => {
-        if (err2) {
-          Swal.fire("Erreur", "Échec de mise à jour du destinataire", "error");
-          return;
-        }
+      const soldeToSend = parseFloat(soldeInput);
+      const senderBalance = parseFloat(senderBalanceStr);
 
-        // ✅ Ajout des messages
-        const senderMsg = {
-          type: "transfert",
-          message: `Vous avez transféré ${soldeToSend} FCFA à ${receiverName} `,
-          montant: soldeToSend,
-          status: true,
-          time: dateFormatted,
-          diffuser: true,
-        };
+      if (isNaN(soldeToSend) || soldeToSend <= 0) {
+        Swal.fire("Erreur", "Montant invalide", "error");
+        return;
+      }
 
-        const receiverMsg = {
-          type: "réception",
-          message: `Vous avez reçu ${soldeToSend} FCFA de ${usernameSender}`,
-          montant: soldeToSend,
-          status: true,
-          time: dateFormatted,
-          diffuser: true,
-        };
+      if (isNaN(senderBalance)) {
+        Swal.fire("Erreur", "Solde actuel invalide", "error");
+        return;
+      }
 
-        senderRef.child("MESSAGES").push(senderMsg);
-        receiverRef.child("MESSAGES").push(receiverMsg);
+      if (senderBalance < soldeToSend) {
+        Swal.fire("Erreur", "Solde insuffisant", "error");
+        return;
+      }
 
-        // 📧 Envoi de l'e-mail
-        fetch("https://api.elasticemail.com/v2/email/send", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams({
-            apiKey: "TA_CLE_ELASTICEMAIL",
-            subject: "Notification de transfert",
-            from: "amobilewallet.inter@gmail.com",
-            fromName: "AM WALLET",
-            to: receiverEmail,
-            bodyHtml: `
+      // 🔎 Recherche du destinataire
+      database.ref("/utilisateurs")
+        .orderByChild("transfert_code_id")
+        .equalTo(transfertCodeId)
+        .once("value")
+        .then((snapshot) => {
+          if (!snapshot.exists()) {
+            Swal.fire("Erreur", "Code de transfert inexistant", "error");
+            return;
+          }
+
+          const receiverKey = Object.keys(snapshot.val())[0];
+          const receiverData = snapshot.val()[receiverKey];
+
+          if (receiverKey === userSenderId) {
+            Swal.fire("Erreur", "Vous ne pouvez pas vous envoyer de l'argent", "error");
+            return;
+          }
+
+          const receiverEmail = receiverData.email;
+          const receiverName = receiverData.username;
+          const receiverBalance = parseFloat(receiverData.ACCOUNTPRINCIPAL || "0");
+
+          if (isNaN(receiverBalance)) {
+            Swal.fire("Erreur", "Solde du destinataire invalide", "error");
+            return;
+          }
+
+          const commission = soldeToSend * 0.01; // 1% de commission
+          const totalDeducted = soldeToSend + commission; // Montant total à déduire
+          const newSenderBalance = senderBalance - totalDeducted;
+          const newReceiverBalance = receiverBalance + soldeToSend;
+
+          const now = new Date();
+          const dateFormatted = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()} ${now.getHours()}h${now.getMinutes()}m`;
+
+          const senderRef = database.ref(`/utilisateurs/${userSenderId}`);
+          const receiverRef = database.ref(`/utilisateurs/${receiverKey}`);
+
+          // 💸 Mise à jour du solde de l’émetteur
+          senderRef.update({ ACCOUNTPRINCIPAL: newSenderBalance }, (err1) => {
+            if (err1) {
+              Swal.fire("Erreur", "Échec de mise à jour de l'expéditeur", "error");
+              return;
+            }
+
+            // 💰 Mise à jour du solde du destinataire
+            receiverRef.update({ ACCOUNTPRINCIPAL: newReceiverBalance }, (err2) => {
+              if (err2) {
+                Swal.fire("Erreur", "Échec de mise à jour du destinataire", "error");
+                return;
+              }
+
+              // ✅ Ajout des messages
+              const senderMsg = {
+                type: "transfert",
+                message: `Vous avez transféré ${soldeToSend} $ à ${receiverName} `,
+                montant: soldeToSend,
+                status: true,
+                time: dateFormatted,
+                diffuser: true,
+              };
+
+              const receiverMsg = {
+                type: "réception",
+                message: `Vous avez reçu ${soldeToSend} $ de ${usernameSender}`,
+                montant: soldeToSend,
+                status: true,
+                time: dateFormatted,
+                diffuser: true,
+              };
+
+              senderRef.child("MESSAGES").push(senderMsg);
+              receiverRef.child("MESSAGES").push(receiverMsg);
+
+              // 📧 Envoi de l'e-mail
+              fetch("https://api.elasticemail.com/v2/email/send", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({
+                  apiKey: "TA_CLE_ELASTICEMAIL",
+                  subject: "Notification de transfert",
+                  from: "amobilewallet.inter@gmail.com",
+                  fromName: "AM WALLET",
+                  to: receiverEmail,
+                  bodyHtml: `
               <div style="padding:20px;background:#f1f1f1">
                 <h3>Bonjour ${receiverName},</h3>
                 <p>Vous avez reçu <strong>${soldeToSend} FCFA</strong> de ${usernameSender} via AM Wallet.</p>
@@ -146,25 +148,25 @@ database.ref("/utilisateurs")
                 <p>Merci pour votre fidélité.</p>
               </div>
             `
-          })
+                })
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  Swal.fire("Succès", "Transfert effectué avec succès", "success");
+                })
+                .catch((e) => {
+                  console.error("Erreur email :", e);
+                  Swal.fire("Succès", "Transfert OK, mais l’e-mail a échoué", "info");
+                });
+            });
+          });
         })
-        .then((res) => res.json())
-        .then((data) => {
-          Swal.fire("Succès", "Transfert effectué avec succès", "success");
-        })
-        .catch((e) => {
-          console.error("Erreur email :", e);
-          Swal.fire("Succès", "Transfert OK, mais l’e-mail a échoué", "info");
+        .catch((error) => {
+          console.error("Firebase error:", error);
+          Swal.fire("Erreur", "Une erreur est survenue", "error");
         });
-      });
-    });
-  })
-  .catch((error) => {
-    console.error("Firebase error:", error);
-    Swal.fire("Erreur", "Une erreur est survenue", "error");
-  });
 
- 
+
     }
   } else {
     window.location.href = "login.html"

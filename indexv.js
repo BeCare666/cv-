@@ -336,7 +336,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                   });
                 });
                 balanceID.innerHTML = ` <p style="font-size: 26px !important;">
-                &dollar; ${balanceIDAW}
+                &dollar; ${parseFloat(balanceIDAW).toFixed(2)}
                 </p> `;
                 if (ACCOUNTLOTO) {
                   usernameID.innerHTML = `${username}   `;
@@ -858,6 +858,8 @@ menubtnId.addEventListener("click", function () {
 
 // to get money
 var tableSolde = []
+var tablePhone = []
+var tablePays = []
 var Get_for_userxxc = document.getElementById("get_for_userxxc");
 Get_for_userxxc.addEventListener("click", function () {
   //containerId.style.display = "none"
@@ -880,6 +882,8 @@ Get_for_userxxc.addEventListener("click", function () {
       const phone = document.getElementById("phone-input").value.trim();
       const amount = document.getElementById("amount-input").value;
       tableSolde.push(amount)
+      tablePhone.push(phone)
+      tablePays.push(selectedCode)
       // Vérification montant
       if (amount <= 0) {
         Swal.showValidationMessage("Veuillez entrer un montant positif !");
@@ -899,28 +903,44 @@ Get_for_userxxc.addEventListener("click", function () {
   }).then((result) => {
     if (result.isConfirmed) {
       const inputValue = tableSolde[tableSolde.length - 1];
+      const inputValuePhone = tablePhone[tablePhone.length - 1];
+      const inputValuePays = tablePays[tablePays.length - 1];
       const selectedCode = result.value.country;
       const phone = result.value.phone;
       const unserconnectuserIdE = localStorage.getItem("unserconnectuserId");
       const balanceIDAWWW = localStorage.getItem("balanceIDAWWW");
-
+      const points = localStorage.getItem("points");
+      // Stocker le montant saisi (net retiré) 
+      // Conversion en nombres
       var balanceIDAWWWx = parseFloat(balanceIDAWWW);
-      var inputValuec = parseFloat(inputValue);
-      if (inputValuec <= balanceIDAWWWx) {
-        var myComptaConvertis = parseFloat(balanceIDAWWW);
-        var addCommissionConvertis = parseFloat(inputValuec);
-        var myCommissionAdd = myComptaConvertis - addCommissionConvertis;
-        localStorage.setItem("MyCommissionAdd", addCommissionConvertis);
-        var myCommissionAddam = myCommissionAdd * 0.05
-        var myCommissionAddamy = parseFloat(myCommissionAddam);
-        const somme = myCommissionAdd + myCommissionAddamy;
-        const sommeArrondie = parseFloat(somme.toFixed(2));
+      var inputValueParsed = parseFloat(inputValue);
+      var pointsx = parseFloat(points);
+
+      // Calcul de la commission (5% du montant saisi)
+      var commission = inputValueParsed * 0.05;
+
+      var montantTotalADeduire = inputValueParsed + commission;
+      var commission = parseFloat(commission);
+      var montantTotalADeduire = parseFloat(montantTotalADeduire);
+      { /**      if (inputValue < 36) {
+        Swal.fire("Ooops", "Les transferts sont a partir de 36$");
+        localStorage.removeItem('MyCommissionAdd')
+        localStorage.removeItem('phone')
+        localStorage.removeItem('selectedCode')
+        return;
+      }**/ }
+      localStorage.setItem("MyCommissionAdd", inputValueParsed.toString());
+      localStorage.setItem("phone", inputValuePhone);
+      localStorage.setItem("selectedCode", inputValuePays);
+      if (balanceIDAWWWx >= montantTotalADeduire) {
+        // Déduction du montant total (montant + commission)
+        var nouveauSolde = balanceIDAWWWx - montantTotalADeduire;
+
+        // Préparation des données à envoyer ou à enregistrer
         const newData = {
-          //ACCOUNTPRINCIPAL sera appliqué avec 5% de commission
-          // Appliquer une commission de 5% à ACCOUNTPRINCIPAL 
-          ACCOUNTPRINCIPAL: sommeArrondie,
-          //PHONE: selectedCode + phone, // Combine le code du pays et le numéro de téléphone
+          ACCOUNTPRINCIPAL: nouveauSolde,
         };
+
         const userRefx = database.ref(`/utilisateurs/${unserconnectuserIdE}`);
         userRefx.update(newData, (error) => {
           if (error) {
@@ -960,6 +980,9 @@ Get_for_userxxc.addEventListener("click", function () {
           }
         });
       } else {
+        localStorage.removeItem('MyCommissionAdd')
+        localStorage.removeItem('phone')
+        localStorage.removeItem('selectedCode')
         Swal.fire({
           title: "Info ",
           text: "Your balance is insufficient",
@@ -1019,19 +1042,22 @@ Get_for_userxxc_points.addEventListener("click", function () {
       var pointsx = parseFloat(points);
       var myComptaConvertis = parseFloat(balanceIDAWWW);
       var addCommissionConvertis = parseFloat(inputValue);
-      var newcommission = addCommissionConvertis * 0.010
-
-      if (inputValue >= 36 && balanceIDAWWWx >= newcommission) {
-        var myCommissionAdd = myComptaConvertis - newcommission;
+      var newcommission = addCommissionConvertis * 0.10
+      var newDollars = newcommission/36;
+     
+      if (inputValue >= 36 && balanceIDAWWWx >= newDollars) {
+        var myCommissionAdd = myComptaConvertis - newDollars;
+         var finaleSomme = myCommissionAdd + newcommission;
+         alert(finaleSomme)
         localStorage.setItem("MyCommissionAdd", addCommissionConvertis);
         const newData = {
-          ACCOUNTPRINCIPAL: myCommissionAdd + newcommission,
+          ACCOUNTPRINCIPAL: finaleSomme;
         };
         const userRefx = database.ref(`/utilisateurs/${unserconnectuserIdE}`);
         userRefx.update(newData, (error) => {
           if (error) {
             Swal.fire({
-              title: "Ooops",
+              title: "Ooops", 
               confirmButtonText: "OK",
               allowOutsideClick: false,
               text: "Your operation has failed.",
